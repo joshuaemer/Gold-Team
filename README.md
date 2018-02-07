@@ -1,6 +1,8 @@
 # Rolled_War_2
 Group Name: Gold Team
+
 Project for CSE 442
+
 Gitter Badge: https://gitter.im/Gold_Team/Lobby?utm_source=share-link&utm_medium=link&utm_campaign=share-link
 
 
