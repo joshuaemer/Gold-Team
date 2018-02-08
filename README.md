@@ -3,7 +3,9 @@ Group Name: Gold Team
 Members:
 
 Joshua Emerling joshuaem
+
 Matthew Holder  mjholder
+
 Ryan Sandidge rdsandid
 
 Project for CSE 442
