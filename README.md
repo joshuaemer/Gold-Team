@@ -1,12 +1,14 @@
 # Rolled_War_2
 Group Name: Gold Team
+Members:
+
+Joshua Emerling joshuaem
+Matthew Holder  mjholder
+Ryan Sandidge rdsandid
 
 Project for CSE 442
 
-Gitter Badge: https://gitter.im/Gold_Team/Lobby?utm_source=share-link&utm_medium=link&utm_campaign=share-link
-http(s)://badges.gitter.im/Gold_Team/Lobby.png
-
-http(s)://badges.gitter.im/org.png
+Gitter Badge ![Gitter chat](https://badges.gitter.im/Gold_Team/gitter.png)
 
 //Below is an outline these will have to finished before Friday at 4
 Project Description:
