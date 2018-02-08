@@ -10,8 +10,7 @@ Ryan Sandidge rdsandid
 
 Project for CSE 442
 
-Gitter: https://gitter.im/Gold_Team/Lobby?utm_source=share-link&utm_medium=link&utm_campaign=share-link
-
+Gitter: [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Gold_Team/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 //Below is an outline these will have to finished before Friday at 4
 Project Description:
 
