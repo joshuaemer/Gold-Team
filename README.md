@@ -1,5 +1,6 @@
-# Rolled_War_2
+# Gold-Team
 Group Name: Gold Team
+Project Name: Rolled War 2
 Members:
 
 Joshua Emerling joshuaem
