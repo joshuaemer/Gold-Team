@@ -26,7 +26,7 @@ Our MVP will include the following:
  -  A UI that players can view there current inventory(in game) and choose game modes.
  - An AI that will be behave like other players.
  - An interactive environment with ramps, power ups(boosts), elevators and traps.
- - Two different Game Modes: DeathMatch and FFA.
+ - Two different Game Modes: Team Death Match and FFA.
  - Realistic wheel chair mechanics (ie. Players will not be able to use stairs).
  - Players will only be able to use a pistol when moving and will need to be stopped to use better guns.
  - A variety of guns with different benefits.
