@@ -37,7 +37,7 @@ Team Roles:
 
   Josh joshuaem: Movement, Environmental interactions.
   
-  Matt mjholder: Networking, Multiplayer, PVP
+  Matt mjholder: Networking, Multiplayer, PVP, Matchmaking, Player Synchronization
   
   Ryan rdsandid: Graphics/Assest Gathering/ AI (PVM)/ Gun mechanics
 
