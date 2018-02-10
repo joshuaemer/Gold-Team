@@ -15,11 +15,11 @@ Project for CSE 442
 
 Gitter: [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Gold_Team/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-Project Description:
+### Project Description:
 
   This project will be a first person shooter where the players and enemy's will be in wheel chairs. This will effect how the environment is laid out, how they interact with the environment and how they use their weapons. Players will only be able to use a pistol when moving and bigger guns when they are not since these will require both hands to be free. Players will be able to acquire new guns through various means. The project will consist of 2 game modes Deathmatch where the players are placed into teams and Free For All where it is every man for himself. It will include both single and multilayer. It will be done using Unity and C# as well as Blender for graphics.
 
-MVP:
+### MVP:
 Our MVP will include the following:
 
  - A Lobbying System that allows players to choose a game or be randomly placed into one. 
@@ -35,7 +35,7 @@ Our MVP will include the following:
 
  
 
-Add-on Features:
+### Add-on Features:
 
   1. Leveling/Experience System to allow players to upgrade weapons and their wheel chairs
   
@@ -43,10 +43,10 @@ Add-on Features:
 
   3. Multiple and dynamically generated maps.
   
-User Story:
+### User Story:
   One very underrepresented group of people in First Person Shooters is the handicap community. We need a game that incorporates FPS features while showing what it is like for a person in a wheel chair. This means that the character would be unable to do things that a person with the ability to walk could. For example someone in a wheel chair would be unable to use stairs, forcing them to find ramps and/or elevators to get to the desired location. The game should still be entertaining and provide a twist to your typical FPS.
 
-Team Roles:
+### Team Roles:
 
   Josh joshuaem: Movement, Environmental interactions. This includes gun placement management of elevators, boosts, traps and other tasks involving the character and the environment. Josh will handle how the map is laid out and how the player/AI will interact with the obstacles.
   
@@ -54,4 +54,5 @@ Team Roles:
   
   Ryan rdsandid: Graphics/Asset Gathering/ AI (PVM)/ Gun mechanics. Ryan's role will focus mostly on the character it self. How they look how and how they fight. He will handle the Gun mechanics and fighting system. This will then be applied to the AI controlled enemy's in the game.
 
-
+### Scrum Board
+https://docs.google.com/spreadsheets/d/1ISFcdACbTpMK2n_4ECj06FskVGkB-4ZWL4J_JPGMZYk/edit?usp=sharing
