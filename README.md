@@ -3,6 +3,8 @@ Group Name: Gold Team
 
 Project Name: Rolled War 2
 
+Scrum Board: https://docs.google.com/spreadsheets/d/1ISFcdACbTpMK2n_4ECj06FskVGkB-4ZWL4J_JPGMZYk/edit?usp=sharing
+
 Members:
 
 Joshua Emerling joshuaem
@@ -54,5 +56,4 @@ Our MVP will include the following:
   
   Ryan rdsandid: Graphics/Asset Gathering/ AI (PVM)/ Gun mechanics. Ryan's role will focus mostly on the character it self. How they look how and how they fight. He will handle the Gun mechanics and fighting system. This will then be applied to the AI controlled enemy's in the game.
 
-### Scrum Board
-https://docs.google.com/spreadsheets/d/1ISFcdACbTpMK2n_4ECj06FskVGkB-4ZWL4J_JPGMZYk/edit?usp=sharing
+
