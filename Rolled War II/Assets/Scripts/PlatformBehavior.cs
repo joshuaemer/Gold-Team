@@ -5,31 +5,31 @@ using UnityEngine.UI;
 
 public class PlatformBehavior : MonoBehaviour {
     
-    
+    private Rigidbody rb;
     
     public GameObject shaft;
     private bool up;
+    //public Text test;
     
-    
-    private float speed;
+    private int speed;
 
     // Use this for initialization
     void Start () {
         
-        
+        rb = GetComponent<Rigidbody>();
         up = false;
         
-        speed = (float)0.1;
+        speed = 5;
     }
 	
 	// Update is called once per frame
-	void LateUpdate () {
+	void Update () {
         if (up)
         {
-            print("up is true");
-            if (transform.position.y < shaft.transform.lossyScale.y-transform.lossyScale.y)
+            
+            if (transform.position.y < shaft.transform.lossyScale.y)
             {
-                transform.position = new Vector3(transform.position.x, transform.position.y + speed, transform.position.z);
+                rb.AddForce(new Vector3(0, speed, 0));
             }
             
         }
@@ -39,9 +39,13 @@ public class PlatformBehavior : MonoBehaviour {
         }
 	}
 
-    public void setBoolUp(bool b)
+    void OnTriggerEnter(Collider other)
     {
-        up = b;
+        if (other.gameObject.CompareTag("Bottom Trigger")) {
+            if(transform.position.y == 0) {
+                up = true;
+            }
+        }
     }
 
 }
