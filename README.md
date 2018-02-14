@@ -48,12 +48,6 @@ Our MVP will include the following:
 ### User Story:
   One very underrepresented group of people in First Person Shooters is the handicap community. We need a game that incorporates FPS features while showing what it is like for a person in a wheel chair. This means that the character would be unable to do things that a person with the ability to walk could. For example someone in a wheel chair would be unable to use stairs, forcing them to find ramps and/or elevators to get to the desired location. The game should still be entertaining and provide a twist to your typical FPS.
 
-### Team Roles:
 
-  Josh joshuaem: Movement, Environmental interactions. This includes gun placement management of elevators, boosts, traps and other tasks involving the character and the environment. Josh will handle how the map is laid out and how the player/AI will interact with the obstacles.
-  
-  Matt mjholder:  Matt will be in charge of the multiplayer aspects of the game this includes Networking, Multiplayer, PVP, Matchmaking, and Player Synchronization.
-  
-  Ryan rdsandid: Graphics/Asset Gathering/ AI (PVM)/ Gun mechanics. Ryan's role will focus mostly on the character it self. How they look how and how they fight. He will handle the Gun mechanics and fighting system. This will then be applied to the AI controlled enemy's in the game.
 
 
