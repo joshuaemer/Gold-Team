@@ -8,12 +8,12 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour {
     private Rigidbody rb;
     public GameObject platform1;
-    private Vector3 platform_start;
+    private Vector3 platform1_start;
     
     // Use this for initialization
     void Start () {
         rb = GetComponent<Rigidbody>();
-        platform_start = platform1.transform.position;
+        platform1_start = platform1.transform.position;
         
     }
 	
@@ -29,12 +29,15 @@ public class PlayerController : MonoBehaviour {
         
         if (other.gameObject.CompareTag("Bottom Trigger"))
         {
-            print("HERE");
-            if (platform1.transform.position.y == platform_start.y)
+            
+            
+            if (platform1.transform.position.y == platform1_start.y)
             {
-                platform1.GetComponent<PlatformBehavior>().setBoolUp(true);
-                print("SET");
+                print("HIT");
+                platform1.GetComponent<PlatformBehavior>().Hit(0);
+                
             }
         }
+        
     }
 }
