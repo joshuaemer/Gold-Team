@@ -1,26 +1,43 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Networking;
+//Set bottom Trigger's tag to "Bottom Trigger"
+//platform1 must be dragged to the correct spot in the script component or it will not work
+//If getting an error on line "pb1.up = true;" comment it out then do the above
 
-public class PlayerController : NetworkBehaviour {
+public class PlayerController : MonoBehaviour {
     private Rigidbody rb;
-    GameObject MyCamera;
-	// Use this for initialization
-	void Start () {
+    public GameObject platform1;
+    private Vector3 platform1_start;
+    
+    // Use this for initialization
+    void Start () {
         rb = GetComponent<Rigidbody>();
-        MyCamera = GameObject.FindGameObjectWithTag("MainCamera");
-        MyCamera.GetComponent<CameraController>().SetPlayer(this.gameObject);
+        platform1_start = platform1.transform.position;
+        
     }
 	
 	// Update is called once per frame
 	void FixedUpdate () {
-        if (hasAuthority) {
-            float move_horizontal = Input.GetAxis("Horizontal");
-            float move_vertical = Input.GetAxis("Vertical");
-            Vector3 movement = new Vector3(move_horizontal, 0, move_vertical);
-            rb.AddForce(movement * 10);
-        }
+        float move_horizontal = Input.GetAxis("Horizontal");
+        float move_vertical = Input.GetAxis("Vertical");
+        Vector3 movement = new Vector3(move_horizontal, 0, move_vertical);
+        rb.AddForce(movement * 10);
     }
-
+    void OnTriggerEnter(Collider other)
+    {
+        
+        if (other.gameObject.CompareTag("Bottom Trigger"))
+        {
+            
+            
+            if (platform1.transform.position.y == platform1_start.y)
+            {
+                print("HIT");
+                platform1.GetComponent<PlatformBehavior>().Hit(0);
+                
+            }
+        }
+        
+    }
 }
