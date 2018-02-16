@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/Traps.unity
+- path: Assets/network.unity
   isLoaded: 1
   isActive: 1
