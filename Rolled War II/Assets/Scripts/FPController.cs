@@ -2,20 +2,40 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.UI;
 
 public class FPController : NetworkBehaviour {
 
     public float speed = 3.0f;
     public float rotateSpeed = 3.0f;
     public float smoother = 10;
+    public int hitpoints = 1000;
     private CharacterController controller;
+    
+    //Controls the elevators each elevator added needs both of theses vars drag each platform to the public 
+    //object
+    public GameObject platform1;
+    private Vector3 platform1_start;
+    
 
     // this is used to sync position and rotation of other players
     private Vector3 enemyPosition;
     private Quaternion enemyRotation;
 
+    //Text for Player Stats
+    public Text hitpointsText;
+    public Text speedText;
+
+
     void Start() {
         controller = gameObject.GetComponent<CharacterController>();
+        
+        platform1 = GameObject.Find("Platform 1");
+        platform1_start = platform1.transform.position;
+        hitpointsText = GameObject.Find("Hit Points").GetComponent<Text>();
+        speedText = GameObject.Find("Speed").GetComponent<Text>();
+        hitpointsText.text = "HP = " + hitpoints.ToString();
+        speedText.text = "Speed = " + speed.ToString();
     }
 
     // Update is called once per frame
@@ -53,4 +73,23 @@ public class FPController : NetworkBehaviour {
         enemyPosition = pos;
         enemyRotation = rot;
     }
+
+    //This fucntion is used to interact with the environment
+    void OnTriggerEnter(Collider other)
+    {
+
+        if (other.gameObject.CompareTag("Bottom Trigger"))
+        {
+
+
+            if (platform1.transform.position.y == platform1_start.y)
+            {
+
+                platform1.GetComponent<PlatformBehavior>().Hit(0);
+
+            }
+        }
+
+    }
+
 }

@@ -37,13 +37,12 @@ public class PlatformBehavior : MonoBehaviour {
     void Start () {
         framesWaitedDown = 0;
         waitFramesDown = 420;
-        frameWaitedUp = 0;
-        waitFramesUp = 150;
+        
         framesWaitedReset = 0;
         waitFramesReset = 500;
         up = false;
         down = false;
-        upActive = true;//True beacuse this is the starting point of the platform
+        
         
         speed = (float)0.1;
         downspeed = (float)0.04;

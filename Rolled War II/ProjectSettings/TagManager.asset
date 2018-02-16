@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Bottom Trigger
   - Top Trigger
+  - Spike Door
+  - Spike Trigger
   layers:
   - Default
   - TransparentFX
