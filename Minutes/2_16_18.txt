@@ -1,0 +1,32 @@
+Gold Team Minutes 
+Date 2/16/2018 4:00 pm
+
+All Member Present
+
+
+Meeting Discussion:
+
+-Created issues for each task
+-Answer doodle pool
+-Showed what we have created so far
+-Discussed next steps for the project
+	-Decided how we want to create the inventory
+	-Added Grenades to Inventory/Weapons System
+-Merged Networking branch back into Environment
+-We will meet on Wednesday to finish the prototype and you tube video for next submission
+
+
+
+
+
+Tasks Done Prior to Meeting
+-Josh: Created Elevator prefab and started working on the spike pit.
+-Matt: Finished Basic Networking and created the first map. Added UI buttons.
+-Ryan: Started Wheelchair modeling
+
+Tasks TODO before next meeting
+-Josh: Finish creating the spikepit and other traps. Create pickups and boots. Create Inventory UI.
+-Matt: Create the Map we are going to use. Start AI scripts.
+-Ryan: Finish Wheelchair model, movement script, weapon modeling and weapon scripts.
+
+
