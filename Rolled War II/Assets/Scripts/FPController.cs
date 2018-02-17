@@ -6,17 +6,23 @@ using UnityEngine.UI;
 
 public class FPController : NetworkBehaviour {
 
-    public float speed = 3.0f;
+    public float speed = 10.0f;
     public float rotateSpeed = 3.0f;
     public float smoother = 10;
     public int hitpoints = 1000;
     private CharacterController controller;
     
     //Controls the elevators each elevator added needs both of theses vars drag each platform to the public 
-    //object
+    //object, Tags for the bottom trigger on each elevator must be different including the spike elevator
     public GameObject platform1;
     private Vector3 platform1_start;
-    
+
+    //Spike Pit Elements
+    public GameObject SpikeDoor1;
+    public GameObject SpikeExit1;
+
+    public GameObject spike_platform1;
+    private Vector3 spike_platform1_start;
 
     // this is used to sync position and rotation of other players
     private Vector3 enemyPosition;
@@ -36,6 +42,11 @@ public class FPController : NetworkBehaviour {
         speedText = GameObject.Find("Speed").GetComponent<Text>();
         hitpointsText.text = "HP = " + hitpoints.ToString();
         speedText.text = "Speed = " + speed.ToString();
+
+        SpikeDoor1 = GameObject.Find("Spike Pit").transform.GetChild(0).gameObject;
+        SpikeExit1 = GameObject.Find("Spike Pit").transform.GetChild(1).gameObject;
+        spike_platform1 = GameObject.Find("Spike Platform 1");
+        spike_platform1_start = spike_platform1.transform.position;
     }
 
     // Update is called once per frame
@@ -58,7 +69,9 @@ public class FPController : NetworkBehaviour {
         float curSpeed = speed * Input.GetAxis("Vertical");
         controller.SimpleMove(forward * curSpeed);
         CmdUpdatePlayer(transform.position, transform.rotation);
-	}
+        hitpointsText.text = "HP = " + hitpoints.ToString();
+        speedText.text = "Speed = " + speed.ToString();
+    }
 
     [Command]
     void CmdUpdatePlayer(Vector3 pos, Quaternion rot) {
@@ -90,6 +103,38 @@ public class FPController : NetworkBehaviour {
             }
         }
 
+        else if (other.CompareTag("Spike Door"))
+        {
+            SpikeDoor1.SetActive(false);
+        }
+
+        else if (other.CompareTag("Exit Trigger"))
+        {
+            SpikeExit1.SetActive(false);
+        }
+
+        else if (other.gameObject.CompareTag("Bottom Trigger Spike"))
+        {
+
+
+            if (spike_platform1.transform.position.y == spike_platform1_start.y)
+            {
+
+                spike_platform1.GetComponent<PlatformBehavior>().Hit(0);
+
+            }
+        }
+
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.CompareTag("Spike Trigger"))
+        {
+            
+            hitpoints = (int)((float)hitpoints - 0.1f);
+            SpikeDoor1.SetActive(true);
+        }
     }
 
 }

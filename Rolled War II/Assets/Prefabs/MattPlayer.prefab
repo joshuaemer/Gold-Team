@@ -182,8 +182,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4e28986b80dfac4f8a140d6f3882932, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 3
+  speed: 10
   rotateSpeed: 3
+  smoother: 10
+  hitpoints: 1000
+  platform1: {fileID: 0}
+  SpikeDoor1: {fileID: 0}
+  SpikeExit1: {fileID: 0}
+  spike_platform1: {fileID: 0}
+  hitpointsText: {fileID: 0}
+  speedText: {fileID: 0}
 --- !u!114 &114542771462595522
 MonoBehaviour:
   m_ObjectHideFlags: 1

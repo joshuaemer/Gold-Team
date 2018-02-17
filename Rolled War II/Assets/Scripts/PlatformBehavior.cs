@@ -8,6 +8,11 @@ public class PlatformBehavior : MonoBehaviour {
     
     
     public GameObject shaft;
+    public double limit; // How high the platform will go. The below must be set to false inorder to change it.
+    public bool useDefualtLimit;// Set to false if changing limit
+
+    public bool isSpike; //Check true if this elevator is in a spike pit
+    public GameObject spikeExit; // Not need if above is False
     
     private bool up; //Tell Platform to go up
     private bool down; //Tell Platform to go down
@@ -48,6 +53,11 @@ public class PlatformBehavior : MonoBehaviour {
         downspeed = (float)0.04;
         start_position = transform.position;
         hasUpBeenSet = false;
+        if (useDefualtLimit)
+        {
+            limit = shaft.transform.lossyScale.y - transform.lossyScale.y - 0.25;
+        }
+        
     }
 	
 	// Update is called once per frame
@@ -75,14 +85,19 @@ public class PlatformBehavior : MonoBehaviour {
         {
             if (!hasUpBeenSet || framesWaitedDown == waitFramesDown)
             {
-                if (transform.position.y < shaft.transform.lossyScale.y - transform.lossyScale.y - 0.25)
+                if (transform.position.y < limit)
                 {
                     transform.position = new Vector3(transform.position.x, transform.position.y + speed, transform.position.z);
                 }
 
+                
 
                 else
                 {
+                    if (isSpike)
+                    {
+                        spikeExit.SetActive(true);
+                    }
                     up = false;
                     down = true;
                     hasUpBeenSet = true;

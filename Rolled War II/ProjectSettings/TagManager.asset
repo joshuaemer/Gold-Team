@@ -8,6 +8,8 @@ TagManager:
   - Top Trigger
   - Spike Door
   - Spike Trigger
+  - Exit Trigger
+  - Bottom Trigger Spike
   layers:
   - Default
   - TransparentFX

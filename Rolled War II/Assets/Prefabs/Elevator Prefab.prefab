@@ -434,3 +434,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shaft: {fileID: 1535404502984748}
+  limit: 0
+  useDefualtLimit: 0
+  isSpike: 0
+  spikeExit: {fileID: 0}

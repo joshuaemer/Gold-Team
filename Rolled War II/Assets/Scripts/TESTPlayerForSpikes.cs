@@ -4,15 +4,26 @@ using UnityEngine;
 
 public class TESTPlayerForSpikes : MonoBehaviour {
     private Rigidbody rb;
-    public GameObject SpikePit1;
+
+    
     public GameObject SpikeDoor1;
+    public GameObject SpikeExit1;
+
+
     public float speed = 10.0f;
     public float hitpoints = 1000f;
+    public GameObject spike_platform1;
+    private Vector3 spike_platform1_start;
+
+
     // Use this for initialization
     void Start () {
         rb = GetComponent<Rigidbody>();
-        SpikePit1 = GameObject.Find("Spike Pit");
-        SpikeDoor1 = SpikePit1.transform.GetChild(0).gameObject;
+         
+        SpikeDoor1 = GameObject.Find("Spike Pit").transform.GetChild(0).gameObject;
+        SpikeExit1 = GameObject.Find("Spike Pit").transform.GetChild(1).gameObject;
+        spike_platform1 = GameObject.Find("Spike Platform 1");
+        spike_platform1_start = spike_platform1.transform.position;
     }
 	
 	// Update is called once per frame
@@ -25,8 +36,26 @@ public class TESTPlayerForSpikes : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Spike Door")) {
+        if (other.CompareTag("Spike Door"))
+        {
             SpikeDoor1.SetActive(false);
+        }
+
+        else if (other.CompareTag("Exit Trigger"))
+        {
+            SpikeExit1.SetActive(false);
+        }
+
+        else if (other.gameObject.CompareTag("Bottom Trigger"))
+        {
+
+
+            if (spike_platform1.transform.position.y == spike_platform1_start.y)
+            {
+
+                spike_platform1.GetComponent<PlatformBehavior>().Hit(0);
+
+            }
         }
     }
 
@@ -34,6 +63,7 @@ public class TESTPlayerForSpikes : MonoBehaviour {
     {
         if (other.CompareTag("Spike Trigger")) {
             hitpoints = hitpoints - 0.1f;
+            SpikeDoor1.SetActive(true);
         }
     }
 
