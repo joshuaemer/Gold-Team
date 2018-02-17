@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class FPController : NetworkBehaviour {
 
     public float speed = 10.0f;
+    private float init_speed;
     public float rotateSpeed = 3.0f;
     public float smoother = 10;
     public int hitpoints = 1000;
@@ -32,6 +33,10 @@ public class FPController : NetworkBehaviour {
     public Text hitpointsText;
     public Text speedText;
 
+    //Speed Timer
+    private int speedFrameWait = 500;
+    private int speedFrameWaited;
+
 
     void Start() {
         controller = gameObject.GetComponent<CharacterController>();
@@ -47,6 +52,7 @@ public class FPController : NetworkBehaviour {
         SpikeExit1 = GameObject.Find("Spike Pit").transform.GetChild(1).gameObject;
         spike_platform1 = GameObject.Find("Spike Platform 1");
         spike_platform1_start = spike_platform1.transform.position;
+        init_speed = speed;
     }
 
     // Update is called once per frame
@@ -71,6 +77,21 @@ public class FPController : NetworkBehaviour {
         CmdUpdatePlayer(transform.position, transform.rotation);
         hitpointsText.text = "HP = " + hitpoints.ToString();
         speedText.text = "Speed = " + speed.ToString();
+
+        if(speed != init_speed)
+        {
+            if(speedFrameWaited<speedFrameWait)
+            {
+                ++speedFrameWaited;
+            }
+
+            else
+            {
+                speedFrameWaited = 0;
+                speed = init_speed;
+
+            }
+        }
     }
 
     [Command]
@@ -123,6 +144,13 @@ public class FPController : NetworkBehaviour {
                 spike_platform1.GetComponent<PlatformBehavior>().Hit(0);
 
             }
+        }
+
+        else if (other.CompareTag("Speed")) {
+            other.gameObject.SetActive(false);
+
+            speed +=5;
+            speedFrameWaited = 0;
         }
 
     }
