@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
@@ -10,6 +11,7 @@ public class FPController : NetworkBehaviour {
     private float init_speed;
     public float rotateSpeed = 3.0f;
     public float smoother = 10;
+    public int MaxHealth;
     public int hitpoints = 1000;
     private CharacterController controller;
     
@@ -53,6 +55,7 @@ public class FPController : NetworkBehaviour {
         spike_platform1 = GameObject.Find("Spike Platform 1");
         spike_platform1_start = spike_platform1.transform.position;
         init_speed = speed;
+        MaxHealth = hitpoints;
     }
 
     // Update is called once per frame
@@ -151,6 +154,16 @@ public class FPController : NetworkBehaviour {
 
             speed +=5;
             speedFrameWaited = 0;
+        }
+
+        else if (other.CompareTag("Health"))
+        {
+            if (hitpoints < MaxHealth)
+            {
+                hitpoints = Math.Min(hitpoints+100,MaxHealth);
+
+            }
+            other.transform.parent.gameObject.SetActive(false);
         }
 
     }

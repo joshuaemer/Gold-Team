@@ -11,6 +11,7 @@ TagManager:
   - Exit Trigger
   - Bottom Trigger Spike
   - Speed
+  - Health
   layers:
   - Default
   - TransparentFX
