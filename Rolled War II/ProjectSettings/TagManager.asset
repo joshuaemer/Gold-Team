@@ -12,6 +12,8 @@ TagManager:
   - Bottom Trigger Spike
   - Speed
   - Health
+  - Pistol
+  - Shotgun
   layers:
   - Default
   - TransparentFX
