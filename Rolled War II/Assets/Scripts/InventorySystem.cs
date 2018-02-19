@@ -12,7 +12,7 @@ public class InventorySystem : MonoBehaviour {
     //SMG: 4
     //Grenades: 5
     //-1 denots empty
-    private ArrayList slots;
+    private string[] slots = { "", "", "", "", "",""};
     //Maps gun id to index, current clip and current ammo amount
     private int free_slot;
     private Hashtable map;
@@ -34,7 +34,14 @@ public class InventorySystem : MonoBehaviour {
 
     string format(int id)
     {
-        string ammo = ((ArrayList)map[id])[1].ToString() + "/" + ((ArrayList)map[id])[2].ToString();
+        
+        string ammo = "";
+        if (id != 5)
+        {
+            ammo = ((ArrayList)map[id])[1].ToString() + "/" + ((ArrayList)map[id])[2].ToString();
+            
+        }
+
         switch (id)
         {
             case 0:
@@ -48,7 +55,7 @@ public class InventorySystem : MonoBehaviour {
             case 4:
                 return "SMG " + ammo;
             case 5:
-                return "Grenade" + ((ArrayList)map[id])[1].ToString();
+                return "Grenade " + ((ArrayList)map[id])[1].ToString();
         }
         return "ERROR INVALID GUN ID";
     }
@@ -61,15 +68,21 @@ public class InventorySystem : MonoBehaviour {
             { 5, new ArrayList { 5, grenadeLimit } }
         };
 
-        slots = new ArrayList
-        {
-            format(0),
-            "Empty",
-            "Empty",
-            "Empty",
-            "Empty",
-            format(5)
-        };
+        slots[0] = format(0);
+        slots[1] = "Empty";
+        slots[2] = "Empty";
+        slots[3] = "Empty";
+        slots[4] = "Empty";
+        slots[5] = format(5);
+
+
+
+
+
+
+
+
+
 
         free_slot = 1;
 
@@ -80,7 +93,8 @@ public class InventorySystem : MonoBehaviour {
 	void Update () {
         Text [] canvas = transform.GetChild(0).gameObject.transform.GetComponentsInChildren<Text>();
         for (int i = 0; i < 6; ++i) {
-            canvas[i].text = (string)slots[i];
+            
+            canvas[i].text = slots[i];
 
         }
 	}
@@ -99,8 +113,9 @@ public class InventorySystem : MonoBehaviour {
                 }
                 else
                 {
-                    slots[free_slot] = id;
+                    
                     map.Add(id, new ArrayList {free_slot,shotgunClip,shotgunLimit });
+                    slots[free_slot] = format(id);
                     free_slot += 1;
                 }
                 break;
@@ -112,8 +127,9 @@ public class InventorySystem : MonoBehaviour {
                 }
                 else
                 {
-                    slots[free_slot] = id;
+                    
                     map.Add(id, new ArrayList { free_slot, sniperClip, sniperLimit });
+                    slots[free_slot] = format(id);
                     free_slot += 1;
                 }
                 break;
@@ -126,8 +142,9 @@ public class InventorySystem : MonoBehaviour {
                 }
                 else
                 {
-                    slots[free_slot] = id;
+                    
                     map.Add(id, new ArrayList { free_slot, arClip, arLimit });
+                    slots[free_slot] = format(id);
                     free_slot += 1;
                 }
                 break;
@@ -139,8 +156,9 @@ public class InventorySystem : MonoBehaviour {
                 }
                 else
                 {
-                    slots[free_slot] = id;
+                    
                     map.Add(id, new ArrayList { free_slot, smgClip, smgLimit });
+                    slots[free_slot] = format(id);
                     free_slot += 1;
                 }
                 break;

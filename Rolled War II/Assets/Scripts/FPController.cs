@@ -39,6 +39,8 @@ public class FPController : NetworkBehaviour {
     private int speedFrameWait = 500;
     private int speedFrameWaited;
 
+    //Inventory
+    public GameObject Inv;
 
     void Start() {
         controller = gameObject.GetComponent<CharacterController>();
@@ -49,7 +51,7 @@ public class FPController : NetworkBehaviour {
         speedText = GameObject.Find("Speed").GetComponent<Text>();
         hitpointsText.text = "HP = " + hitpoints.ToString();
         speedText.text = "Speed = " + speed.ToString();
-
+        Inv = GameObject.Find("Inventory");
         SpikeDoor1 = GameObject.Find("Spike Pit").transform.GetChild(0).gameObject;
         SpikeExit1 = GameObject.Find("Spike Pit").transform.GetChild(1).gameObject;
         spike_platform1 = GameObject.Find("Spike Platform 1");
@@ -166,6 +168,20 @@ public class FPController : NetworkBehaviour {
             other.transform.parent.gameObject.SetActive(false);
         }
 
+        else if (other.CompareTag("Weapon"))
+        {
+            
+            int id = other.gameObject.GetComponent<GunComponent>().id;
+            Inv.GetComponent<InventorySystem>().Add(id);
+            other.transform.parent.gameObject.SetActive(false);
+            print("HIT " + id.ToString());
+        }
+        else if (other.CompareTag("Grenade"))
+        {
+            
+            Inv.GetComponent<InventorySystem>().Add(5);
+            other.gameObject.SetActive(false);
+        }
     }
 
     private void OnTriggerStay(Collider other)
