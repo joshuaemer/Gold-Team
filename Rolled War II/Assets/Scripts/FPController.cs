@@ -188,8 +188,9 @@ public class FPController : NetworkBehaviour {
     {
         if (other.CompareTag("Spike Trigger"))
         {
+
             
-            hitpoints = (int)((float)hitpoints - 0.1f);
+            hitpoints -= 1;
             SpikeDoor1.SetActive(true);
         }
     }
