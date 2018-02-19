@@ -35,7 +35,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4733880737733920}
   - component: {fileID: 33195097783948110}
-  - component: {fileID: 136337385586736622}
   - component: {fileID: 23337992282594876}
   m_Layer: 0
   m_Name: Barrel
@@ -58,7 +57,7 @@ GameObject:
   - component: {fileID: 114070632731694446}
   m_Layer: 0
   m_Name: Trigger
-  m_TagString: Untagged
+  m_TagString: Weapon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -72,7 +71,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4724835423624368}
   - component: {fileID: 33893608481111284}
-  - component: {fileID: 65327289703199624}
   - component: {fileID: 23476243259968094}
   m_Layer: 0
   m_Name: Stock
@@ -88,7 +86,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1101936542308740}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.5232643, y: 1.0434725, z: -1.723864}
+  m_LocalPosition: {x: 9.23, y: 0.36, z: -1.723864}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4381183978328184}
@@ -105,7 +103,7 @@ Transform:
   m_GameObject: {fileID: 1510944298336636}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0.681, y: -0.034, z: -0.65200007}
-  m_LocalScale: {x: 0.48346278, y: 0.12626688, z: 0.01859377}
+  m_LocalScale: {x: 0.61037177, y: 0.16099027, z: 0.09692003}
   m_Children: []
   m_Father: {fileID: 4005580431681384}
   m_RootOrder: 0
@@ -259,18 +257,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1784480339590502}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!65 &65327289703199624
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1784480339590502}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!65 &65841578901715112
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -294,17 +280,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a09dbbb0e9c71be4f9896e7c6641c102, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: 3
---- !u!136 &136337385586736622
-CapsuleCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1147389644911518}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  id: 2

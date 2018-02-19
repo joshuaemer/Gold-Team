@@ -11,7 +11,7 @@ public class InventorySystem : MonoBehaviour {
     //AR: 3
     //SMG: 4
     //Grenades: 5
-    //-1 denots empty
+   
     private string[] slots = { "", "", "", "", "",""};
     //Maps gun id to index, current clip and current ammo amount
     private int free_slot;
@@ -23,7 +23,7 @@ public class InventorySystem : MonoBehaviour {
    private int sniperLimit = 100;
    private int arLimit = 100;
    private int smgLimit = 100;
-   private int grenadeLimit = 100;
+   private int grenadeLimit = 6;
 
     //clip sizes
    private int pistolClip = 50;
@@ -163,7 +163,7 @@ public class InventorySystem : MonoBehaviour {
                 }
                 break;
             case 5:
-                ((ArrayList)map[5])[2] = grenadeLimit;
+                ((ArrayList)map[5])[2] = (int)((ArrayList)map[5])[2]+1;
                 break;
             default:
                 print("ERROR INVALID GUN ID" + id.ToString());

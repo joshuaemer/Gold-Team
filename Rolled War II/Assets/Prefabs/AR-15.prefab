@@ -35,7 +35,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4430836559705758}
   - component: {fileID: 33120092654811482}
-  - component: {fileID: 65769933291233240}
   - component: {fileID: 23180457452695948}
   m_Layer: 0
   m_Name: Mag
@@ -72,7 +71,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4061947404151358}
   - component: {fileID: 33478621111933522}
-  - component: {fileID: 136357192910477046}
   - component: {fileID: 23018003127412996}
   m_Layer: 0
   m_Name: Barrel
@@ -90,7 +88,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4238680460296054}
   - component: {fileID: 33380683381114958}
-  - component: {fileID: 65684259129306346}
   - component: {fileID: 23876021028144108}
   m_Layer: 0
   m_Name: Stock
@@ -163,7 +160,7 @@ Transform:
   m_GameObject: {fileID: 1707359964050172}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 4.571, y: -0.032, z: 0}
-  m_LocalScale: {x: 0.45508313, y: 0.12151812, z: 0.072106086}
+  m_LocalScale: {x: 0.50628, y: 0.14885966, z: 0.13700147}
   m_Children: []
   m_Father: {fileID: 4403162394967528}
   m_RootOrder: 0
@@ -344,30 +341,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!65 &65684259129306346
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1780031843031976}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!65 &65769933291233240
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1533803787486498}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &114689870470633284
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -380,16 +353,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 3
---- !u!136 &136357192910477046
-CapsuleCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1774720740343504}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
