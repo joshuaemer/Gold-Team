@@ -15,17 +15,13 @@ public class FPController : NetworkBehaviour {
     public int hitpoints = 1000;
     private CharacterController controller;
     
-    //Controls the elevators each elevator added needs both of theses vars drag each platform to the public 
-    //object, Tags for the bottom trigger on each elevator must be different including the spike elevator
-    public GameObject platform1;
-    private Vector3 platform1_start;
+    
+    
+    
+    
+    
 
-    //Spike Pit Elements
-    public GameObject SpikeDoor1;
-    public GameObject SpikeExit1;
-
-    public GameObject spike_platform1;
-    private Vector3 spike_platform1_start;
+    
 
     // this is used to sync position and rotation of other players
     private Vector3 enemyPosition;
@@ -45,17 +41,15 @@ public class FPController : NetworkBehaviour {
     void Start() {
         controller = gameObject.GetComponent<CharacterController>();
         
-        platform1 = GameObject.Find("Platform 1");
-        platform1_start = platform1.transform.position;
+        
         hitpointsText = GameObject.Find("Hit Points").GetComponent<Text>();
         speedText = GameObject.Find("Speed").GetComponent<Text>();
         hitpointsText.text = "HP = " + hitpoints.ToString();
         speedText.text = "Speed = " + speed.ToString();
         Inv = GameObject.Find("Inventory");
-        SpikeDoor1 = GameObject.Find("Spike Pit").transform.GetChild(0).gameObject;
-        SpikeExit1 = GameObject.Find("Spike Pit").transform.GetChild(1).gameObject;
-        spike_platform1 = GameObject.Find("Spike Platform 1");
-        spike_platform1_start = spike_platform1.transform.position;
+        
+        
+        
         init_speed = speed;
         MaxHealth = hitpoints;
     }
@@ -121,34 +115,34 @@ public class FPController : NetworkBehaviour {
         {
 
 
-            if (platform1.transform.position.y == platform1_start.y)
-            {
 
-                platform1.GetComponent<PlatformBehavior>().Hit(0);
 
-            }
+            other.transform.parent.gameObject.GetComponentInChildren<PlatformBehavior>().Hit(0);
+                
+
+            
         }
 
         else if (other.CompareTag("Spike Door"))
         {
-            SpikeDoor1.SetActive(false);
+            other.transform.parent.gameObject.SetActive(false);
         }
 
         else if (other.CompareTag("Exit Trigger"))
         {
-            SpikeExit1.SetActive(false);
+            other.transform.parent.gameObject.SetActive(false);
         }
 
         else if (other.gameObject.CompareTag("Bottom Trigger Spike"))
         {
 
 
-            if (spike_platform1.transform.position.y == spike_platform1_start.y)
-            {
 
-                spike_platform1.GetComponent<PlatformBehavior>().Hit(0);
 
-            }
+            other.transform.parent.gameObject.GetComponentInChildren<PlatformBehavior>().Hit(0);
+
+
+
         }
 
         else if (other.CompareTag("Speed")) {
@@ -191,7 +185,7 @@ public class FPController : NetworkBehaviour {
 
             
             hitpoints -= 1;
-            SpikeDoor1.SetActive(true);
+            other.transform.parent.GetChild(0).gameObject.SetActive(true);
         }
     }
 
