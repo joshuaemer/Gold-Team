@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 public class InventorySystem : MonoBehaviour {
     //keeps track of what guns are in each slot based on id
@@ -16,6 +17,8 @@ public class InventorySystem : MonoBehaviour {
     //Maps gun id to index, current clip and current ammo amount
     private int free_slot;
     private Hashtable map;
+
+    private int current = 0;
 
     //Ammo limits
    private int pistolLimit = 100;
@@ -175,6 +178,88 @@ public class InventorySystem : MonoBehaviour {
         }
 
     }
-  
-    
+
+    //subtracts one from the ammoClip or reloads if comepletly out of ammo does nothing
+    //returns false if it could not fire.
+    public bool Fire(int id)
+    {
+        int ammoInClip = 0;
+        int ammoInInv = 0;
+        if (map.ContainsKey(id))
+        {
+            ammoInClip = (int)((ArrayList)map[id])[1];
+            if (id == 5)
+            {
+                
+                
+                if(ammoInClip > 0)
+                {
+                    ((ArrayList)map[5])[1] = (int)((ArrayList)map[5])[1] - 1;
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                if (ammoInClip > 0)
+                {
+                    ((ArrayList)map[id])[1] = (int)((ArrayList)map[id])[1] - 1;
+                    return true;
+                }
+                else
+                {
+                    ammoInInv = (int)((ArrayList)map[id])[2];
+                    switch (id)
+                    {
+                        case 0:
+                            ((ArrayList)map[id])[1] = Math.Min(pistolClip, ammoInInv) + (int)((ArrayList)map[id])[1];
+
+                            break;
+                        case 1:
+                            ((ArrayList)map[id])[1] = Math.Min(shotgunClip, ammoInInv) + (int)((ArrayList)map[id])[1];
+
+                            break;
+                        case 2:
+                            ((ArrayList)map[id])[1] = Math.Min(sniperClip, ammoInInv) + (int)((ArrayList)map[id])[1];
+
+                            break;
+
+                        case 3:
+                            ((ArrayList)map[id])[1] = Math.Min(arClip, ammoInInv) + (int)((ArrayList)map[id])[1];
+
+                            break;
+                        case 4:
+                            ((ArrayList)map[id])[1] = Math.Min(smgClip, ammoInInv) + (int)((ArrayList)map[id])[1];
+
+                            break;
+                    }
+                    return (int)((ArrayList)map[id])[1] > 0;
+                }
+            }
+            
+        }
+        else { return false; }
+    }
+    //Switchs current weapon returns new id
+    public int switchWeapon()
+    {
+        int next = current + 1;
+        while (!map.ContainsKey(next))
+        {
+            if(next == 6)
+            {
+                next = 0;
+            }
+            else
+            {
+                next += 1;
+            }
+        }
+
+        current = next;
+        return current;
+    }
 }
