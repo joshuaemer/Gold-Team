@@ -309,6 +309,8 @@
     <Compile Include="Assets\Scripts\CameraController.cs" />
     <Compile Include="Assets\Scripts\FollowPlayer.cs" />
     <Compile Include="Assets\Scripts\FPController.cs" />
+    <Compile Include="Assets\Scripts\GunComponent.cs" />
+    <Compile Include="Assets\Scripts\InventorySystem.cs" />
     <Compile Include="Assets\Scripts\Pickup.cs" />
     <Compile Include="Assets\Scripts\PlatformBehavior.cs" />
     <Compile Include="Assets\Scripts\PlayerConnector.cs" />

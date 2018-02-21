@@ -142,10 +142,11 @@ public class PlatformBehavior : MonoBehaviour {
     {
         if (id == 0)
         {
-            
-            up = true;
-                
-                
+            if (transform.position.y == start_position.y)
+            {
+                up = true;
+
+            }   
             
             
         
