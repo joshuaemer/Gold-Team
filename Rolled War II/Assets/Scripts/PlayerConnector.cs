@@ -7,12 +7,18 @@ public class PlayerConnector : NetworkBehaviour {
     // This is in charge of handling spawning the player and some other client/server things
     // This is not for controlling the character
 
+    public MenuController menu;
+
 	// Use this for initialization
 	void Start () {
 		// Is this my local PlayerConnector?
         if(!isLocalPlayer) {
             return;
         }
+
+        // Tell the MenuController I, the client, did connect
+        menu = GameObject.FindGameObjectWithTag("MenuController").GetComponent<MenuController>();
+        menu.ConfirmConnect();
 
         CmdSpawnUnit();
 	}
