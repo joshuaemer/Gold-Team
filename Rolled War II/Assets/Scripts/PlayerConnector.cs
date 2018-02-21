@@ -9,6 +9,9 @@ public class PlayerConnector : NetworkBehaviour {
 
     public MenuController menu;
 
+    [SerializeField]
+    private int team;
+
 	// Use this for initialization
 	void Start () {
 		// Is this my local PlayerConnector?
@@ -19,7 +22,6 @@ public class PlayerConnector : NetworkBehaviour {
         // Tell the MenuController I, the client, did connect
         menu = GameObject.FindGameObjectWithTag("MenuController").GetComponent<MenuController>();
         menu.ConfirmConnect();
-
         CmdSpawnUnit();
 	}
 
