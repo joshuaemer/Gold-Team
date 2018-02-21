@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 33651274843609764}
   - component: {fileID: 65273738126286854}
   - component: {fileID: 23079788443806170}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -185,6 +185,7 @@ MonoBehaviour:
   speed: 10
   rotateSpeed: 3
   smoother: 10
+  MaxHealth: 0
   hitpoints: 1000
   platform1: {fileID: 0}
   SpikeDoor1: {fileID: 0}
