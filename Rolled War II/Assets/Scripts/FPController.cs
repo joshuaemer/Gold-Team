@@ -168,7 +168,7 @@ public class FPController : NetworkBehaviour {
             int id = other.gameObject.GetComponent<GunComponent>().id;
             Inv.GetComponent<InventorySystem>().Add(id);
             other.transform.parent.gameObject.SetActive(false);
-            print("HIT " + id.ToString());
+            
         }
         else if (other.CompareTag("Grenade"))
         {

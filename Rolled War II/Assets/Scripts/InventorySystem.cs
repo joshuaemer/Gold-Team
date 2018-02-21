@@ -47,7 +47,7 @@ public class InventorySystem : MonoBehaviour {
             case 0:
                 return "Pistol " + ammo;
             case 1:
-                return "Shot Gun" + ammo;
+                return "ShotGun " + ammo;
             case 2:
                 return "Sniper " + ammo;
             case 3:
@@ -163,7 +163,10 @@ public class InventorySystem : MonoBehaviour {
                 }
                 break;
             case 5:
-                ((ArrayList)map[5])[2] = (int)((ArrayList)map[5])[2]+1;
+                
+                ((ArrayList)map[5])[1] = (int)((ArrayList)map[5])[1]+1;
+                slots[5] = format(id);
+
                 break;
             default:
                 print("ERROR INVALID GUN ID" + id.ToString());
