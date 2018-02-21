@@ -11,15 +11,28 @@ public class MenuController : MonoBehaviour {
     public GameObject playerMenu;
     public GameObject controllsMenu;
 
+    GameManager gm;
+
     // Host a Game
-	public void Host(NetworkManager manager) {
+	public void HostTDM(NetworkManager manager) {
         manager.StartHost();
+        gm = GameObject.FindObjectOfType<GameManager>();
+        gm.SetGameType("TDM");
+        inGame = true;
+        mainMenu.SetActive(false);
+    }
+
+    public void HostFFA(NetworkManager manager) {
+        manager.StartHost();
+        gm = GameObject.FindObjectOfType<GameManager>();
+        gm.SetGameType("FFA");
         inGame = true;
         mainMenu.SetActive(false);
     }
 
     // Try to connect to a hosted game
     public void Connect(NetworkManager manager) {
+        gm = GameObject.FindObjectOfType<GameManager>();
         NetworkClient client = manager.StartClient();
     }
 
