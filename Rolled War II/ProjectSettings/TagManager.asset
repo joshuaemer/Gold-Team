@@ -3,7 +3,17 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Bottom Trigger
+  - Top Trigger
+  - Spike Door
+  - Spike Trigger
+  - Exit Trigger
+  - Bottom Trigger Spike
+  - Speed
+  - Health
+  - Weapon
+  - Grenade
   layers:
   - Default
   - TransparentFX
