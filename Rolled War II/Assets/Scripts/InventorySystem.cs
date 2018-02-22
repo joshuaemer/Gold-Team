@@ -181,8 +181,9 @@ public class InventorySystem : MonoBehaviour {
 
     //subtracts one from the ammoClip or reloads if comepletly out of ammo does nothing
     //returns false if it could not fire.
-    public bool Fire(int id)
+    public bool Fire()
     {
+        int id = current;
         int ammoInClip = 0;
         int ammoInInv = 0;
         if (map.ContainsKey(id))
@@ -195,6 +196,7 @@ public class InventorySystem : MonoBehaviour {
                 if(ammoInClip > 0)
                 {
                     ((ArrayList)map[5])[1] = (int)((ArrayList)map[5])[1] - 1;
+                    slots[(int)((ArrayList)map[id])[0]] = format(id);
                     return true;
                 }
                 else
@@ -207,6 +209,7 @@ public class InventorySystem : MonoBehaviour {
                 if (ammoInClip > 0)
                 {
                     ((ArrayList)map[id])[1] = (int)((ArrayList)map[id])[1] - 1;
+                    slots[(int)((ArrayList)map[id])[0]] = format(id);
                     return true;
                 }
                 else
@@ -236,7 +239,13 @@ public class InventorySystem : MonoBehaviour {
 
                             break;
                     }
-                    return (int)((ArrayList)map[id])[1] > 0;
+                    if ((int)((ArrayList)map[id])[1] > 0) {
+                        slots[(int)((ArrayList)map[id])[0]] = format(id);
+                        return true;
+                    }
+                    else {
+                        return false;
+                    }
                 }
             }
             

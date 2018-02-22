@@ -70,6 +70,9 @@ public class FPController : NetworkBehaviour {
             return;
         }
 
+        // TODO
+        //gameObject.transform.camera =
+
         Camera.main.GetComponent<FollowPlayer>().setPlayer(transform);
 
         // We know this is OUR character to control so let's control it

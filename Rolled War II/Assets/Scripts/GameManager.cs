@@ -20,7 +20,6 @@ public class GameManager : NetworkBehaviour {
         if (!isServer){return;}
         // we know this is the server
         numPlayers = Network.connections.Length;
-        print(numPlayers);
 	}
 
     public void SetGameType(string type) {
