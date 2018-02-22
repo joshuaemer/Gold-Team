@@ -22,7 +22,7 @@ public class PlatformBehavior : MonoBehaviour {
     private bool upActive; 
     
 
-    private Vector3 start_position;
+    public Vector3 start_position;
 
     private int waitFramesDown; //Elevator waits for this many frames before going back down
     private int framesWaitedDown;//Number of frames waited while in up position
