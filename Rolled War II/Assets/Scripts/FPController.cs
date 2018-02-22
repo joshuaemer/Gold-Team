@@ -12,8 +12,13 @@ public class FPController : NetworkBehaviour {
     public float rotateSpeed = 3.0f;
     public float smoother = 10;
     public int MaxHealth;
+
+    [SyncVar]
     public int hitpoints = 1000;
+
     private CharacterController controller;
+
+    private MenuController menu;
     
     //Controls the elevators each elevator added needs both of theses vars drag each platform to the public 
     //object, Tags for the bottom trigger on each elevator must be different including the spike elevator
@@ -42,7 +47,7 @@ public class FPController : NetworkBehaviour {
 
     void Start() {
         controller = gameObject.GetComponent<CharacterController>();
-        
+        menu = GameObject.FindGameObjectWithTag("MenuController").GetComponent<MenuController>();
         platform1 = GameObject.Find("Platform 1");
         platform1_start = platform1.transform.position;
         hitpointsText = GameObject.Find("Hit Points").GetComponent<Text>();
@@ -74,6 +79,7 @@ public class FPController : NetworkBehaviour {
         //gameObject.transform.camera =
 
         Camera.main.GetComponent<FollowPlayer>().setPlayer(transform);
+        
 
         // We know this is OUR character to control so let's control it
         transform.Rotate(0, Input.GetAxis("Horizontal") * rotateSpeed, 0);
@@ -81,7 +87,6 @@ public class FPController : NetworkBehaviour {
         float curSpeed = speed * Input.GetAxis("Vertical");
         controller.SimpleMove(forward * curSpeed);
         CmdUpdatePlayer(transform.position, transform.rotation);
-        hitpointsText.text = "HP = " + hitpoints.ToString();
         speedText.text = "Speed = " + speed.ToString();
 
         if(speed != init_speed)
@@ -171,14 +176,28 @@ public class FPController : NetworkBehaviour {
 
     }
 
+    void OnDestroy() {
+        menu.GameOver();
+    }
+
     private void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("Spike Trigger"))
         {
-            
-            hitpoints = (int)((float)hitpoints - 0.1f);
+
+            TakeDamage(1);
             SpikeDoor1.SetActive(true);
         }
     }
 
+
+    public void TakeDamage(int damage) {
+        if(!isServer) { return; }
+
+        hitpoints -= damage;
+        hitpointsText.text = "HP: " + hitpoints;
+        if (hitpoints <= 0) {
+            Destroy(gameObject);
+        }
+    }
 }

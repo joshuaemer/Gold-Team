@@ -10,6 +10,7 @@ public class MenuController : MonoBehaviour {
     public GameObject mainMenu;
     public GameObject playerMenu;
     public GameObject controllsMenu;
+    public GameObject gameOver;
 
     GameManager gm;
 
@@ -73,6 +74,12 @@ public class MenuController : MonoBehaviour {
     public void ControllsBack() {
         controllsMenu.SetActive(false);
         playerMenu.SetActive(true);
+    }
+
+    public void GameOver() {
+        playerMenu.SetActive(false);
+        controllsMenu.SetActive(false);
+        gameOver.SetActive(true);
     }
 
     // Wait for player to press ESC to bring up pause menu

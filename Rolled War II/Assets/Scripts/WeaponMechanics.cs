@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class WeaponMechanics : MonoBehaviour {
+public class WeaponMechanics : NetworkBehaviour {
 	private GameObject inv;
 	
 	public int coord_x, coord_y, coord_z;
@@ -21,6 +22,7 @@ public class WeaponMechanics : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        if (!hasAuthority) { return; }
 		// If the left mouse button is clicked, fire RigidBodies from the weapon
 		if (Input.GetMouseButton(0)) {
 			// TODO
@@ -40,17 +42,20 @@ public class WeaponMechanics : MonoBehaviour {
 
 
 	void shoot() {
-		RaycastHit hit;
 		if (inv.GetComponent<InventorySystem>().Fire()) {
-			Physics.Raycast(transform.position, transform.rotation.eulerAngles, out hit);
-			if (hit.transform.CompareTag("Player")) {
-				hit.transform.gameObject.GetComponent<FPController>().hitpoints -=100;
-			}
-
-
-
+            CmdShoot(transform.position, transform.forward);
 		}
 	}
+
+    [Command]
+    void CmdShoot(Vector3 pos, Vector3 rot) {
+		RaycastHit hit;
+		if(Physics.Raycast(pos, rot, out hit)) {
+			if (hit.transform.CompareTag("Player")) {
+				hit.transform.gameObject.GetComponent<FPController>().TakeDamage(100);
+			}
+        }
+    }
 	/*public class Weapon{
 		int ID;
 		int reserves;
