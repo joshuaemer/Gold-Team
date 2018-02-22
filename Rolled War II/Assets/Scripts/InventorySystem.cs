@@ -240,6 +240,7 @@ public class InventorySystem : MonoBehaviour {
                             break;
                     }
                     if ((int)((ArrayList)map[id])[1] > 0) {
+                        ((ArrayList)map[id])[2] = (int)((ArrayList)map[id])[2]-(int)((ArrayList)map[id])[1];
                         slots[(int)((ArrayList)map[id])[0]] = format(id);
                         return true;
                     }

@@ -316,6 +316,7 @@
     <Compile Include="Assets\Scripts\CameraController.cs" />
     <Compile Include="Assets\Scripts\FollowPlayer.cs" />
     <Compile Include="Assets\Scripts\FPController.cs" />
+    <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\GunComponent.cs" />
     <Compile Include="Assets\Scripts\InventorySystem.cs" />
     <Compile Include="Assets\Scripts\MenuController.cs" />
@@ -324,8 +325,7 @@
     <Compile Include="Assets\Scripts\PlayerConnector.cs" />
     <Compile Include="Assets\Scripts\PlayerController.cs" />
     <Compile Include="Assets\Scripts\StartMenu.cs" />
-    <Compile Include="Assets\Scripts\TESTCameraSpikes.cs" />
-    <Compile Include="Assets\Scripts\TESTPlayerForSpikes.cs" />
+    <Compile Include="Assets\Scripts\WeaponMechanics.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01_UGUI.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark02.cs" />
