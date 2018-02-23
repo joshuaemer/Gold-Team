@@ -34,7 +34,8 @@ public class InventorySystem : MonoBehaviour {
    private int sniperClip = 50;
    private int arClip = 50;
    private int smgClip = 50;
-
+    
+    //Formats string to display on screen based on gun id.
     string format(int id)
     {
         
@@ -96,11 +97,14 @@ public class InventorySystem : MonoBehaviour {
 	void Update () {
         Text [] canvas = transform.GetChild(0).gameObject.transform.GetComponentsInChildren<Text>();
         for (int i = 0; i < 6; ++i) {
-            
+            //Update text based on slots array
             canvas[i].text = slots[i];
 
         }
 	}
+    //Used for Weapon Pickups
+    //If the gun is already in the inventory refill ammo
+    //Else Add the gun to the inventory
     public void Add(int id) {
         
         switch (id)
@@ -181,6 +185,7 @@ public class InventorySystem : MonoBehaviour {
 
     //subtracts one from the ammoClip or reloads if comepletly out of ammo does nothing
     //returns false if it could not fire.
+    //Else True
     public bool Fire()
     {
         int id = current;
