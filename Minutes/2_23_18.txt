@@ -1,0 +1,23 @@
+Gold Team Minutes 
+Date 2/23/2018 4:00 pm
+
+Attendance:
+All members present. 
+
+Meeting Discussion:
+Discussed what tasks need to be completed for the alpha.
+Looked at the parts of code where everyone needs to add their parts.
+Decided what task to be completed for next part.
+Still trying to figure out if we want AI to be in every game mode or it's own game mode.
+
+
+Tasks Done Prior to Meeting:
+Josh: Finished Inventory system, Traps and Boosts. Environmental interactions are complete. Integrated basic shooting and weapon mechanics to inventory.
+Matt: Started Gamemodes. Synced hitpoints.
+Ryan: Created Wheel Chair Model. Created basic weapon behavior script.
+
+
+Tasks TODO before next meeting:
+Josh: Start Developing AI, make them drop weapons, ammo, boosts etc.
+Matt: Add Score board and Teams for TDM. 
+Ryan: Add varying fire rates based on weapon id. Switch actual gun models.
