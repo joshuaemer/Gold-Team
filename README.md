@@ -53,7 +53,9 @@ See wiki Page 2.
 
 ### Prototype
 YouTube video: https://youtu.be/-1yUjHhCJpI
+
 Release v0.1.0
+
 To run: Run the exe in the Rolled War II folder and select a game mode. To add another player to an existing game run the exe and select Join game. 
   
 
