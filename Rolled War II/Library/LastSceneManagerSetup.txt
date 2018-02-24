@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/network.unity
+- path: Assets/Testing AI.unity
   isLoaded: 1
   isActive: 1

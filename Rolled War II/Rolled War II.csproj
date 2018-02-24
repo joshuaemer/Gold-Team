@@ -324,6 +324,7 @@
     <Compile Include="Assets\Scripts\PlatformBehavior.cs" />
     <Compile Include="Assets\Scripts\PlayerConnector.cs" />
     <Compile Include="Assets\Scripts\PlayerController.cs" />
+    <Compile Include="Assets\Scripts\SkeletonMovement.cs" />
     <Compile Include="Assets\Scripts\StartMenu.cs" />
     <Compile Include="Assets\Scripts\WeaponMechanics.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
