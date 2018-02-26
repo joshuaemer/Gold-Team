@@ -5,6 +5,7 @@ using UnityEngine.AI;
 
 
 //TODO
+//Instead of Raycasting switch with collider when check with onCollision if the player is in the vicinity
 //Wont stop rotating when attacking
 //Next need to add attack animation
 public class SkeletonMovement : MonoBehaviour {
@@ -39,7 +40,7 @@ public class SkeletonMovement : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void Update () {
+    void LateUpdate () {
         //Checks if player is within line of sight if not move to the next checkpoint
         if (foundPlayer)
         {
