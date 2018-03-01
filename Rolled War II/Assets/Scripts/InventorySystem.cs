@@ -4,6 +4,10 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 
+
+
+//TODO Fix gun prefabs by removing parent object.
+
 public class InventorySystem : MonoBehaviour {
     //keeps track of what guns are in each slot based on id
     //Pistol: 0
@@ -347,9 +351,10 @@ public class InventorySystem : MonoBehaviour {
          
         }
         //Create the gun object and disable it's trigger since this gun has already been picked up
-        Gun = Instantiate(current_gun_prefab, new Vector3(0,0,0), Quaternion.Euler(0,0,0))as GameObject;
-        Gun.transform.position = Player.transform.position - (Vector3)pos_offsets[current];
-        Gun.transform.rotation = (Quaternion)rot_offsets[current];
+
+        Gun = Instantiate(current_gun_prefab, create_pos, create_rot)as GameObject;
+        //Gun.transform.position = Player.transform.position - (Vector3)pos_offsets[current];
+        //Gun.transform.rotation = Player.transform.rotation;
         Destroy(Gun.GetComponent<BoxCollider>());
         //Destroy the old gun
         Destroy(Player.transform.GetChild(0).gameObject);
@@ -357,7 +362,8 @@ public class InventorySystem : MonoBehaviour {
         Gun.transform.parent = Player.transform;
 
         Gun.transform.SetSiblingIndex(0);
-        
+        Gun.transform.localPosition = create_pos;
+        Gun.transform.localRotation = create_rot;
         return current;
     }
 }
