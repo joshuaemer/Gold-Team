@@ -26,7 +26,7 @@ public class WeaponMechanics : NetworkBehaviour {
 			shoot();
 
 		}
-		else if (Input.GetKey("e")) {
+		else if (Input.GetKeyDown("e")) {
             //Switch Weapons
 			inv.GetComponent<InventorySystem>().switchWeapon();
 		}

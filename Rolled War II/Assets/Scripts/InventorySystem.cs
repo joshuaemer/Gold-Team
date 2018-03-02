@@ -8,7 +8,8 @@ using System;
 
 //TODO Fix gun prefabs by removing parent object.
 
-public class InventorySystem : MonoBehaviour {
+public class InventorySystem : MonoBehaviour
+{
     //keeps track of what guns are in each slot based on id
     //Pistol: 0
     //Shotgun: 1
@@ -16,8 +17,8 @@ public class InventorySystem : MonoBehaviour {
     //AK: 3
     //SMG: 4
     //Grenades: 5
-   
-    private string[] slots = { "", "", "", "", "",""};
+
+    private string[] slots = { "", "", "", "", "", "" };
     //Maps gun id to index, current clip and current ammo amount
     private int free_slot;
     private Hashtable map;
@@ -25,19 +26,19 @@ public class InventorySystem : MonoBehaviour {
     private int current = 0;
 
     //Ammo limits
-   private int pistolLimit = 100;
-   private int shotgunLimit = 100;
-   private int sniperLimit = 100;
-   private int arLimit = 100;
-   private int smgLimit = 100;
-   private int grenadeLimit = 6;
+    private int pistolLimit = 100;
+    private int shotgunLimit = 100;
+    private int sniperLimit = 100;
+    private int arLimit = 100;
+    private int smgLimit = 100;
+    private int grenadeLimit = 6;
 
     //clip sizes
-   private int pistolClip = 50;
-   private int shotgunClip = 50;
-   private int sniperClip = 50;
-   private int arClip = 50;
-   private int smgClip = 50;
+    private int pistolClip = 50;
+    private int shotgunClip = 50;
+    private int sniperClip = 50;
+    private int arClip = 50;
+    private int smgClip = 50;
 
 
     //Objects for each gun prefab
@@ -47,82 +48,62 @@ public class InventorySystem : MonoBehaviour {
     public GameObject ak_prefab;
     public GameObject smg_prefab;
     public GameObject grenade_prefab;
+    //Determines if the initial gun has been set
+    private bool initialSet = false;
 
-    //Offsets for switching the guns else they end up in wack posistions
-    private Vector3 pistol_offset = new Vector3(-1.34f, -2.76f, -0.22f);
-    private Quaternion pistol_rot_offset= Quaternion.Euler(-1.101f, -26.355f, 2.125f);
-    private Vector3 shotgun_offset = new Vector3(0, 0, 0);
-    private Quaternion shotgun_rot_offset = Quaternion.Euler(-1.101f, -26.355f, 2.125f);
-    private Vector3 sniper_offset = new Vector3(0, 0, 0);
-    private Quaternion sniper_rot_offset = Quaternion.Euler(-1.101f, -26.355f, 2.125f);
-    private Vector3 ak_offset = new Vector3(0, 0, 0);
-    private Quaternion ak_rot_offset = Quaternion.Euler(-1.101f, -26.355f, 2.125f);
-    private Vector3 smg_offset = new Vector3(0, 0, 0);
-    private Quaternion smg_rot_offset = Quaternion.Euler(-1.101f, -26.355f, 2.125f);
-    private Vector3 grenade_offset = new Vector3(0, 0, 0);
-    private Quaternion grenade_rot_offset = Quaternion.Euler(-1.101f, -26.355f, 2.125f);
 
-    private Hashtable pos_offsets;
-    private Hashtable rot_offsets;
+
 
     //Formats string to display on screen based on gun id.
     string format(int id)
     {
-        
+        string result = "";
         string ammo = "";
         if (id != 5)
         {
             ammo = ((ArrayList)map[id])[1].ToString() + "/" + ((ArrayList)map[id])[2].ToString();
-            
+
         }
 
         switch (id)
         {
             case 0:
-                return "Pistol " + ammo;
+                result += "Pistol " + ammo;
+                break;
             case 1:
-                return "ShotGun " + ammo;
+                result += "ShotGun " + ammo;
+                break;
             case 2:
-                return "Sniper " + ammo;
+                result += "Sniper " + ammo;
+                break;
             case 3:
-                return "AK-47 " + ammo;
+                result+= "AK-47 " + ammo;
+                break;
             case 4:
-                return "SMG " + ammo;
+                result+="SMG " + ammo;
+                break;
             case 5:
-                return "Grenade " + ((ArrayList)map[id])[1].ToString();
+                result+= "Grenade " + ((ArrayList)map[id])[1].ToString();
+                break;
         }
-        return "ERROR INVALID GUN ID";
+        if(id == current)
+        {
+            result = "*" + result;
+        }
+
+        return result;
     }
     // Use this for initialization
-    void Start () {
-        
+    void Start()
+    {
+
         map = new Hashtable
         {
             { 0, new ArrayList { 0, pistolClip, pistolLimit } },
             { 5, new ArrayList { 5, grenadeLimit } }
         };
 
-        pos_offsets = new Hashtable
-        {
-            {0, pistol_offset },
-            {1, shotgun_offset },
-            {2, sniper_offset },
-            {3, ak_offset },
-            {4, smg_offset },
-            {5, grenade_offset }
 
-        };
-
-        rot_offsets = new Hashtable
-        {
-            {0, pistol_rot_offset },
-            {1, shotgun_rot_offset },
-            {2, sniper_offset },
-            {3, ak_rot_offset },
-            {4, smg_rot_offset },
-            {5, grenade_rot_offset }
-
-        };
         slots[0] = format(0);
         slots[1] = "Empty";
         slots[2] = "Empty";
@@ -130,15 +111,17 @@ public class InventorySystem : MonoBehaviour {
         slots[4] = "Empty";
         slots[5] = format(5);
         free_slot = 1;
-        
+
 
     }
-    
-	
-	// Update is called once per frame
-	void Update () {
-        Text [] canvas = transform.GetChild(0).gameObject.transform.GetComponentsInChildren<Text>();
-        for (int i = 0; i < 6; ++i) {
+
+
+    // Update is called once per frame
+    void Update()
+    {
+        Text[] canvas = transform.GetChild(0).gameObject.transform.GetComponentsInChildren<Text>();
+        for (int i = 0; i < 6; ++i)
+        {
             //Update text based on slots array
             canvas[i].text = slots[i];
 
@@ -147,13 +130,19 @@ public class InventorySystem : MonoBehaviour {
         {   //If Player was not created yet try to find it again
             Player = GameObject.Find("MattPlayer(Clone)");
         }
-       
-	}
+        else if (!initialSet)
+        {   //Give the player their starting pistol
+            initialSet = true;
+            setWeapon(0);
+        }
+
+    }
     //Used for Weapon Pickups
     //If the gun is already in the inventory refill ammo
     //Else Add the gun to the inventory
-    public void Add(int id) {
-        
+    public void Add(int id)
+    {
+
         switch (id)
         {
             case 0:
@@ -167,8 +156,8 @@ public class InventorySystem : MonoBehaviour {
                 }
                 else
                 {
-                    
-                    map.Add(id, new ArrayList {free_slot,shotgunClip,shotgunLimit });
+
+                    map.Add(id, new ArrayList { free_slot, shotgunClip, shotgunLimit });
                     slots[free_slot] = format(id);
                     free_slot += 1;
                 }
@@ -181,7 +170,7 @@ public class InventorySystem : MonoBehaviour {
                 }
                 else
                 {
-                    
+
                     map.Add(id, new ArrayList { free_slot, sniperClip, sniperLimit });
                     slots[free_slot] = format(id);
                     free_slot += 1;
@@ -196,7 +185,7 @@ public class InventorySystem : MonoBehaviour {
                 }
                 else
                 {
-                    
+
                     map.Add(id, new ArrayList { free_slot, arClip, arLimit });
                     slots[free_slot] = format(id);
                     free_slot += 1;
@@ -210,15 +199,15 @@ public class InventorySystem : MonoBehaviour {
                 }
                 else
                 {
-                    
+
                     map.Add(id, new ArrayList { free_slot, smgClip, smgLimit });
                     slots[free_slot] = format(id);
                     free_slot += 1;
                 }
                 break;
             case 5:
-                
-                ((ArrayList)map[5])[1] = (int)((ArrayList)map[5])[1]+1;
+
+                ((ArrayList)map[5])[1] = (int)((ArrayList)map[5])[1] + 1;
                 slots[5] = format(id);
 
                 break;
@@ -243,9 +232,9 @@ public class InventorySystem : MonoBehaviour {
             ammoInClip = (int)((ArrayList)map[id])[1];
             if (id == 5)
             {
-                
-                
-                if(ammoInClip > 0)
+
+
+                if (ammoInClip > 0)
                 {
                     ((ArrayList)map[5])[1] = (int)((ArrayList)map[5])[1] - 1;
                     slots[(int)((ArrayList)map[id])[0]] = format(id);
@@ -291,27 +280,30 @@ public class InventorySystem : MonoBehaviour {
 
                             break;
                     }
-                    if ((int)((ArrayList)map[id])[1] > 0) {
-                        ((ArrayList)map[id])[2] = (int)((ArrayList)map[id])[2]-(int)((ArrayList)map[id])[1];
+                    if ((int)((ArrayList)map[id])[1] > 0)
+                    {
+                        ((ArrayList)map[id])[2] = (int)((ArrayList)map[id])[2] - (int)((ArrayList)map[id])[1];
                         slots[(int)((ArrayList)map[id])[0]] = format(id);
                         return true;
                     }
-                    else {
+                    else
+                    {
                         return false;
                     }
                 }
             }
-            
+
         }
         else { return false; }
     }
     //Switchs current weapon returns new id
     public int switchWeapon()
     {
+        int last = current;
         int next = current + 1;
         while (!map.ContainsKey(next))
         {
-            if(next == 6)
+            if (next == 6)
             {
                 next = 0;
             }
@@ -323,13 +315,25 @@ public class InventorySystem : MonoBehaviour {
 
         current = next;
         //Needs to be orginally set to null
+
+        setWeapon(current);
+        slots[(int)((ArrayList)map[last])[0]] = format(last);
+        slots[(int)((ArrayList)map[current])[0]] = format(current);
+
+        return current;
+    }
+
+
+    void setWeapon(int id)
+    {
+
         GameObject current_gun_prefab = null;
-        Vector3 create_pos = Player.transform.GetChild(0).gameObject.transform.position;
-        Quaternion create_rot = Player.transform.GetChild(0).gameObject.transform.rotation;
+        Vector3 create_pos = Player.transform.GetChild(0).gameObject.transform.localPosition;
+        Quaternion create_rot = Player.transform.GetChild(0).gameObject.transform.localRotation;
         GameObject Gun;
-        print(current);
-        switch (current)
-        { 
+        
+        switch (id)
+        {
             case 0:
                 current_gun_prefab = pistol_prefab;
                 break;
@@ -348,22 +352,30 @@ public class InventorySystem : MonoBehaviour {
             case 5:
                 current_gun_prefab = grenade_prefab;
                 break;
-         
+
         }
         //Create the gun object and disable it's trigger since this gun has already been picked up
 
-        Gun = Instantiate(current_gun_prefab, create_pos, create_rot)as GameObject;
-        //Gun.transform.position = Player.transform.position - (Vector3)pos_offsets[current];
-        //Gun.transform.rotation = Player.transform.rotation;
-        Destroy(Gun.GetComponent<BoxCollider>());
+        Gun = Instantiate(current_gun_prefab, create_pos, create_rot) as GameObject;
+        //Remove guns trigger
+        if (id != 5)
+        {
+            Destroy(Gun.transform.GetChild(0).GetComponent<BoxCollider>());
+        }
         //Destroy the old gun
         Destroy(Player.transform.GetChild(0).gameObject);
         //Make the new gun the first child of the player
         Gun.transform.parent = Player.transform;
 
         Gun.transform.SetSiblingIndex(0);
+        //Set local position to that of the old gun
         Gun.transform.localPosition = create_pos;
         Gun.transform.localRotation = create_rot;
-        return current;
+        //Rotate gun 90 degrees only ever needs to be done once
+        //if (!rotation_set)
+        //{
+        //    Gun.transform.Rotate(new Vector3(0, 90, 0));
+        //}
+        Gun.transform.localRotation = Quaternion.Euler(0, 90, 0);
     }
 }
