@@ -262,6 +262,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa6664ce18dc3d745aa04b2c47445397, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pistol_prefab: {fileID: 1921823055822340, guid: b4216efe2c4cb0b4195ddd7fbfd36aaf,
+    type: 2}
+  shotgun_prefab: {fileID: 1023468140704912, guid: 12ed446960abb3d46a04c39f1307f754,
+    type: 2}
+  sniper_prefab: {fileID: 1090743798893486, guid: 769ad6f2b0fc874459edc2e4c1f956dc,
+    type: 2}
+  ak_prefab: {fileID: 1235401389195616, guid: ac8556a008fbe4f45a90b1e68661749b, type: 2}
+  smg_prefab: {fileID: 1019611890861342, guid: 858705dc764416d49af2a50c10c3d296, type: 2}
+  grenade_prefab: {fileID: 1589068871940906, guid: 2daecd76c1dfee7498238be5f4dfdfea,
+    type: 2}
 --- !u!114 &114823626680162118
 MonoBehaviour:
   m_ObjectHideFlags: 1

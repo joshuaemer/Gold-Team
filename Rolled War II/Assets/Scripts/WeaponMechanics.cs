@@ -18,7 +18,7 @@ public class WeaponMechanics : NetworkBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void LateUpdate () {
         if (!hasAuthority) { return; }
 		// If the left mouse button is clicked, fire.
 		if (Input.GetMouseButton(0)) {
@@ -26,7 +26,7 @@ public class WeaponMechanics : NetworkBehaviour {
 			shoot();
 
 		}
-		else if (Input.GetKey("e")) {
+		else if (Input.GetKeyDown("e")) {
             //Switch Weapons
 			inv.GetComponent<InventorySystem>().switchWeapon();
 		}
