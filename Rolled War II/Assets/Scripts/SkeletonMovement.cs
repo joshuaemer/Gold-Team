@@ -121,4 +121,13 @@ public class SkeletonMovement : MonoBehaviour {
         Vector3 pos = transform.position;
         return Mathf.Abs(pos.x - otherPos.x) <= limit || Mathf.Abs(pos.z - otherPos.z) <= limit;
     }
+
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (anim.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
+        {
+            print("TRUE");
+        }
+    }
 }
