@@ -10,7 +10,8 @@ using UnityEngine.AI;
 //Next need to add attack animation
 public class SkeletonMovement : MonoBehaviour {
     private Animator anim;
-    private float speed =2f;
+    public float speed =2f;
+    public int damage = 100;
     private NavMeshAgent nav;
    
     //Check is an empty static game object that needs to have children that are also static and empty. The AI will follow go to each child to create a path.
@@ -27,8 +28,14 @@ public class SkeletonMovement : MonoBehaviour {
     int lineOfSight = 20;
     bool foundPlayer = false;
     bool isFacing = false;
+
     
+    //Target is set to whatever player is seen first
     private GameObject target;
+
+    //Time before damage is dealt
+    private float timeWaited = 0;
+    
     // Use this for initialization
     void Start () {
         nav = GetComponent<NavMeshAgent>();
@@ -36,7 +43,6 @@ public class SkeletonMovement : MonoBehaviour {
         attackHash = Animator.StringToHash("Attack");
         anim = GetComponent<Animator>();
         nav.speed = speed;
-
         
        
     }
@@ -48,7 +54,7 @@ public class SkeletonMovement : MonoBehaviour {
         {
             if (inRange(2, target.transform.position))
             {
-                print("ATTACK");
+                //If the skeleton is not facing the player then make it face the player
                 if (!isFacing)
                 {
 
@@ -56,20 +62,37 @@ public class SkeletonMovement : MonoBehaviour {
                     isFacing = true;
 
                 }
+                //If the the animator is in the attack state start to damage the player
+                else if (anim.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
+                {
+                    print("Waited: " +timeWaited.ToString());
+                    print("Clip Length: " + anim.GetCurrentAnimatorClipInfo(0).Length.ToString());
+                    //Wait until the animation is over
+                    if(timeWaited- Time.deltaTime >= 2*anim.GetCurrentAnimatorClipInfo(0).Length && inRange(2, target.transform.position))
+                    {
+                        target.GetComponent<FPController>().TakeDamage(damage);
+                        timeWaited = 0;
+                    }
+                    else
+                    {
+                        timeWaited += Time.deltaTime;
+                    }
+                }
                 else
                 {   //Order is important here, it needs to go from stand run state->stand->attack
                     anim.SetFloat(speedHash, -1);
 
                     anim.SetBool(attackHash, true);
-                    
+                    timeWaited = 0;
                 }
             }
 
             else
             {
-                print("Locating");
+                
                 nav.SetDestination(target.transform.position);
                 isFacing = false;
+                timeWaited = 0;
 
                 //Order is important here, it needs to go from stand run attack->stand->run
                 anim.SetBool(attackHash, false);
@@ -85,7 +108,7 @@ public class SkeletonMovement : MonoBehaviour {
 
                 if (hit.transform.CompareTag("Player"))
                 {
-                    print("hit");
+                    
                     foundPlayer = true;
                     target = hit.transform.gameObject;
                     nav.SetDestination(target.transform.position);
@@ -114,6 +137,8 @@ public class SkeletonMovement : MonoBehaviour {
 
             }
         }
+        
+        
     }
     //Returns true if the enemy is atMost limit away from the otherPos in the x or y direction
     bool inRange(int limit, Vector3 otherPos)
@@ -123,11 +148,5 @@ public class SkeletonMovement : MonoBehaviour {
     }
 
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (anim.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
-        {
-            print("TRUE");
-        }
-    }
+  
 }
