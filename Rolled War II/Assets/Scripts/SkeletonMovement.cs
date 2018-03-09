@@ -13,6 +13,7 @@ public class SkeletonMovement : MonoBehaviour {
     public float speed =2f;
     public int damage = 100;
     private NavMeshAgent nav;
+    public int hitpoints = 500;
    
     //Check is an empty static game object that needs to have children that are also static and empty. The AI will follow go to each child to create a path.
     public GameObject check;
@@ -21,6 +22,7 @@ public class SkeletonMovement : MonoBehaviour {
     public int direction;
     int speedHash;
     int attackHash;
+    int deathHash;
     int nextPoint = 0;
 
     //Raycasts Vars
@@ -41,6 +43,7 @@ public class SkeletonMovement : MonoBehaviour {
         nav = GetComponent<NavMeshAgent>();
         speedHash = Animator.StringToHash("Speed");
         attackHash = Animator.StringToHash("Attack");
+        deathHash = Animator.StringToHash("isDead");
         anim = GetComponent<Animator>();
         nav.speed = speed;
         
@@ -65,8 +68,7 @@ public class SkeletonMovement : MonoBehaviour {
                 //If the the animator is in the attack state start to damage the player
                 else if (anim.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
                 {
-                    print("Waited: " +timeWaited.ToString());
-                    print("Clip Length: " + anim.GetCurrentAnimatorClipInfo(0).Length.ToString());
+                    
                     //Wait until the animation is over
                     if(timeWaited- Time.deltaTime >= 2*anim.GetCurrentAnimatorClipInfo(0).Length && inRange(2, target.transform.position))
                     {
@@ -147,6 +149,20 @@ public class SkeletonMovement : MonoBehaviour {
         return Mathf.Abs(pos.x - otherPos.x) <= limit || Mathf.Abs(pos.z - otherPos.z) <= limit;
     }
 
+    public void takeDamage(int damage)
+    {
+        
+        hitpoints -= damage;
+        print(hitpoints);
+        if (hitpoints <= 0)
+        {   //Switch to death state
+            anim.SetBool(deathHash, true);
+            //Destroy this object after death animation
+            Destroy(gameObject, gameObject.GetComponent<Animator>().GetCurrentAnimatorClipInfo(0).Length+1.15f);
+            
+            
 
+        }
+    }
   
 }

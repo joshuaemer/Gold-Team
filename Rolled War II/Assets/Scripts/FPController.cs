@@ -170,8 +170,7 @@ public class FPController : NetworkBehaviour {
             //Since other is the trigger we need to get rid of the entire game object
             Destroy(other.transform.parent.gameObject);
         }
-
-       
+        
 
     }
 

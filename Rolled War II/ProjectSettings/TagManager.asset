@@ -16,6 +16,7 @@ TagManager:
   - Grenade
   - MenuController
   - Sword
+  - Monster
   layers:
   - Default
   - TransparentFX
