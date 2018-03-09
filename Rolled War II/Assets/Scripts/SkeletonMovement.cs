@@ -153,7 +153,7 @@ public class SkeletonMovement : MonoBehaviour {
     {
         
         hitpoints -= damage;
-        print(hitpoints);
+        
         if (hitpoints <= 0)
         {   //Switch to death state
             anim.SetBool(deathHash, true);
