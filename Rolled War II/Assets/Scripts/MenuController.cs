@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.UI;
 
 public class MenuController : MonoBehaviour {
 
@@ -11,6 +12,7 @@ public class MenuController : MonoBehaviour {
     public GameObject playerMenu;
     public GameObject controllsMenu;
     public GameObject gameOver;
+    public Text score;
 
     GameManager gm;
 
@@ -59,7 +61,6 @@ public class MenuController : MonoBehaviour {
         inGame = false;
         mainMenu.SetActive(true);
         playerMenu.SetActive(false);
-        Camera.main.GetComponent<FollowPlayer>().setPlayer(null);
         Camera.main.transform.SetPositionAndRotation(new Vector3(0f, 50f, 0f), Quaternion.Euler(90, 0, 0));
     }
 
@@ -88,6 +89,10 @@ public class MenuController : MonoBehaviour {
             playerMenu.SetActive(toggle);
             toggle = !toggle;
             controllsMenu.SetActive(false);
+            score.text = "";
+            foreach (GameObject go in GameObject.FindGameObjectsWithTag("Player")) {
+                score.text += go.GetComponent<FPController>().hitpoints +  "\n";
+            }
         }
     }
 }

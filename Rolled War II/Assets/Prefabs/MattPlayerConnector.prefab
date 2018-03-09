@@ -84,6 +84,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7effd887d632571449fda737203019a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  menu: {fileID: 114527005160375894, guid: 00c215dc8b68485469db6f025e14ba59, type: 2}
+  menu: {fileID: 114855959451158266, guid: 70f2142a2c23b4245bb8e606844bce12, type: 2}
+  team: 0
   PlayerPrefab: {fileID: 1634413678982570, guid: fcf8efe0cb3ae854082e67ef9e7f7307,
     type: 2}

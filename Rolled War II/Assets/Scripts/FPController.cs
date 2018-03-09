@@ -66,12 +66,6 @@ public class FPController : NetworkBehaviour {
             return;
         }
 
-        // TODO
-        //gameObject.transform.camera =
-
-        Camera.main.GetComponent<FollowPlayer>().setPlayer(transform);
-        
-
         // We know this is OUR character to control so let's control it
         transform.Rotate(0, Input.GetAxis("Horizontal") * rotateSpeed, 0);
         Vector3 forward = transform.TransformDirection(Vector3.forward);
