@@ -14,6 +14,9 @@ TagManager:
   - Health
   - Weapon
   - Grenade
+  - MenuController
+  - Sword
+  - Monster
   layers:
   - Default
   - TransparentFX
