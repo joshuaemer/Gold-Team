@@ -1,0 +1,29 @@
+Gold Team Minutes 
+Date 3/9/2018 4:00 pm
+
+Attendance:
+All members present. 
+
+Meeting Discussion:
+Merged all current feature Branches.
+Will meet up Wednesday night to create the alpha release.
+Discussed what we want for the 3 help wanted tasks they will be as follows:
+
+1. Muzzle Flashes
+
+2. Move wheel chair backwards when shooting
+
+3. Select Fire Rate
+
+
+
+Tasks Done Prior to Meeting:
+Matt: Added Score Board, Team Correction, Improved Networking code.
+Josh: Added AI, Implemented Weapon Switching
+Ryan: Added Weapon Fire Rates
+
+
+Tasks TODO before next meeting:
+Matt: Add Audio
+Josh: Add AI Controller, this will keep track of all AI's handle their drops and stats
+Ryan: Create Player Model
