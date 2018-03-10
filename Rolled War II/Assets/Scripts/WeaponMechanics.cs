@@ -96,7 +96,7 @@ public class WeaponMechanics : NetworkBehaviour {
 			}
             else if (hit.transform.CompareTag("Monster"))
             {
-                hit.transform.gameObject.GetComponent<SkeletonMovement>().takeDamage(10);
+                hit.transform.gameObject.GetComponent<SkeletonMovement>().takeDamage(50);
             }
         }
     }
