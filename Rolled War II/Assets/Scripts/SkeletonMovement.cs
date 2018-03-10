@@ -10,7 +10,7 @@ using UnityEngine.AI;
 //Next need to add attack animation
 public class SkeletonMovement : MonoBehaviour {
     private Animator anim;
-    public float speed =2f;
+    public float speed =4f;
     public int damage = 100;
     private NavMeshAgent nav;
     public int hitpoints = 500;
