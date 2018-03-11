@@ -1201,7 +1201,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!1 &1733482632393790
 GameObject:
@@ -114797,6 +114797,7 @@ MonoBehaviour:
   useDefualtLimit: 0
   isSpike: 1
   spikeExit: {fileID: 1913586847314810}
+  start_position: {x: 0, y: 0, z: 0}
 --- !u!114 &114985643814955436
 MonoBehaviour:
   m_ObjectHideFlags: 1

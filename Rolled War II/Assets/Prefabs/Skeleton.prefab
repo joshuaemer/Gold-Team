@@ -1225,7 +1225,6 @@ MonoBehaviour:
   damage: 100
   hitpoints: 500
   check: {fileID: 0}
-  direction: -1
 --- !u!137 &137916850500303848
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

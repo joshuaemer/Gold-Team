@@ -4,22 +4,19 @@ using UnityEngine;
 using UnityEngine.AI;
 
 
-//TODO
-//Instead of Raycasting switch with collider when check with onCollision if the player is in the vicinity
-//Wont stop rotating when attacking
-//Next need to add attack animation
+
 public class SkeletonMovement : MonoBehaviour {
     private Animator anim;
     public float speed =4f;
     public int damage = 100;
     private NavMeshAgent nav;
     public int hitpoints = 500;
-   
+    private GameObject AIHandler;
     //Check is an empty static game object that needs to have children that are also static and empty. The AI will follow go to each child to create a path.
-    public GameObject check;
+    private GameObject check;
     //Which direction the player will follow the objects cannot have an absoulute value greater then the number of check's child objects -1
     
-    public int direction;
+    private int direction;
     int speedHash;
     int attackHash;
     int deathHash;
@@ -40,6 +37,8 @@ public class SkeletonMovement : MonoBehaviour {
     
     // Use this for initialization
     void Start () {
+        AIHandler = GameObject.Find("AIMasterHandler").gameObject;
+        check =AIHandler.transform.GetChild(0).gameObject;
         nav = GetComponent<NavMeshAgent>();
         speedHash = Animator.StringToHash("Speed");
         attackHash = Animator.StringToHash("Attack");
@@ -55,7 +54,7 @@ public class SkeletonMovement : MonoBehaviour {
         //Checks if player is within line of sight if not move to the next checkpoint
         if (foundPlayer)
         {
-            if (inRange(2, target.transform.position))
+            if (InRange(2, target.transform.position))
             {
                 //If the skeleton is not facing the player then make it face the player
                 if (!isFacing)
@@ -70,7 +69,7 @@ public class SkeletonMovement : MonoBehaviour {
                 {
                     
                     //Wait until the animation is over
-                    if(timeWaited- Time.deltaTime >= 2*anim.GetCurrentAnimatorClipInfo(0).Length && inRange(2, target.transform.position))
+                    if(timeWaited- Time.deltaTime >= 2*anim.GetCurrentAnimatorClipInfo(0).Length && InRange(2, target.transform.position))
                     {
                         target.GetComponent<FPController>().TakeDamage(damage);
                         timeWaited = 0;
@@ -120,7 +119,7 @@ public class SkeletonMovement : MonoBehaviour {
             if (!foundPlayer)
             {
                 
-                if (inRange(1, check.transform.GetChild(nextPoint).transform.position))
+                if (InRange(1, check.transform.GetChild(nextPoint).transform.position))
                 {
 
                     nextPoint += direction;
@@ -142,14 +141,15 @@ public class SkeletonMovement : MonoBehaviour {
         
         
     }
+
     //Returns true if the enemy is atMost limit away from the otherPos in the x or y direction
-    bool inRange(int limit, Vector3 otherPos)
+    private bool InRange(int limit, Vector3 otherPos)
     {
         Vector3 pos = transform.position;
         return Mathf.Abs(pos.x - otherPos.x) <= limit || Mathf.Abs(pos.z - otherPos.z) <= limit;
     }
 
-    public void takeDamage(int damage)
+    public void TakeDamage(int damage)
     {
         
         hitpoints -= damage;
@@ -158,11 +158,17 @@ public class SkeletonMovement : MonoBehaviour {
         {   //Switch to death state
             anim.SetBool(deathHash, true);
             //Destroy this object after death animation
+            Vector3 last_pos = transform.position;
             Destroy(gameObject, gameObject.GetComponent<Animator>().GetCurrentAnimatorClipInfo(0).Length+1.15f);
-            
+            //Let the game object know this has died
+            AIHandler.GetComponent<AIHandler>().Signal_death(last_pos);
             
 
         }
     }
-  
+
+    //Used by AI handler sets the direction that the AI will follow the checkpoints
+    public void Set_direction(int d) {
+        direction = d;
+    }
 }
