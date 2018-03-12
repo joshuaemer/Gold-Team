@@ -74,6 +74,12 @@ public class FPController : NetworkBehaviour {
         CmdUpdatePlayer(transform.position, transform.rotation);
         speedText.text = "Speed = " + speed.ToString();
 
+        if(inv == null)
+        {
+            inv = GameObject.Find("Inventory");
+        }
+        
+
         if(speed != init_speed)
         {
             if(speedFrameWaited<speedFrameWait)
@@ -160,7 +166,8 @@ public class FPController : NetworkBehaviour {
         }
         else if (other.CompareTag("Weapon"))
         {   //Add the gun to the inventory
-            inv.GetComponent<InventorySystem>().Add(other.GetComponent<GunComponent>().id);
+            inv.GetComponent<InventorySystem>().Add(other.GetComponent<GunComponent>().GetID());
+            
             //Since other is the trigger we need to get rid of the entire game object
             Destroy(other.transform.parent.gameObject);
         }

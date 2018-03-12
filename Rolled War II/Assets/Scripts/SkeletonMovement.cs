@@ -7,10 +7,10 @@ using UnityEngine.AI;
 
 public class SkeletonMovement : MonoBehaviour {
     private Animator anim;
-    public float speed =4f;
+    public float speed =5f;
     public int damage = 100;
     private NavMeshAgent nav;
-    public int hitpoints = 500;
+    public int hitpoints = 1000;
     private GameObject AIHandler;
     //Check is an empty static game object that needs to have children that are also static and empty. The AI will follow go to each child to create a path.
     private GameObject check;
@@ -22,6 +22,7 @@ public class SkeletonMovement : MonoBehaviour {
     int deathHash;
     int nextPoint = 0;
 
+    bool dead = false;
     //Raycasts Vars
     RaycastHit hit;
     int lineOfSight = 20;
@@ -159,9 +160,14 @@ public class SkeletonMovement : MonoBehaviour {
             anim.SetBool(deathHash, true);
             //Destroy this object after death animation
             Vector3 last_pos = transform.position;
-            Destroy(gameObject, gameObject.GetComponent<Animator>().GetCurrentAnimatorClipInfo(0).Length+1.15f);
-            //Let the game object know this has died
-            AIHandler.GetComponent<AIHandler>().Signal_death(last_pos);
+            if (!dead)
+            {
+                AIHandler.GetComponent<AIHandler>().Signal_death(last_pos);
+                Destroy(gameObject, gameObject.GetComponent<Animator>().GetCurrentAnimatorClipInfo(0).Length + 1.15f);
+                //Let the game object know this has died
+                dead = true;
+            }
+           
             
 
         }

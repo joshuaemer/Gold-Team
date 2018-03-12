@@ -4,11 +4,7 @@ using UnityEngine;
 using System;
 
 public class AIHandler : MonoBehaviour {
-    //TODO
-    //Test drops
-
-    //DROP ISSUES:
-    //Too many objects being dropped grenade prefab too big
+    
     //Make sure only one boss exists at a time
     
     //Make sure boss only one boss exists at a time
@@ -37,7 +33,7 @@ public class AIHandler : MonoBehaviour {
 
     //AI Info
     
-    private int ai_limit = 2;
+    private int ai_limit = 5;
     private int ai_count =0;
     
 
@@ -63,6 +59,7 @@ public class AIHandler : MonoBehaviour {
     //Creates AI's up to ai_limit
     void create()
     {
+        print(ai_count);
         int rand_index;
         int rand_direction;
         //Since randoms upper bound is exclusive it is set to childCount not childCount -1;
@@ -74,9 +71,7 @@ public class AIHandler : MonoBehaviour {
             monster =Instantiate(skeleton_prefab, check.transform.GetChild(rand_index).gameObject.transform.position,Quaternion.identity);
             rand_direction = rand.Next((bound-1) * -1, bound);
             monster.GetComponent<SkeletonMovement>().Set_direction(rand_direction);
-            print("AI #: "+ai_count.ToString());
-            print("Start: " + rand_index.ToString());
-            print("DIR: " + rand_direction.ToString());
+            
             ai_count += 1;
         }
     }
@@ -85,13 +80,14 @@ public class AIHandler : MonoBehaviour {
     public void Signal_death(Vector3 create_pos)
     {
         ai_count -= 1;
+        print(ai_count);
         GameObject drop = null;
 
 
-       
-    
 
-        switch (rand.Next(0, drop_count)){
+        int id = rand.Next(0, drop_count);
+
+        switch (id){
             case 0:
                 drop = speed_prefab;
                 break;
@@ -120,7 +116,13 @@ public class AIHandler : MonoBehaviour {
 
         //Create drop here at create pos;
         //Call this function upon death in skeleton movement
+        create_pos.y += 1;
         Instantiate(drop, create_pos,Quaternion.identity);
-        print("DROP");
+        
+        
     }
+
+
+
+    
 }

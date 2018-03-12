@@ -13,4 +13,11 @@ public class GunComponent : MonoBehaviour {
 	void Update () {
 		
 	}
+
+    public int GetID()
+    {
+        return id;
+    }
+
+
 }
