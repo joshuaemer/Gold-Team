@@ -22,13 +22,13 @@ public class WeaponMechanics : NetworkBehaviour {
         if (!hasAuthority) { return; }
 		// If the left mouse button is clicked, fire.
 		if (Input.GetMouseButton(0)) {
-            if (Input.GetMouseButtonDown(0))
-            {
-                // TODO
+            
+               
                 if (curr == 0)
                 {
                     waitForNSeconds(0.4f);
                     shoot();
+                    
                 }
                 else if (curr == 1)
                 {
@@ -37,7 +37,7 @@ public class WeaponMechanics : NetworkBehaviour {
                 }
                 else if (curr == 2)
                 {
-                    //yield return new WaitForSeconds(4);
+                    
                     waitForNSeconds(4);
                     shoot();
                 }
@@ -50,18 +50,20 @@ public class WeaponMechanics : NetworkBehaviour {
                 {
                     waitForNSeconds(0.05f);
                     shoot();
+                    
                 }
                 else if (curr == 5)
                 {
-                    //yield return new WaitForSeconds(3);
+                    
                     waitForNSeconds(3);
-                }
+                    shoot();
+                 }
                 else
                 {
                     Debug.LogError("ERR: Invalid curr value: " + curr + ".  Quitting....");
-                    Application.Quit();
+                   // Application.Quit();
                 }
-            }
+            
 		}
 		else if (Input.GetKeyDown("e")) {
             //Switch Weapons
@@ -69,7 +71,7 @@ public class WeaponMechanics : NetworkBehaviour {
 		}
 	}
     
-
+    //Does not work!!!
 	/*
 	waitForNSeconds(float n): Function that takes in a float argument called n, and delays the function that calls this one
 	by that number n in seconds.  For example, n = 0.25f means delay by a quarter of a second, and n=4
@@ -96,7 +98,7 @@ public class WeaponMechanics : NetworkBehaviour {
 			}
             else if (hit.transform.CompareTag("Monster"))
             {
-                hit.transform.gameObject.GetComponent<SkeletonMovement>().takeDamage(50);
+                hit.transform.gameObject.GetComponent<SkeletonMovement>().TakeDamage(50);
             }
         }
     }

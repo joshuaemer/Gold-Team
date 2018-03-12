@@ -356,12 +356,11 @@ public class InventorySystem : MonoBehaviour
         }
         //Create the gun object and disable it's trigger since this gun has already been picked up
 
-        Gun = Instantiate(current_gun_prefab, create_pos, create_rot) as GameObject;
+        Gun = Instantiate(current_gun_prefab, new Vector3(0,0,0), create_rot) as GameObject;
         //Remove guns trigger
-        if (id != 5)
-        {
-            Destroy(Gun.transform.GetChild(0).GetComponent<BoxCollider>());
-        }
+       
+        Destroy(Gun.transform.GetChild(0).GetComponent<BoxCollider>());
+        
         //Destroy the old gun
         Destroy(Player.transform.GetChild(0).gameObject);
         //Make the new gun the first child of the player
