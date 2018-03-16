@@ -1,0 +1,22 @@
+Gold Team Minutes 
+Date 3/16/2018 4:00 pm
+
+Attendance:
+All Members 
+
+Meeting Discussion:
+Discussed next steps for the project and what needs to be done for the alpha release. 
+We will meet the Monday after break.
+
+
+Tasks Done Prior to Meeting:
+Matt: Added Pause menu.
+Josh: Finished AI Spawning
+Ryan: Started Fixing Fire Rates
+
+
+Tasks TODO before next meeting:
+Matt: Add Audio
+Josh: Have Grenade 
+Ryan: Create Player Model, Fixed Fire Rate
+
