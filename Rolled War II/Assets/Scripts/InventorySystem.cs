@@ -31,7 +31,7 @@ public class InventorySystem : MonoBehaviour
     private int sniperLimit = 100;
     private int arLimit = 100;
     private int smgLimit = 100;
-    private int grenadeLimit = 6;
+    private int grenadeLimit = 500;
 
     //clip sizes
     private int pistolClip = 50;
@@ -40,6 +40,10 @@ public class InventorySystem : MonoBehaviour
     private int arClip = 50;
     private int smgClip = 50;
 
+    //Grenade vars
+    //Handles grenade fire rate
+    private bool nextGrenade = true;
+   
 
     //Objects for each gun prefab
     public GameObject pistol_prefab;
@@ -77,16 +81,16 @@ public class InventorySystem : MonoBehaviour
                 result += "Sniper " + ammo;
                 break;
             case 3:
-                result+= "AK-47 " + ammo;
+                result += "AK-47 " + ammo;
                 break;
             case 4:
-                result+="SMG " + ammo;
+                result += "SMG " + ammo;
                 break;
             case 5:
-                result+= "Grenade " + ((ArrayList)map[id])[1].ToString();
+                result += "Grenade " + ((ArrayList)map[id])[1].ToString();
                 break;
         }
-        if(id == current)
+        if (id == current)
         {
             result = "*" + result;
         }
@@ -224,7 +228,10 @@ public class InventorySystem : MonoBehaviour
     //Else True
     public bool Fire()
     {
+        
         int id = current;
+
+       
         int ammoInClip = 0;
         int ammoInInv = 0;
         if (map.ContainsKey(id))
@@ -232,12 +239,26 @@ public class InventorySystem : MonoBehaviour
             ammoInClip = (int)((ArrayList)map[id])[1];
             if (id == 5)
             {
-
+                if (!nextGrenade) { return false; }
 
                 if (ammoInClip > 0)
                 {
                     ((ArrayList)map[5])[1] = (int)((ArrayList)map[5])[1] - 1;
                     slots[(int)((ArrayList)map[id])[0]] = format(id);
+
+
+
+
+                    //Below will throw the grenade
+                    //The guncomponent script belongs to the weapons child so we need to call it from there.
+                    nextGrenade = false;
+                    GameObject grenade = Player.transform.GetChild(0).gameObject;
+
+                    grenade.gameObject.transform.GetChild(0).gameObject.GetComponent<GunComponent>().Throw_grenade(Player);
+                    
+
+
+
                     return true;
                 }
                 else
@@ -280,10 +301,13 @@ public class InventorySystem : MonoBehaviour
 
                             break;
                     }
+
                     if ((int)((ArrayList)map[id])[1] > 0)
                     {
                         ((ArrayList)map[id])[2] = (int)((ArrayList)map[id])[2] - (int)((ArrayList)map[id])[1];
                         slots[(int)((ArrayList)map[id])[0]] = format(id);
+                       
+
                         return true;
                     }
                     else
@@ -331,7 +355,7 @@ public class InventorySystem : MonoBehaviour
         Vector3 create_pos = Player.transform.GetChild(0).gameObject.transform.localPosition;
         Quaternion create_rot = Player.transform.GetChild(0).gameObject.transform.localRotation;
         GameObject Gun;
-        
+
         switch (id)
         {
             case 0:
@@ -356,11 +380,11 @@ public class InventorySystem : MonoBehaviour
         }
         //Create the gun object and disable it's trigger since this gun has already been picked up
 
-        Gun = Instantiate(current_gun_prefab, new Vector3(0,0,0), create_rot) as GameObject;
+        Gun = Instantiate(current_gun_prefab, new Vector3(0, 0, 0), create_rot) as GameObject;
         //Remove guns trigger
-       
+
         Destroy(Gun.transform.GetChild(0).GetComponent<BoxCollider>());
-        
+
         //Destroy the old gun
         Destroy(Player.transform.GetChild(0).gameObject);
         //Make the new gun the first child of the player
@@ -370,11 +394,16 @@ public class InventorySystem : MonoBehaviour
         //Set local position to that of the old gun
         Gun.transform.localPosition = create_pos;
         Gun.transform.localRotation = create_rot;
-        //Rotate gun 90 degrees only ever needs to be done once
-        //if (!rotation_set)
-        //{
-        //    Gun.transform.Rotate(new Vector3(0, 90, 0));
-        //}
+        
         Gun.transform.localRotation = Quaternion.Euler(0, 90, 0);
+    }
+
+    public void setNextGrenade(bool next)
+    {
+        nextGrenade = next;
+    }
+    public GameObject getGrenadePrefab()
+    {
+        return grenade_prefab;
     }
 }

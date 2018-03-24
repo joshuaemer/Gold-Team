@@ -59,7 +59,7 @@ public class AIHandler : MonoBehaviour {
     //Creates AI's up to ai_limit
     void create()
     {
-        print(ai_count);
+        
         int rand_index;
         int rand_direction;
         //Since randoms upper bound is exclusive it is set to childCount not childCount -1;
@@ -80,7 +80,7 @@ public class AIHandler : MonoBehaviour {
     public void Signal_death(Vector3 create_pos)
     {
         ai_count -= 1;
-        print(ai_count);
+        
         GameObject drop = null;
 
 

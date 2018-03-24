@@ -147,7 +147,7 @@ public class SkeletonMovement : MonoBehaviour {
     private bool InRange(int limit, Vector3 otherPos)
     {
         Vector3 pos = transform.position;
-        return Mathf.Abs(pos.x - otherPos.x) <= limit || Mathf.Abs(pos.z - otherPos.z) <= limit;
+        return (Mathf.Abs(pos.x - otherPos.x) <= limit || Mathf.Abs(pos.z - otherPos.z) <= limit) && Mathf.Abs(pos.y - otherPos.y)<5;
     }
 
     public void TakeDamage(int damage)
