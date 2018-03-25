@@ -31,7 +31,7 @@ public class InventorySystem : MonoBehaviour
     private int sniperLimit = 100;
     private int arLimit = 100;
     private int smgLimit = 100;
-    private int grenadeLimit = 500;
+    private int grenadeLimit = 6;
 
     //clip sizes
     private int pistolClip = 50;
@@ -396,6 +396,10 @@ public class InventorySystem : MonoBehaviour
         Gun.transform.localRotation = create_rot;
         
         Gun.transform.localRotation = Quaternion.Euler(0, 90, 0);
+        if (!HasAmmoLeft(5) && id == 5)
+        {
+            Gun.GetComponent<MeshRenderer>().enabled = false;
+        }
     }
 
     public void setNextGrenade(bool next)
@@ -405,5 +409,10 @@ public class InventorySystem : MonoBehaviour
     public GameObject getGrenadePrefab()
     {
         return grenade_prefab;
+    }
+
+    public bool HasAmmoLeft(int id)
+    {
+        return (int)((ArrayList)map[id])[1] > 0;
     }
 }

@@ -53,7 +53,7 @@ public class SkeletonMovement : MonoBehaviour {
     // Update is called once per frame
     void Update () {
         //Checks if player is within line of sight if not move to the next checkpoint
-        if (foundPlayer)
+        if (foundPlayer && target!=null)
         {
             if (InRange(2, target.transform.position))
             {
