@@ -6,14 +6,16 @@ using UnityEngine.Networking;
 public class WeaponMechanics : NetworkBehaviour {
 	private GameObject inv;
 	private int curr= 0;
-	
+
+    public AudioClip gun_shot;
+    public AudioSource source;
 
 	// Use this for initialization
 	void Start () {
 		
         //Get the Player's Inventory
 		inv = GameObject.Find("Inventory");
-
+        source = GetComponent<AudioSource>();
 
 	}
 	
@@ -85,6 +87,7 @@ public class WeaponMechanics : NetworkBehaviour {
 
 	void shoot() {
 		if (inv.GetComponent<InventorySystem>().Fire()) {
+            source.PlayOneShot(gun_shot);
             CmdShoot(transform.position, transform.forward);
 		}
 	}
