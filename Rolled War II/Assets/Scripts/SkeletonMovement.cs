@@ -53,7 +53,7 @@ public class SkeletonMovement : MonoBehaviour {
     // Update is called once per frame
     void Update () {
         //Checks if player is within line of sight if not move to the next checkpoint
-        if (foundPlayer)
+        if (foundPlayer && target!=null)
         {
             if (InRange(2, target.transform.position))
             {
@@ -147,7 +147,7 @@ public class SkeletonMovement : MonoBehaviour {
     private bool InRange(int limit, Vector3 otherPos)
     {
         Vector3 pos = transform.position;
-        return Mathf.Abs(pos.x - otherPos.x) <= limit || Mathf.Abs(pos.z - otherPos.z) <= limit;
+        return (Mathf.Abs(pos.x - otherPos.x) <= limit || Mathf.Abs(pos.z - otherPos.z) <= limit) && Mathf.Abs(pos.y - otherPos.y)<5;
     }
 
     public void TakeDamage(int damage)

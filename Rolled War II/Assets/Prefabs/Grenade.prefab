@@ -180,3 +180,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 5
+  explosion: {fileID: 1321996940549400, guid: 3c9683c5128ae924d8f3814d17111235, type: 2}
