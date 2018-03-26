@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
+
 public class WeaponMechanics : NetworkBehaviour
 {
     //keeps track of what guns are in each slot based on ID
@@ -25,15 +26,21 @@ public class WeaponMechanics : NetworkBehaviour
     private GameObject inv;
     private float nextFire;
     private int curr = 0; //'curr' represents the currently selected weapon in the Inventory
+     public AudioClip gun_shot;
+    public AudioSource source;
 
     // Use this for initialization
     void Start()
     {
 
+
         //Get the Player's Inventory
+
         inv = GameObject.Find("Inventory");
+        source = GetComponent<AudioSource>();
 
     }
+
 
     // Update is called once per frame
     /*Checking Input.getMouseButtonDown(0) checks if the left mouse button is clicked down at the current frame in Update (semi-automatic fire)
@@ -115,10 +122,13 @@ public class WeaponMechanics : NetworkBehaviour
         weaponCooled = true;
     }
 
+
     void shoot()
     {
         if (inv.GetComponent<InventorySystem>().Fire())
         {
+          source.PlayOneShot(gun_shot);
+
             CmdShoot(transform.position, transform.forward);
         }
     }
