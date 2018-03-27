@@ -187,6 +187,7 @@ GameObject:
   - component: {fileID: 81292168845477244}
   - component: {fileID: 114103684345645166}
   - component: {fileID: 82028908698107618}
+  - component: {fileID: 114185483254799298}
   m_Layer: 0
   m_Name: MattPlayer
   m_TagString: Player
@@ -907,6 +908,19 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &114185483254799298
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1634413678982570}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb8307875ce62514088ff11536d4d9ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  force: 10
+  grenade: {fileID: 1589068871940906, guid: 61aadefa92e925d42b20a0916e3ee6be, type: 2}
 --- !u!114 &114380299507054152
 MonoBehaviour:
   m_ObjectHideFlags: 1

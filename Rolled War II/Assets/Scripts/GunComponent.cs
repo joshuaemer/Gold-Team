@@ -108,11 +108,6 @@ public class GunComponent : NetworkBehaviour {
     {
         id = new_id;
     }
-    
-    [Command]
-    public void Cmd_Throw_Grenade(GameObject Player) {
-        Rpc_Throw_grenade(Player);
-    }
 
     public void Throw_grenade(GameObject Player) {
         //Make sure a new grenade cannot be thrown yet
@@ -145,8 +140,8 @@ public class GunComponent : NetworkBehaviour {
 
     //Throws the grenade will be called in fire in Inventory System
     //The player game object is passed so we know we are using the correct player object
-    [ClientRpc]
-    public void Rpc_Throw_grenade(GameObject Player)
+    [Command]
+    public void Cmd_Throw_grenade(GameObject Player)
     {
         //Make sure a new grenade cannot be thrown yet
        

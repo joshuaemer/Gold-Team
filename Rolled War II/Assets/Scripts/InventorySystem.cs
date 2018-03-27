@@ -87,9 +87,6 @@ public class InventorySystem : NetworkBehaviour
             case 4:
                 result += "SMG " + ammo;
                 break;
-            case 5:
-                result += "Grenade " + ((ArrayList)map[id])[1].ToString();
-                break;
         }
         if (id == current)
         {
@@ -104,8 +101,7 @@ public class InventorySystem : NetworkBehaviour
 
         map = new Hashtable
         {
-            { 0, new ArrayList { 0, pistolClip, pistolLimit } },
-            { 5, new ArrayList { 5, grenadeLimit } }
+            { 0, new ArrayList { 0, pistolClip, pistolLimit } }
         };
 
 
@@ -114,7 +110,6 @@ public class InventorySystem : NetworkBehaviour
         slots[2] = "Empty";
         slots[3] = "Empty";
         slots[4] = "Empty";
-        slots[5] = format(5);
         free_slot = 1;
 
 
@@ -126,7 +121,7 @@ public class InventorySystem : NetworkBehaviour
     {
         if (!transform.parent.GetComponent<FPController>().HasAuthority()) { return; }
         Text[] canvas = transform.GetChild(0).gameObject.transform.GetComponentsInChildren<Text>();
-        for (int i = 0; i < 6; ++i)
+        for (int i = 0; i < 5; ++i)
         {
             //Update text based on slots array
             canvas[i].text = slots[i];
@@ -211,12 +206,6 @@ public class InventorySystem : NetworkBehaviour
                     free_slot += 1;
                 }
                 break;
-            case 5:
-
-                ((ArrayList)map[5])[1] = (int)((ArrayList)map[5])[1] + 1;
-                slots[5] = format(id);
-
-                break;
             default:
                 print("ERROR INVALID GUN ID" + id.ToString());
                 break;
@@ -230,7 +219,6 @@ public class InventorySystem : NetworkBehaviour
     //Else True
     public bool Fire()
     {
-        
         int id = current;
 
        
@@ -239,7 +227,7 @@ public class InventorySystem : NetworkBehaviour
         if (map.ContainsKey(id))
         {
             ammoInClip = (int)((ArrayList)map[id])[1];
-            if (id == 5)
+            if (id == 8)
             {
                 if (!nextGrenade) { return false; }
 
@@ -256,7 +244,7 @@ public class InventorySystem : NetworkBehaviour
                     nextGrenade = false;
                     GameObject grenade = Player.transform.GetChild(0).gameObject;
 
-                    grenade.gameObject.transform.GetChild(0).gameObject.GetComponent<GunComponent>().Cmd_Throw_Grenade(Player);
+                    //grenade.gameObject.transform.GetChild(0).gameObject.GetComponent<GunComponent>().Cmd_Throw_grenade(Player);
                     
 
 
@@ -329,7 +317,7 @@ public class InventorySystem : NetworkBehaviour
         int next = current + 1;
         while (!map.ContainsKey(next))
         {
-            if (next == 6)
+            if (next == 5)
             {
                 next = 0;
             }
