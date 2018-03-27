@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Networking;
 using System;
 
 
 
 //TODO Fix gun prefabs by removing parent object.
 
-public class InventorySystem : MonoBehaviour
+public class InventorySystem : NetworkBehaviour
 {
     //keeps track of what guns are in each slot based on id
     //Pistol: 0
@@ -26,19 +27,19 @@ public class InventorySystem : MonoBehaviour
     private int current = 0;
 
     //Ammo limits
-    private int pistolLimit = 100;
-    private int shotgunLimit = 100;
-    private int sniperLimit = 100;
-    private int arLimit = 100;
-    private int smgLimit = 100;
+    private int pistolLimit = 120;
+    private int shotgunLimit = 40;
+    private int sniperLimit = 30;
+    private int arLimit = 120;
+    private int smgLimit = 135;
     private int grenadeLimit = 6;
 
     //clip sizes
-    private int pistolClip = 50;
-    private int shotgunClip = 50;
-    private int sniperClip = 50;
-    private int arClip = 50;
-    private int smgClip = 50;
+    private int pistolClip = 12;
+    private int shotgunClip = 8;
+    private int sniperClip = 6;
+    private int arClip = 30;
+    private int smgClip = 35;
 
     //Grenade vars
     //Handles grenade fire rate
@@ -123,6 +124,7 @@ public class InventorySystem : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!transform.parent.GetComponent<FPController>().HasAuthority()) { return; }
         Text[] canvas = transform.GetChild(0).gameObject.transform.GetComponentsInChildren<Text>();
         for (int i = 0; i < 6; ++i)
         {
@@ -132,7 +134,7 @@ public class InventorySystem : MonoBehaviour
         }
         if (Player == null)
         {   //If Player was not created yet try to find it again
-            Player = GameObject.Find("MattPlayer(Clone)");
+            Player = transform.parent.gameObject;
         }
         else if (!initialSet)
         {   //Give the player their starting pistol
@@ -254,7 +256,7 @@ public class InventorySystem : MonoBehaviour
                     nextGrenade = false;
                     GameObject grenade = Player.transform.GetChild(0).gameObject;
 
-                    grenade.gameObject.transform.GetChild(0).gameObject.GetComponent<GunComponent>().Throw_grenade(Player);
+                    grenade.gameObject.transform.GetChild(0).gameObject.GetComponent<GunComponent>().Cmd_Throw_Grenade(Player);
                     
 
 

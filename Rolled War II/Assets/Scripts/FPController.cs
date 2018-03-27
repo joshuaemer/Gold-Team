@@ -96,6 +96,10 @@ public class FPController : NetworkBehaviour {
         }
     }
 
+    public bool HasAuthority() {
+        return hasAuthority;
+    }
+
     [Command]
     void CmdUpdatePlayer(Vector3 pos, Quaternion rot) {
         transform.position = pos;

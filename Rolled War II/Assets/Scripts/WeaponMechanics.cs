@@ -36,7 +36,7 @@ public class WeaponMechanics : NetworkBehaviour
 
         //Get the Player's Inventory
 
-        inv = GameObject.Find("Inventory");
+        inv = transform.GetChild(1).gameObject;
         source = GetComponent<AudioSource>();
 
     }
@@ -96,16 +96,17 @@ public class WeaponMechanics : NetworkBehaviour
             }
         }
         //Checks if the current weapon is the grenade and if the weapon is cooled
-        else if (curr == 5 && weaponCooled)
+        else if (curr == 5)
         {
             if (Input.GetMouseButtonDown(0))
             {
-                StartCoroutine(waitForNSeconds(grenade_fireRate));
+                //StartCoroutine(waitForNSeconds(grenade_fireRate));
+                shoot();
             }
         }
         else
         {
-            Debug.LogError("ERR: Invalid curr value: " + curr + ".  Quitting....");
+            //Debug.LogError("ERR: Invalid curr value: " + curr + ".  Quitting....");
         }
     }
     /*waitForNSeconds(float N): Function that takes in a float argument called N, calls the shoot() function,
@@ -145,7 +146,7 @@ public class WeaponMechanics : NetworkBehaviour
             }
             else if (hit.transform.CompareTag("Monster"))
             {
-                hit.transform.gameObject.GetComponent<SkeletonMovement>().TakeDamage(50);
+                hit.transform.gameObject.GetComponent<SkeletonMovement>().TakeDamage(100);
             }
         }
     }

@@ -33,7 +33,7 @@ public class AIHandler : MonoBehaviour {
 
     //AI Info
     
-    private int ai_limit = 5;
+    private int ai_limit = 7;
     private int ai_count =0;
     
 

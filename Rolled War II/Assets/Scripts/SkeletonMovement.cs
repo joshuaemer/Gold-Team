@@ -10,7 +10,7 @@ public class SkeletonMovement : MonoBehaviour {
     public float speed =5f;
     public int damage = 100;
     private NavMeshAgent nav;
-    public int hitpoints = 1000;
+    public int hitpoints = 500;
     private GameObject AIHandler;
     //Check is an empty static game object that needs to have children that are also static and empty. The AI will follow go to each child to create a path.
     private GameObject check;
