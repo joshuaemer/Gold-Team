@@ -9610,12 +9610,7 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 114328825066879592, guid: 70f2142a2c23b4245bb8e606844bce12,
-        type: 2}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
-      value: 
-      objectReference: {fileID: 738001285}
-    - target: {fileID: 114187882026516016, guid: 70f2142a2c23b4245bb8e606844bce12,
+    - target: {fileID: 114538217234420582, guid: 70f2142a2c23b4245bb8e606844bce12,
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
       value: 
@@ -9625,20 +9620,16 @@ Prefab:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
       value: 
       objectReference: {fileID: 738001285}
-    - target: {fileID: 114538217234420582, guid: 70f2142a2c23b4245bb8e606844bce12,
+    - target: {fileID: 114187882026516016, guid: 70f2142a2c23b4245bb8e606844bce12,
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
       value: 
       objectReference: {fileID: 738001285}
-    - target: {fileID: 1901540015937500, guid: 70f2142a2c23b4245bb8e606844bce12, type: 2}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114855959451158266, guid: 70f2142a2c23b4245bb8e606844bce12,
+    - target: {fileID: 114328825066879592, guid: 70f2142a2c23b4245bb8e606844bce12,
         type: 2}
-      propertyPath: score
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
       value: 
-      objectReference: {fileID: 2039014610}
+      objectReference: {fileID: 738001285}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 70f2142a2c23b4245bb8e606844bce12, type: 2}
   m_IsPrefabParent: 0
@@ -17564,12 +17555,6 @@ Mesh:
   m_BakedConvexCollisionMesh: 
   m_BakedTriangleCollisionMesh: 
   m_MeshOptimized: 0
---- !u!114 &2039014610 stripped
-MonoBehaviour:
-  m_PrefabParentObject: {fileID: 114325856465317170, guid: 70f2142a2c23b4245bb8e606844bce12,
-    type: 2}
-  m_PrefabInternal: {fileID: 1069683705}
-  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
 --- !u!1 &2043743546
 GameObject:
   m_ObjectHideFlags: 0
