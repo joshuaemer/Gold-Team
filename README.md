@@ -61,9 +61,11 @@ YouTube video: https://youtu.be/LonUqTFIchg
 Release v0.2.0
 
 How to Run:
-  The Alpha Release now has support for Windows, Linux32 and Linux64. In the Gold Team folder extract the respective folder and execute the file listed below. 
+  The Alpha Release now has support for Windows, Linux32 and Linux64. 
 
 **IMPORTANT(Windows only) Do not run the exe titled Rolled War II v0.1.0.exe located in the Rolled War II folder as this is the prototype. Unless you wanted to run the protype for some reason then go for it.**
+
+In the Gold Team folder (The Parent Folder) extract the respective folder and execute the file listed below. 
 
     Windows: Folder: Windows.zip  Executable: RWII.exe
     Linux64: Folder: Linux 64.zip Executable: RWII.x86_64
@@ -84,7 +86,11 @@ It is also possible just to create the object and not add it to the prefab eithe
 
 **Contact username: joshuaemer**
 
+**Make the wheelchair move backwards slightly when the Player shoots. #52**
+Description:
+To make the game more realistic we need to improve our physics. Since the Players are in wheel chairs shooting a gun will push them backwards a little bit. The shooting takes place in the WeaponMechanics script in the shoot function. If the player was able to shoot and when they do apply a small force to the Player's rigid body component. The force must be an Impulse Force. The WeaponMechanics script is attached directly to the player so it will be easy to access it's rigid body.
 
+**Contact username: mjholder**
 
  
   
