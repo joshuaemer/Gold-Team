@@ -70,7 +70,10 @@ In the Gold Team folder (The Parent Folder) extract the respective folder and ex
     Windows: Folder: Windows.zip  Executable: RWII.exe
     Linux64: Folder: Linux 64.zip Executable: RWII.x86_64
     Linux32: Folder: Linux 32.zip Executable: RWII.x86
-    
+ To create a game select a game mode. To join an existing game select Join Game. Multiplayer is done over LAN only.
+**Controls:**
+	W/S will move the player forward and backwards. A/D will move the camera left and right. E will switch weapons, G will throw a grenade and Esc will pause the game.
+To see these controls in game, hit Esc and click controls.
 ### Help Wanted
   There are 3 issuses with a help wanted tag they are as follows:
   
