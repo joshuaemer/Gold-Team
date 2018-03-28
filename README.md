@@ -49,7 +49,10 @@ Our MVP will include the following:
 
 
 ### Team Roles:
-See wiki Page 2.
+See wiki Page Team Roles.
+
+### Developer Documentation:
+See wiki Page Developer Documentation.
 
 
   
