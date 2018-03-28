@@ -104,8 +104,10 @@ To make the game more realistic we need to improve our physics. Since the Player
 
 **Contact username: mjholder**
 
- 
-  
+**Implement the ability to change fire rates on certain guns. #54**
+Description: 
+When the player has certain weapons, give the ability to change fire rates (semi-auto, auto, and burst possibly) upon pressing the 'f' key. This functionality will only work on certain weapons (the M4, and the AK-47). Each one of those should have semi-auto and fully automatic (with the M4 and/or the AK-47 having an optional burst fire, in which case the 'f' key just cycles through the different options).  This will not apply to the pistol, shotgun, sniper rifle, or grenades.
 
+**Contact username: rdsandid**
   
 
