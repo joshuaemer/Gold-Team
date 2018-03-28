@@ -87,18 +87,20 @@ To see these controls in game, hit Esc and click controls.
  **Muzzle Flashes #38** 
  Description:
  This task will involve using a particle system to create muzzle flashes when a player shoots.
-To do this you will need to add a empty game object with a particle system component to each gun prefab. It is very important that this object is NOT the first child of the gun or it will break functionality.
+To do this you will need to add a empty game object with a particle system component to each gun prefab Shotgun,Sniper,Pistol,SMG,AK-47. It is very important that this object is NOT the first child of the gun or it will break functionality.
 To edit the prefab first drag it into the scene create the changes and hit apply in the inspector window.
 
-The shoot function is called in the weapon mechanics script. It is defined in inventory system. Upon shooting the script should retrieve the particle system component from the child and play it for a short time. This should not be done when the weapon id==5 as this is the grenade.
+The shoot function is called in the weapon mechanics script. It is defined in WeponMechanics.cs and called in InventorySystem.cs in fire(). Upon shooting the script should retrieve the particle system component from the child and play it for a short time. This should not be done when the weapon id==5 as this is the grenade. WeponMechanics is attached to the Player and the Player's first child is always it's currently equipped weapon. transform.GetChild(index).gameObject will return the GameObject of the child at index. To obtain a specific transform of an object use <Name of the gameobject whose transform you want to use>.transform. Not putting this in front of the GetChild function will use the transform of the object that the script is attached to. Use this function as many times as needed to get the correct object.
 
 It is also possible just to create the object and not add it to the prefab either way it will work
+
+The muzzle flash should only appear if the charcter succesfully shot. In shoot() there is an if statement which determines this so the code should be placed inside that block.
 
 **Contact username: joshuaemer**
 
 **Make the wheelchair move backwards slightly when the Player shoots. #52**
 Description:
-To make the game more realistic we need to improve our physics. Since the Players are in wheel chairs shooting a gun will push them backwards a little bit. The shooting takes place in the WeaponMechanics script in the shoot function. If the player was able to shoot and when they do apply a small force to the Player's rigid body component. The force must be an Impulse Force. The WeaponMechanics script is attached directly to the player so it will be easy to access it's rigid body.
+To make the game more realistic we need to improve our physics. Since the Players are in wheel chairs shooting a gun will push them backwards a little bit. The shooting takes place in the WeaponMechanics script in the shoot function. If the player was able to shoot and when they do apply a small force to the Player's rigid body component. The force must be an Impulse Force. The WeaponMechanics script is attached directly to the player so it will be easy to access it's rigid body. <Gameobject you want to use>.GetComponent<Name of Component>() will get a component for you. 
 
 **Contact username: mjholder**
 
