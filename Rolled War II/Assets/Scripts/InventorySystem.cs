@@ -56,6 +56,9 @@ public class InventorySystem : NetworkBehaviour
     //Determines if the initial gun has been set
     private bool initialSet = false;
 
+    //slots corrsponding to gun ids
+    private ArrayList id_slots = new ArrayList{ 0 };
+
 
 
 
@@ -153,6 +156,7 @@ public class InventorySystem : NetworkBehaviour
                 if (map.ContainsKey(1))
                 {
                     ((ArrayList)map[1])[2] = shotgunLimit;
+                    
 
                 }
                 else
@@ -161,6 +165,7 @@ public class InventorySystem : NetworkBehaviour
                     map.Add(id, new ArrayList { free_slot, shotgunClip, shotgunLimit });
                     slots[free_slot] = format(id);
                     free_slot += 1;
+                    id_slots.Add(id);
                 }
                 break;
             case 2:
@@ -175,6 +180,7 @@ public class InventorySystem : NetworkBehaviour
                     map.Add(id, new ArrayList { free_slot, sniperClip, sniperLimit });
                     slots[free_slot] = format(id);
                     free_slot += 1;
+                    id_slots.Add(id);
                 }
                 break;
 
@@ -190,6 +196,7 @@ public class InventorySystem : NetworkBehaviour
                     map.Add(id, new ArrayList { free_slot, arClip, arLimit });
                     slots[free_slot] = format(id);
                     free_slot += 1;
+                    id_slots.Add(id);
                 }
                 break;
             case 4:
@@ -204,7 +211,10 @@ public class InventorySystem : NetworkBehaviour
                     map.Add(id, new ArrayList { free_slot, smgClip, smgLimit });
                     slots[free_slot] = format(id);
                     free_slot += 1;
+                    id_slots.Add(id);
                 }
+                break;
+            case 5:
                 break;
             default:
                 print("ERROR INVALID GUN ID" + id.ToString());
@@ -314,20 +324,18 @@ public class InventorySystem : NetworkBehaviour
     public int switchWeapon()
     {
         int last = current;
-        int next = current + 1;
-        while (!map.ContainsKey(next))
+        //Get the currenly equipped weapon's index
+        int next_index = (int)((ArrayList)map[current])[0] + 1;
+        
+        if (next_index == id_slots.Count)
         {
-            if (next == 5)
-            {
-                next = 0;
-            }
-            else
-            {
-                next += 1;
-            }
+            next_index = 0;
         }
+       
+       
 
-        current = next;
+        
+        current = (int)id_slots[next_index];
         //Needs to be orginally set to null
 
         setWeapon(current);
@@ -403,6 +411,13 @@ public class InventorySystem : NetworkBehaviour
 
     public bool HasAmmoLeft(int id)
     {
-        return (int)((ArrayList)map[id])[1] > 0;
+        //return (int)((ArrayList)map[id])[1] > 0;
+        return true;
+    }
+
+    void printIDSlots()
+    { String r = "";
+        for(int i = 0; i<id_slots.Count; ++i) { r += id_slots[i]; r += " , "; }
+        print(r);
     }
 }
