@@ -610,6 +610,7 @@ GameObject:
   - component: {fileID: 114041768627221384}
   - component: {fileID: 195937705962480952}
   - component: {fileID: 65423719653287326}
+  - component: {fileID: 114099423289018370}
   m_Layer: 0
   m_Name: Skeleton
   m_TagString: Monster
@@ -1224,7 +1225,38 @@ MonoBehaviour:
   speed: 2
   damage: 100
   hitpoints: 500
-  check: {fileID: 0}
+--- !u!114 &114099423289018370
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1948197233251528}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 111
+    i1: 17
+    i2: 145
+    i3: 176
+    i4: 24
+    i5: 18
+    i6: 129
+    i7: 4
+    i8: 152
+    i9: 69
+    i10: 94
+    i11: 167
+    i12: 22
+    i13: 79
+    i14: 62
+    i15: 134
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 0
 --- !u!137 &137916850500303848
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

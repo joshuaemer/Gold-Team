@@ -1,15 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-//3/25/2018
-//Josh: Note to self TODO 
-
-//can't set inv next greadnade to true so it can fire a grenade again until right before this object is destroyed
-//Next steps will be explsion and damage
+using UnityEngine.Networking;
 
 
-public class GunComponent : MonoBehaviour {
+public class GunComponent : NetworkBehaviour {
     public int id;//The id of the weapon
 
     
@@ -26,8 +21,8 @@ public class GunComponent : MonoBehaviour {
     private GameObject new_grenade; // The next grenade
     private float blast_scale = 7f;// Scale where damage will be done
     private bool damageDealt = false; // Make sure damage is only dealt once
-   
-    
+
+    private float timer;
 
     //For creating the place holder object
     private Vector3 create_pos;
@@ -47,9 +42,9 @@ public class GunComponent : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if(inv == null)
+        if(inv == null && transform.parent.parent != null)
         {
-            inv = GameObject.Find("Inventory");
+            inv = transform.parent.parent.GetChild(1).gameObject;
         }
         //Update is only used for grenades
 
@@ -64,12 +59,13 @@ public class GunComponent : MonoBehaviour {
                 grenade.transform.parent = null;
                 isChild = false;
                
-                CreatePlaceHolder();
             }
             //Wait until the grenade has stopped moving
 
-            else if (!IsMoving() || hasLanded)
+            else if (Time.time - timer >= 3)
             {
+                print("IsMoving: " + IsMoving());
+                print("hasLanded: " + hasLanded);
 
                 //Remove the old grenades rigid body
                 Destroy(grenade.GetComponent<Rigidbody>());
@@ -112,22 +108,50 @@ public class GunComponent : MonoBehaviour {
     {
         id = new_id;
     }
-    
 
-    //Throws the grendade will be called in fire in Inventory System
+    public void Throw_grenade(GameObject Player) {
+        //Make sure a new grenade cannot be thrown yet
+
+        //Function should not be called if the weapon is not a grenade
+        if (id != 5) { return; }
+
+        _Player = Player;
+        create_pos = grenade.transform.localPosition;
+        create_rot = grenade.transform.localRotation;
+
+
+
+
+        //Giving the object a rigid body so that we may add force to it
+        grenade.gameObject.AddComponent<Rigidbody>();
+        //Finding the objects position and adding to its y to put an angle on it.
+        Vector3 dir = _Player.transform.forward;
+        dir.y += 1;
+
+        grenade.gameObject.GetComponent<Rigidbody>().AddForce(dir * g_force, ForceMode.Impulse);
+        isThrown = true;
+        grenade.transform.GetChild(0).gameObject.AddComponent<BoxCollider>();
+        grenade.transform.parent = null;
+        isChild = false;
+
+        CreatePlaceHolder();
+        timer = Time.time;
+    }
+
+    //Throws the grenade will be called in fire in Inventory System
     //The player game object is passed so we know we are using the correct player object
-
-    public void Throw_grenade(GameObject Player)
+    [Command]
+    public void Cmd_Throw_grenade(GameObject Player)
     {
         //Make sure a new grenade cannot be thrown yet
        
-        //Fucntion should not be called if the weapon is not a grenade
+        //Function should not be called if the weapon is not a grenade
         if(id != 5) { return; }
 
         _Player = Player;
        create_pos = grenade.transform.localPosition;
        create_rot = grenade.transform.localRotation;
-
+       
         
         
         
@@ -144,6 +168,7 @@ public class GunComponent : MonoBehaviour {
         isChild = false;
 
         CreatePlaceHolder();
+        timer = Time.time;
     }
 
     private bool InRange(int limit, Vector3 otherPos)
@@ -203,10 +228,10 @@ public class GunComponent : MonoBehaviour {
         }
     }
     private void OnDestroy()
-    { GameObject inventory = GameObject.Find("Inventory");
-        if (inventory != null)
+    { 
+        if (inv != null)
         {
-            inventory.GetComponent<InventorySystem>().setNextGrenade(true);
+            inv.GetComponent<InventorySystem>().setNextGrenade(true);
         }
     }
 }

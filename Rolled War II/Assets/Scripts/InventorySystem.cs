@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Networking;
 using System;
 
 
 
 //TODO Fix gun prefabs by removing parent object.
 
-public class InventorySystem : MonoBehaviour
+public class InventorySystem : NetworkBehaviour
 {
     //keeps track of what guns are in each slot based on id
     //Pistol: 0
@@ -26,19 +27,19 @@ public class InventorySystem : MonoBehaviour
     private int current = 0;
 
     //Ammo limits
-    private int pistolLimit = 100;
-    private int shotgunLimit = 100;
-    private int sniperLimit = 100;
-    private int arLimit = 100;
-    private int smgLimit = 100;
+    private int pistolLimit = 120;
+    private int shotgunLimit = 40;
+    private int sniperLimit = 30;
+    private int arLimit = 120;
+    private int smgLimit = 135;
     private int grenadeLimit = 6;
 
     //clip sizes
-    private int pistolClip = 50;
-    private int shotgunClip = 50;
-    private int sniperClip = 50;
-    private int arClip = 50;
-    private int smgClip = 50;
+    private int pistolClip = 12;
+    private int shotgunClip = 8;
+    private int sniperClip = 6;
+    private int arClip = 30;
+    private int smgClip = 35;
 
     //Grenade vars
     //Handles grenade fire rate
@@ -54,6 +55,9 @@ public class InventorySystem : MonoBehaviour
     public GameObject grenade_prefab;
     //Determines if the initial gun has been set
     private bool initialSet = false;
+
+    //slots corrsponding to gun ids
+    private ArrayList id_slots = new ArrayList{ 0 };
 
 
 
@@ -86,9 +90,6 @@ public class InventorySystem : MonoBehaviour
             case 4:
                 result += "SMG " + ammo;
                 break;
-            case 5:
-                result += "Grenade " + ((ArrayList)map[id])[1].ToString();
-                break;
         }
         if (id == current)
         {
@@ -103,8 +104,7 @@ public class InventorySystem : MonoBehaviour
 
         map = new Hashtable
         {
-            { 0, new ArrayList { 0, pistolClip, pistolLimit } },
-            { 5, new ArrayList { 5, grenadeLimit } }
+            { 0, new ArrayList { 0, pistolClip, pistolLimit } }
         };
 
 
@@ -113,7 +113,6 @@ public class InventorySystem : MonoBehaviour
         slots[2] = "Empty";
         slots[3] = "Empty";
         slots[4] = "Empty";
-        slots[5] = format(5);
         free_slot = 1;
 
 
@@ -123,8 +122,9 @@ public class InventorySystem : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!transform.parent.GetComponent<FPController>().HasAuthority()) { return; }
         Text[] canvas = transform.GetChild(0).gameObject.transform.GetComponentsInChildren<Text>();
-        for (int i = 0; i < 6; ++i)
+        for (int i = 0; i < 5; ++i)
         {
             //Update text based on slots array
             canvas[i].text = slots[i];
@@ -132,7 +132,7 @@ public class InventorySystem : MonoBehaviour
         }
         if (Player == null)
         {   //If Player was not created yet try to find it again
-            Player = GameObject.Find("MattPlayer(Clone)");
+            Player = transform.parent.gameObject;
         }
         else if (!initialSet)
         {   //Give the player their starting pistol
@@ -156,6 +156,7 @@ public class InventorySystem : MonoBehaviour
                 if (map.ContainsKey(1))
                 {
                     ((ArrayList)map[1])[2] = shotgunLimit;
+                    
 
                 }
                 else
@@ -164,6 +165,7 @@ public class InventorySystem : MonoBehaviour
                     map.Add(id, new ArrayList { free_slot, shotgunClip, shotgunLimit });
                     slots[free_slot] = format(id);
                     free_slot += 1;
+                    id_slots.Add(id);
                 }
                 break;
             case 2:
@@ -178,6 +180,7 @@ public class InventorySystem : MonoBehaviour
                     map.Add(id, new ArrayList { free_slot, sniperClip, sniperLimit });
                     slots[free_slot] = format(id);
                     free_slot += 1;
+                    id_slots.Add(id);
                 }
                 break;
 
@@ -193,6 +196,7 @@ public class InventorySystem : MonoBehaviour
                     map.Add(id, new ArrayList { free_slot, arClip, arLimit });
                     slots[free_slot] = format(id);
                     free_slot += 1;
+                    id_slots.Add(id);
                 }
                 break;
             case 4:
@@ -207,13 +211,10 @@ public class InventorySystem : MonoBehaviour
                     map.Add(id, new ArrayList { free_slot, smgClip, smgLimit });
                     slots[free_slot] = format(id);
                     free_slot += 1;
+                    id_slots.Add(id);
                 }
                 break;
             case 5:
-
-                ((ArrayList)map[5])[1] = (int)((ArrayList)map[5])[1] + 1;
-                slots[5] = format(id);
-
                 break;
             default:
                 print("ERROR INVALID GUN ID" + id.ToString());
@@ -228,7 +229,6 @@ public class InventorySystem : MonoBehaviour
     //Else True
     public bool Fire()
     {
-        
         int id = current;
 
        
@@ -237,7 +237,7 @@ public class InventorySystem : MonoBehaviour
         if (map.ContainsKey(id))
         {
             ammoInClip = (int)((ArrayList)map[id])[1];
-            if (id == 5)
+            if (id == 8)
             {
                 if (!nextGrenade) { return false; }
 
@@ -254,7 +254,7 @@ public class InventorySystem : MonoBehaviour
                     nextGrenade = false;
                     GameObject grenade = Player.transform.GetChild(0).gameObject;
 
-                    grenade.gameObject.transform.GetChild(0).gameObject.GetComponent<GunComponent>().Throw_grenade(Player);
+                    //grenade.gameObject.transform.GetChild(0).gameObject.GetComponent<GunComponent>().Cmd_Throw_grenade(Player);
                     
 
 
@@ -324,20 +324,18 @@ public class InventorySystem : MonoBehaviour
     public int switchWeapon()
     {
         int last = current;
-        int next = current + 1;
-        while (!map.ContainsKey(next))
+        //Get the currenly equipped weapon's index
+        int next_index = (int)((ArrayList)map[current])[0] + 1;
+        
+        if (next_index == id_slots.Count)
         {
-            if (next == 6)
-            {
-                next = 0;
-            }
-            else
-            {
-                next += 1;
-            }
+            next_index = 0;
         }
+       
+       
 
-        current = next;
+        
+        current = (int)id_slots[next_index];
         //Needs to be orginally set to null
 
         setWeapon(current);
@@ -413,6 +411,13 @@ public class InventorySystem : MonoBehaviour
 
     public bool HasAmmoLeft(int id)
     {
-        return (int)((ArrayList)map[id])[1] > 0;
+        //return (int)((ArrayList)map[id])[1] > 0;
+        return true;
+    }
+
+    void printIDSlots()
+    { String r = "";
+        for(int i = 0; i<id_slots.Count; ++i) { r += id_slots[i]; r += " , "; }
+        print(r);
     }
 }
