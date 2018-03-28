@@ -3,7 +3,6 @@ Group Name: Gold Team
 
 Project Name: Rolled War 2
 
-Scrum Board: https://docs.google.com/spreadsheets/d/1ISFcdACbTpMK2n_4ECj06FskVGkB-4ZWL4J_JPGMZYk/edit?usp=sharing
 
 Members:
 
@@ -52,18 +51,43 @@ Our MVP will include the following:
 ### Team Roles:
 See wiki Page 2.
 
-### Prototype
-YouTube video: https://youtu.be/-1yUjHhCJpI
 
-Release v0.1.0
-
-To run: Run the exe in the Rolled War II folder and select a game mode. To add another player to an existing game run the exe and select Join game. 
   
 
 
-### Prototype
-YouTube video: https://youtu.be/-1yUjHhCJpI
-Release v0.1.0
-To run: Run the exe in the Rolled War II folder and select a game mode. To add another player to an existing game run the exe and select Join game. 
+### Alpha
+YouTube video: https://youtu.be/LonUqTFIchg
+
+Release v0.2.0
+
+How to Run:
+  The Alpha Release now has support for Windows, Linux32 and Linux64. In the Gold Team folder extract the respective folder and execute the file listed below. 
+
+**IMPORTANT(Windows only) Do not run the exe titled Rolled War II v0.1.0.exe located in the Rolled War II folder as this is the prototype. Unless you wanted to run the protype for some reason then go for it.**
+
+    Windows: Folder: Windows.zip  Executable: RWII.exe
+    Linux64: Folder: Linux 64.zip Executable: RWII.x86_64
+    Linux32: Folder: Linux 32.zip Executable: RWII.x86
+    
+### Help Wanted
+  There are 3 issuses with a help wanted tag they are as follows:
+  
+ **Muzzle Flashes #38** 
+ Description:
+ This task will involve using a particle system to create muzzle flashes when a player shoots.
+To do this you will need to add a empty game object with a particle system component to each gun prefab. It is very important that this object is NOT the first child of the gun or it will break functionality.
+To edit the prefab first drag it into the scene create the changes and hit apply in the inspector window.
+
+The shoot function is called in the weapon mechanics script. It is defined in inventory system. Upon shooting the script should retrieve the particle system component from the child and play it for a short time. This should not be done when the weapon id==5 as this is the grenade.
+
+It is also possible just to create the object and not add it to the prefab either way it will work
+
+**Contact username: joshuaemer**
+
+
+
+ 
+  
+
   
 
