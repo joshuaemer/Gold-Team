@@ -172,7 +172,7 @@ public class SkeletonMovement : MonoBehaviour {
             Vector3 last_pos = transform.position;
             if (!dead)
             {
-                AIHandler.GetComponent<AIHandler>().Signal_death(last_pos);
+                AIHandler.GetComponent<AIHandler>().Signal_death(last_pos,isBoss);
                 Destroy(gameObject, gameObject.GetComponent<Animator>().GetCurrentAnimatorClipInfo(0).Length + 1.15f);
                 //Let the game object know this has died
                 dead = true;

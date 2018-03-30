@@ -5,7 +5,8 @@ using System;
 using UnityEngine.UI;
 
 public class AIHandler : MonoBehaviour {
-    
+    //Note to Self Josh
+    //Check update text function or boss prefab. Text is not updating correctly when boss is spawned.
     
     
     
@@ -35,6 +36,7 @@ public class AIHandler : MonoBehaviour {
     private int ai_limit = 2;
     private int ai_count =0;
     private int wave = 1;
+    private int old_wave;
     private Text AI_Text;
 
     
@@ -53,14 +55,23 @@ public class AIHandler : MonoBehaviour {
         check_Boss = transform.GetChild(1).gameObject;
         rand = new System.Random();
         create(false);
-        UpdateText();
+        UpdateText(false);
+        old_wave = wave;
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		if(ai_count == 0)
         {
-            print("all down");
+            //Then spawn Boss
+            if(old_wave == wave)
+            {
+                create(true);
+            }
+            else
+            {
+                create(false);
+            }
         }
 	}
 
@@ -103,10 +114,13 @@ public class AIHandler : MonoBehaviour {
     }
 
     //Signals the AI Handler that an AI has died
-    public void Signal_death(Vector3 create_pos)
+    public void Signal_death(Vector3 create_pos,bool isBoss)
     {
         ai_count -= 1;
-        UpdateText();
+       
+        UpdateText(isBoss);
+       
+        
         GameObject drop = null;
 
 
@@ -149,8 +163,17 @@ public class AIHandler : MonoBehaviour {
     }
 
     //Updats text to current values
-    private void UpdateText() {
-        AI_Text.text = "Wave: " + wave.ToString() + " Monsters Remaining: " + ai_count.ToString();
+    private void UpdateText(bool isBoss) {
+        String last;
+        if (isBoss)
+        {
+            last = "Boss";
+        }
+        else
+        {
+            last = ai_count.ToString();
+        }
+        AI_Text.text = "Wave: " + wave.ToString() + " Monsters Remaining: " + last;
     }
     
 }
