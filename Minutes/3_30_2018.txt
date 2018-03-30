@@ -1,0 +1,24 @@
+Gold Team Minutes 
+Date 3/30/2018 4:00 pm
+
+Attendance:
+All Members 
+
+Meeting Discussion:
+Discussed what we wish to change in MVP. We will make another release on Wednesday with bug fixes.
+
+
+Tasks Done Prior to Meeting:
+Matt: Added audio and synced grenades
+Josh: Created grenade throwing created Hot Fix
+Ryan: Fixed Weapon Fire Rates
+
+
+Tasks TODO before next meeting:
+Fix all assinged bugs be Wednesday.
+
+Matt: Lobbies and Respawn Features
+Josh: Bosses and AI Features
+Ryan: Have different guns deal different damgage
+
+
