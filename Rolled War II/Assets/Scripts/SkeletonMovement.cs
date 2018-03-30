@@ -51,7 +51,7 @@ public class SkeletonMovement : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void Update () {
+    void LateUpdate () {
         //Checks if player is within line of sight if not move to the next checkpoint
         if (foundPlayer && target!=null)
         {
