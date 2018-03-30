@@ -2,18 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.UI;
 
 public class AIHandler : MonoBehaviour {
     
-    //Make sure only one boss exists at a time
     
-    //Make sure boss only one boss exists at a time
-    //Boss should drop multiple objects
     
     
 
 
-
+    public GameObject skeleton_Boss_prefab;
     public GameObject skeleton_prefab;
     //Prefabs for all dropable objects
 
@@ -30,11 +28,15 @@ public class AIHandler : MonoBehaviour {
     private int drop_count = 8;
     //Check Point object
     private GameObject check;
+    private GameObject check_Boss;
 
     //AI Info
     
-    private int ai_limit = 7;
+    private int ai_limit = 2;
     private int ai_count =0;
+    private int wave = 1;
+    private Text AI_Text;
+
     
 
     //RNG
@@ -46,29 +48,53 @@ public class AIHandler : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+        AI_Text = transform.GetChild(2).gameObject.transform.GetComponentInChildren<Text>();
         check = transform.GetChild(0).gameObject;
+        check_Boss = transform.GetChild(1).gameObject;
         rand = new System.Random();
-        create();
+        create(false);
+        UpdateText();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		
+		if(ai_count == 0)
+        {
+            print("all down");
+        }
 	}
 
-    //Creates AI's up to ai_limit
-    void create()
+    //Creates AI's up to ai_limit or Bosses up to wave # depending on isBoss
+    void create(bool isBoss)
     {
         
         int rand_index;
         int rand_direction;
-        //Since randoms upper bound is exclusive it is set to childCount not childCount -1;
-        int bound = check.transform.childCount;
+        int limit;
+        int bound;
+        GameObject spawn;
+        GameObject points;
         GameObject monster;
-        while(ai_count<ai_limit)
+        //Since randoms upper bound is exclusive it is set to childCount not childCount -1;
+        if (isBoss)
+        {
+            points = check_Boss;
+            spawn = skeleton_Boss_prefab;
+            bound = check_Boss.transform.childCount;
+            limit = wave;
+        }
+        else
+        {
+            points = check;
+            spawn = skeleton_prefab;
+            bound = check.transform.childCount;
+            limit = ai_limit;
+        }
+        
+        while(ai_count<limit)
         {
             rand_index = rand.Next(0, bound);
-            monster =Instantiate(skeleton_prefab, check.transform.GetChild(rand_index).gameObject.transform.position,Quaternion.identity);
+            monster =Instantiate(spawn, points.transform.GetChild(rand_index).gameObject.transform.position,Quaternion.identity);
             rand_direction = rand.Next((bound-1) * -1, bound);
             monster.GetComponent<SkeletonMovement>().Set_direction(rand_direction);
             
@@ -80,7 +106,7 @@ public class AIHandler : MonoBehaviour {
     public void Signal_death(Vector3 create_pos)
     {
         ai_count -= 1;
-        
+        UpdateText();
         GameObject drop = null;
 
 
@@ -122,7 +148,9 @@ public class AIHandler : MonoBehaviour {
         
     }
 
-
-
+    //Updats text to current values
+    private void UpdateText() {
+        AI_Text.text = "Wave: " + wave.ToString() + " Monsters Remaining: " + ai_count.ToString();
+    }
     
 }

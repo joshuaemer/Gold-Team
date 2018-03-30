@@ -7,14 +7,16 @@ using UnityEngine.AI;
 
 public class SkeletonMovement : MonoBehaviour {
     private Animator anim;
-    public float speed =5f;
-    public int damage = 100;
+    public float speed;
+    public int damage;
+    
     private NavMeshAgent nav;
-    public int hitpoints = 500;
+    public int hitpoints;
+    public bool isBoss;
     private GameObject AIHandler;
     //Check is an empty static game object that needs to have children that are also static and empty. The AI will follow go to each child to create a path.
     private GameObject check;
-    //Which direction the player will follow the objects cannot have an absoulute value greater then the number of check's child objects -1
+    //Which direction the AI will follow the objects cannot have an absoulute value greater then the number of check's child objects -1
     
     private int direction;
     int speedHash;
@@ -39,7 +41,15 @@ public class SkeletonMovement : MonoBehaviour {
     // Use this for initialization
     void Start () {
         AIHandler = GameObject.Find("AIMasterHandler").gameObject;
-        check =AIHandler.transform.GetChild(0).gameObject;
+        if (isBoss)
+        {
+            check = AIHandler.transform.GetChild(1).gameObject;
+        }
+        else
+        {
+            check = AIHandler.transform.GetChild(0).gameObject;
+        }
+        
         nav = GetComponent<NavMeshAgent>();
         speedHash = Animator.StringToHash("Speed");
         attackHash = Animator.StringToHash("Attack");
@@ -51,7 +61,7 @@ public class SkeletonMovement : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void Update () {
+    void LateUpdate () {
         //Checks if player is within line of sight if not move to the next checkpoint
         if (foundPlayer && target!=null)
         {
