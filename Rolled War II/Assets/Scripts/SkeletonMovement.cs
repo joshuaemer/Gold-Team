@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-
+//Note to self Josh, Boss is not going to attack state.
 
 public class SkeletonMovement : MonoBehaviour {
     private Animator anim;
@@ -30,7 +30,7 @@ public class SkeletonMovement : MonoBehaviour {
     int lineOfSight = 20;
     bool foundPlayer = false;
     bool isFacing = false;
-    //Offsets the ray cast + for normal monsters, - for boss
+    //Offsets the ray cast 
     private float offset;
     
 
@@ -47,12 +47,14 @@ public class SkeletonMovement : MonoBehaviour {
         if (isBoss)
         {
             check = AIHandler.transform.GetChild(1).gameObject;
-            offset = -0.5f;
+            offset = 1.0f;
+            
         }
         else
         {
             check = AIHandler.transform.GetChild(0).gameObject;
-            offset = 1.0f;
+            offset = 0.5f;
+            
         }
         
         nav = GetComponent<NavMeshAgent>();
@@ -70,6 +72,7 @@ public class SkeletonMovement : MonoBehaviour {
         //Checks if player is within line of sight if not move to the next checkpoint
         if (foundPlayer && target!=null)
         {
+            print("found");
             if (InRange(2, target.transform.position))
             {
                 //If the skeleton is not facing the player then make it face the player
@@ -131,13 +134,33 @@ public class SkeletonMovement : MonoBehaviour {
             {
                 
 
+
                 if (hit.transform.CompareTag("Player"))
                 {
-                    
+
                     foundPlayer = true;
                     target = hit.transform.gameObject;
                     nav.SetDestination(target.transform.position);
-                    
+
+                }
+                //Boss has 2 casts this is beacuse the boss is tall
+                else if (isBoss)
+                {
+                    Debug.DrawRay(new Vector3(transform.position.x, transform.position.y -2, transform.position.z), transform.forward.normalized * lineOfSight, Color.green);
+                    if (Physics.Raycast(new Vector3(transform.position.x, transform.position.y -2, transform.position.z), transform.forward, out hit, lineOfSight))
+                    {
+
+
+                        if (hit.transform.CompareTag("Player"))
+                        {
+
+                            foundPlayer = true;
+                            target = hit.transform.gameObject;
+                            nav.SetDestination(target.transform.position);
+
+                        }
+
+                    }
                 }
             }
             if (!foundPlayer)
