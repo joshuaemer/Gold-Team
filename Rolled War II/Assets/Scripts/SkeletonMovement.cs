@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-//Note to self Josh, Boss is not going to attack state.
+
 
 public class SkeletonMovement : MonoBehaviour {
     private Animator anim;
@@ -32,7 +32,8 @@ public class SkeletonMovement : MonoBehaviour {
     bool isFacing = false;
     //Offsets the ray cast 
     private float offset;
-    
+    //Once AI is within this range of the player the attack state is set
+    private float range;
 
     
     //Target is set to whatever player is seen first
@@ -48,12 +49,14 @@ public class SkeletonMovement : MonoBehaviour {
         {
             check = AIHandler.transform.GetChild(1).gameObject;
             offset = 1.0f;
+            range = 4.5f;
             
         }
         else
         {
             check = AIHandler.transform.GetChild(0).gameObject;
             offset = 0.5f;
+            range = 2f;
             
         }
         
@@ -72,9 +75,10 @@ public class SkeletonMovement : MonoBehaviour {
         //Checks if player is within line of sight if not move to the next checkpoint
         if (foundPlayer && target!=null)
         {
-            print("found");
-            if (InRange(2, target.transform.position))
+            
+            if (InRange(range, target.transform.position))
             {
+                print("in range");
                 //If the skeleton is not facing the player then make it face the player
                 if (!isFacing)
                 {
@@ -88,7 +92,7 @@ public class SkeletonMovement : MonoBehaviour {
                 {
                     
                     //Wait until the animation is over
-                    if(timeWaited- Time.deltaTime >= 2*anim.GetCurrentAnimatorClipInfo(0).Length && InRange(2, target.transform.position))
+                    if(timeWaited- Time.deltaTime >= 2*anim.GetCurrentAnimatorClipInfo(0).Length && InRange(range, target.transform.position))
                     {
                         Collider[] hitColliders = Physics.OverlapBox(gameObject.transform.position + new Vector3(1,0,1), transform.localScale / 2, Quaternion.identity);
                         for(int i =0; i<hitColliders.Length; ++i) {
@@ -190,7 +194,7 @@ public class SkeletonMovement : MonoBehaviour {
     }
 
     //Returns true if the enemy is atMost limit away from the otherPos in the x or y direction
-    private bool InRange(int limit, Vector3 otherPos)
+    private bool InRange(float limit, Vector3 otherPos)
     {
         Vector3 pos = transform.position;
         return (Mathf.Abs(pos.x - otherPos.x) <= limit && Mathf.Abs(pos.z - otherPos.z) <= limit) && Mathf.Abs(pos.y - otherPos.y)<5;

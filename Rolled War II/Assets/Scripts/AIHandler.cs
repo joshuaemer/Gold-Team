@@ -71,9 +71,10 @@ public class AIHandler : MonoBehaviour {
                 initSet = true;
             }
         }
+        //This means there are currently no AI in play
 		if(ai_count == 0)
         {
-            //Then spawn Boss
+            //Then spawn Boss, Wave gets incremented when all Bosses are killed
             if(old_wave == wave)
             {
                 create(true);
@@ -129,8 +130,17 @@ public class AIHandler : MonoBehaviour {
     public void Signal_death(Vector3 create_pos,bool isBoss)
     {
         ai_count -= 1;
-       
-        UpdateText(false);
+        if (!isBoss)
+        {
+            UpdateText(false);
+        }
+        else if( isBoss && ai_count == 0)
+        {
+            old_wave = wave;
+            wave += 1;
+            ai_limit = (int)(ai_limit * 1.5);
+            UpdateText(false);
+        }
        
         
         GameObject drop = null;

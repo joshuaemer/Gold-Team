@@ -1335,7 +1335,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0059719be774380418e56d1b953e6e35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 2
+  speed: 10
   damage: 200
   hitpoints: 1500
   isBoss: 1
