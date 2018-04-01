@@ -49,7 +49,7 @@ public class SkeletonMovement : MonoBehaviour {
         {
             check = AIHandler.transform.GetChild(1).gameObject;
             offset = 1.0f;
-            range = 4.5f;
+            range = 5.5f;
             
         }
         else
@@ -78,7 +78,7 @@ public class SkeletonMovement : MonoBehaviour {
             
             if (InRange(range, target.transform.position))
             {
-                print("in range");
+                
                 //If the skeleton is not facing the player then make it face the player
                 if (!isFacing)
                 {
@@ -133,7 +133,7 @@ public class SkeletonMovement : MonoBehaviour {
         }
         else
         {
-            Debug.DrawRay(new Vector3(transform.position.x, transform.position.y + offset, transform.position.z), transform.forward.normalized * lineOfSight, Color.green);
+            //Debug.DrawRay(new Vector3(transform.position.x, transform.position.y + offset, transform.position.z), transform.forward.normalized * lineOfSight, Color.green);
             if (Physics.Raycast(new Vector3(transform.position.x,transform.position.y+offset,transform.position.z), transform.forward, out hit,lineOfSight))
             {
                 
@@ -147,10 +147,22 @@ public class SkeletonMovement : MonoBehaviour {
                     nav.SetDestination(target.transform.position);
 
                 }
+                else if (hit.transform.CompareTag("Monster") && InRange(range + 2, hit.transform.position))
+                {
+                    nextPoint += direction;
+                    if (nextPoint > check.transform.childCount - 1)
+                    {
+                        nextPoint = 0;
+                    }
+                    else if (nextPoint < 0)
+                    {
+                        nextPoint = check.transform.childCount - 1;
+                    }
+                }
                 //Boss has 2 casts this is beacuse the boss is tall
                 else if (isBoss)
                 {
-                    Debug.DrawRay(new Vector3(transform.position.x, transform.position.y -2, transform.position.z), transform.forward.normalized * lineOfSight, Color.green);
+                    //Debug.DrawRay(new Vector3(transform.position.x, transform.position.y -2, transform.position.z), transform.forward.normalized * lineOfSight, Color.green);
                     if (Physics.Raycast(new Vector3(transform.position.x, transform.position.y -2, transform.position.z), transform.forward, out hit, lineOfSight))
                     {
 
@@ -162,6 +174,17 @@ public class SkeletonMovement : MonoBehaviour {
                             target = hit.transform.gameObject;
                             nav.SetDestination(target.transform.position);
 
+                        }
+                        else if (hit.transform.CompareTag("Monster") && InRange(range +2, hit.transform.position)){
+                            nextPoint += direction;
+                            if (nextPoint > check.transform.childCount - 1)
+                            {
+                                nextPoint = 0;
+                            }
+                            else if (nextPoint < 0)
+                            {
+                                nextPoint = check.transform.childCount - 1;
+                            }
                         }
 
                     }
@@ -226,5 +249,17 @@ public class SkeletonMovement : MonoBehaviour {
     //Used by AI handler sets the direction that the AI will follow the checkpoints
     public void Set_direction(int d) {
         direction = d;
+    }
+    public void increaseDamage(int delta)
+    {
+        damage += delta;
+
+    }
+
+
+    public void increaseHealth(int delta)
+    {
+        damage += delta;
+
     }
 }

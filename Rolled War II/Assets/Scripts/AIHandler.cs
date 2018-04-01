@@ -32,7 +32,7 @@ public class AIHandler : MonoBehaviour {
 
     //AI Info
     
-    private int ai_limit = 2;
+    private int ai_limit = 6;
     private int ai_count =0;
     private int wave = 1;
     private int old_wave;
@@ -44,7 +44,10 @@ public class AIHandler : MonoBehaviour {
 
     //RNG
     private System.Random rand;
-
+    //Delay Between rounds
+    private float waveDelay = 5f;
+    private float last_wave_end = 0f;
+    private bool spawnBoss = false;
     
     
 
@@ -74,16 +77,20 @@ public class AIHandler : MonoBehaviour {
         //This means there are currently no AI in play
 		if(ai_count == 0)
         {
-            //Then spawn Boss, Wave gets incremented when all Bosses are killed
-            if(old_wave == wave)
+            //Then spawn Boss, Wave gets incremented when all Bosses are killed spawn boss is set by the last normal AI to die
+            if(spawnBoss)
             {
                 create(true);
                 UpdateText(true);
+                spawnBoss = false;
 
             }
-            else
-            {
+            //Spawning of the next wave occurs waveDelay seconds after the previous wave. Increases the number of AI's by 50%
+            else if(Time.time - last_wave_end >= waveDelay) 
+            {   if(wave!= 1) { ai_limit = (int)(ai_limit * 1.5); }
+                
                 create(false);
+                UpdateText(false);
             }
         }
 	}
@@ -96,6 +103,8 @@ public class AIHandler : MonoBehaviour {
         int rand_direction;
         int limit;
         int bound;
+        int more_damage;
+        int more_health;
         GameObject spawn;
         GameObject points;
         GameObject monster;
@@ -105,7 +114,9 @@ public class AIHandler : MonoBehaviour {
             points = check_Boss;
             spawn = skeleton_Boss_prefab;
             bound = check_Boss.transform.childCount;
-            limit = wave;
+            limit = 1;
+            more_damage = 50;
+            more_health = 100;
         }
         else
         {
@@ -113,14 +124,28 @@ public class AIHandler : MonoBehaviour {
             spawn = skeleton_prefab;
             bound = check.transform.childCount;
             limit = ai_limit;
+            more_damage = 10;
+            more_health = 20;
         }
         
         while(ai_count<limit)
         {
             rand_index = rand.Next(0, bound);
             monster =Instantiate(spawn, points.transform.GetChild(rand_index).gameObject.transform.position,Quaternion.identity);
-            rand_direction = rand.Next((bound-1) * -1, bound);
+            if (isBoss)
+            {
+                rand_direction = rand.Next(-1, 2);
+            }
+            else
+            {
+                rand_direction = rand.Next((bound - 1) * -1, bound);
+            }
             monster.GetComponent<SkeletonMovement>().Set_direction(rand_direction);
+           
+            //Increase damage
+            monster.GetComponent<SkeletonMovement>().increaseDamage((wave - 1)*more_damage);
+            monster.GetComponent<SkeletonMovement>().increaseHealth((wave - 1) * more_health);
+           
             
             ai_count += 1;
         }
@@ -133,13 +158,20 @@ public class AIHandler : MonoBehaviour {
         if (!isBoss)
         {
             UpdateText(false);
+            if (ai_count == 0)
+            {
+                spawnBoss = true;
+            }
         }
         else if( isBoss && ai_count == 0)
         {
             old_wave = wave;
             wave += 1;
-            ai_limit = (int)(ai_limit * 1.5);
-            UpdateText(false);
+            AI_Text.text = "Wave: " + (wave-1).ToString() + " Complete";
+            last_wave_end = Time.time;
+
+
+
         }
        
         
@@ -180,6 +212,12 @@ public class AIHandler : MonoBehaviour {
         //Call this function upon death in skeleton movement
         create_pos.y += 1;
         Instantiate(drop, create_pos,Quaternion.identity);
+        //Boss will always drop health as well
+        if (isBoss)
+        {
+            
+            Instantiate(health_prefab, check.transform.GetChild(0).gameObject.transform.position, Quaternion.identity);
+        }
         
         
     }
