@@ -5,8 +5,7 @@ using System;
 using UnityEngine.UI;
 
 public class AIHandler : MonoBehaviour {
-    //Note to Self Josh
-    //Check update text function or boss prefab. Text is not updating correctly when boss is spawned.
+   
     
     
     
@@ -37,8 +36,10 @@ public class AIHandler : MonoBehaviour {
     private int ai_count =0;
     private int wave = 1;
     private int old_wave;
-    private Text AI_Text;
 
+    //Text
+    private Text AI_Text;
+    private bool initSet;
     
 
     //RNG
@@ -55,18 +56,29 @@ public class AIHandler : MonoBehaviour {
         check_Boss = transform.GetChild(1).gameObject;
         rand = new System.Random();
         create(false);
-        UpdateText(false);
+        
         old_wave = wave;
 	}
 	
 	// Update is called once per frame
 	void Update () {
+        //Sets AI text when player is spawned
+        if (!initSet)
+        {
+            if (GameObject.FindGameObjectWithTag("Player") != null)
+            {
+                UpdateText(false);
+                initSet = true;
+            }
+        }
 		if(ai_count == 0)
         {
             //Then spawn Boss
             if(old_wave == wave)
             {
                 create(true);
+                UpdateText(true);
+
             }
             else
             {
@@ -118,7 +130,7 @@ public class AIHandler : MonoBehaviour {
     {
         ai_count -= 1;
        
-        UpdateText(isBoss);
+        UpdateText(false);
        
         
         GameObject drop = null;

@@ -30,6 +30,9 @@ public class SkeletonMovement : MonoBehaviour {
     int lineOfSight = 20;
     bool foundPlayer = false;
     bool isFacing = false;
+    //Offsets the ray cast + for normal monsters, - for boss
+    private float offset;
+    
 
     
     //Target is set to whatever player is seen first
@@ -44,10 +47,12 @@ public class SkeletonMovement : MonoBehaviour {
         if (isBoss)
         {
             check = AIHandler.transform.GetChild(1).gameObject;
+            offset = -0.5f;
         }
         else
         {
             check = AIHandler.transform.GetChild(0).gameObject;
+            offset = 1.0f;
         }
         
         nav = GetComponent<NavMeshAgent>();
@@ -82,7 +87,14 @@ public class SkeletonMovement : MonoBehaviour {
                     //Wait until the animation is over
                     if(timeWaited- Time.deltaTime >= 2*anim.GetCurrentAnimatorClipInfo(0).Length && InRange(2, target.transform.position))
                     {
-                        target.GetComponent<FPController>().TakeDamage(damage);
+                        Collider[] hitColliders = Physics.OverlapBox(gameObject.transform.position + new Vector3(1,0,1), transform.localScale / 2, Quaternion.identity);
+                        for(int i =0; i<hitColliders.Length; ++i) {
+                            if (hitColliders[i].gameObject.CompareTag("Player"))
+                            {
+                                target.GetComponent<FPController>().TakeDamage(damage);
+                            }
+                        }
+                       
                         timeWaited = 0;
                     }
                     else
@@ -114,9 +126,10 @@ public class SkeletonMovement : MonoBehaviour {
         }
         else
         {
-            if (Physics.Raycast(new Vector3(transform.position.x,transform.position.y+0.5f,transform.position.z), transform.forward, out hit,lineOfSight))
+            Debug.DrawRay(new Vector3(transform.position.x, transform.position.y + offset, transform.position.z), transform.forward.normalized * lineOfSight, Color.green);
+            if (Physics.Raycast(new Vector3(transform.position.x,transform.position.y+offset,transform.position.z), transform.forward, out hit,lineOfSight))
             {
-                Debug.DrawRay(new Vector3(transform.position.x, transform.position.y + 3, transform.position.z), transform.forward.normalized * lineOfSight,Color.green);
+                
 
                 if (hit.transform.CompareTag("Player"))
                 {
@@ -157,7 +170,7 @@ public class SkeletonMovement : MonoBehaviour {
     private bool InRange(int limit, Vector3 otherPos)
     {
         Vector3 pos = transform.position;
-        return (Mathf.Abs(pos.x - otherPos.x) <= limit || Mathf.Abs(pos.z - otherPos.z) <= limit) && Mathf.Abs(pos.y - otherPos.y)<5;
+        return (Mathf.Abs(pos.x - otherPos.x) <= limit && Mathf.Abs(pos.z - otherPos.z) <= limit) && Mathf.Abs(pos.y - otherPos.y)<5;
     }
 
     public void TakeDamage(int damage)
