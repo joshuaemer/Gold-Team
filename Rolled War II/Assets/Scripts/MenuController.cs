@@ -8,6 +8,7 @@ public class MenuController : MonoBehaviour {
 
     private bool inGame = false;
     private bool toggle = false;
+    public GameObject mainCamera;
     public GameObject mainMenu;
     public GameObject playerMenu;
     public GameObject controllsMenu;
@@ -59,10 +60,8 @@ public class MenuController : MonoBehaviour {
             manager.StopClient();
         }
         inGame = false;
-        Camera.main.gameObject.SetActive(true);
-        mainMenu.SetActive(true);
         playerMenu.SetActive(false);
-        Camera.main.transform.SetPositionAndRotation(new Vector3(0f, 50f, 0f), Quaternion.Euler(90, 0, 0));
+        mainCamera.transform.SetPositionAndRotation(new Vector3(0f, 50f, 0f), Quaternion.Euler(90, 0, 0));
     }
 
     // Display Controlls
@@ -82,8 +81,13 @@ public class MenuController : MonoBehaviour {
         playerMenu.SetActive(false);
         controllsMenu.SetActive(false);
         gameOver.SetActive(true);
-        Camera.main.gameObject.SetActive(true);
+        mainMenu.SetActive(false);
+    }
+
+    public void ToMainMenu() {
+        gameOver.SetActive(false);
         mainMenu.SetActive(true);
+        mainCamera.SetActive(true);
     }
 
     // Wait for player to press ESC to bring up pause menu
