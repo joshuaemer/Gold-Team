@@ -1255,7 +1255,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
-  damage: 50
+  damage: 25
   hitpoints: 250
   isBoss: 0
 --- !u!137 &137208146432570412

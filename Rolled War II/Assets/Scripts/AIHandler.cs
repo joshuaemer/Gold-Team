@@ -33,11 +33,12 @@ public class AIHandler : MonoBehaviour {
 
     //AI Info
     
-    private int ai_limit = 6;
+    private int ai_limit = 3;
     private int ai_count =0;
     private int wave = 1;
     private int old_wave;
-
+    //A list of all enemys spawned by the boss. These will be killed when the boss is destroyed
+    private ArrayList boss_children; 
     //Text
     private Text AI_Text;
     private bool initSet;
@@ -62,6 +63,7 @@ public class AIHandler : MonoBehaviour {
         create(false,false,null);
         
         old_wave = wave;
+        boss_children = new ArrayList();
 	}
 	
 	// Update is called once per frame
@@ -78,7 +80,7 @@ public class AIHandler : MonoBehaviour {
         //This means there are currently no AI in play
 		if(ai_count == 0)
         {
-            //Then spawn Boss, Wave gets incremented when all Bosses are killed spawn boss is set by the last normal AI to die
+            //Then spawn Boss, Wave gets incremented when  Bosses is killed spawn boss is set by the last normal AI to die
             if(spawnBoss)
             {
                 create(true,false,null);
@@ -90,7 +92,7 @@ public class AIHandler : MonoBehaviour {
             else if(Time.time - last_wave_end >= waveDelay) 
             {   if(wave!= 1) { ai_limit = (int)(ai_limit * 1.5); }
                 
-                create(false,true,null);
+                create(false,false,null);
                 UpdateText(false);
             }
         }
@@ -111,6 +113,8 @@ public class AIHandler : MonoBehaviour {
         GameObject spawn;
         GameObject points;
         GameObject monster;
+        //The incrementer for the loop
+        int inc = 0;
         //Since randoms upper bound is exclusive it is set to childCount not childCount -1;
         if (isBoss)
         {
@@ -120,6 +124,8 @@ public class AIHandler : MonoBehaviour {
             limit = 1;
             more_damage = 50;
             more_health = 100;
+            inc = ai_count;
+
         }
         else if (!isBoss && !isMini)
         {
@@ -129,6 +135,7 @@ public class AIHandler : MonoBehaviour {
             limit = ai_limit;
             more_damage = 10;
             more_health = 20;
+            inc = ai_count;
         }
         else {
             points = check;
@@ -140,7 +147,7 @@ public class AIHandler : MonoBehaviour {
 
 
         }
-        while (ai_count < limit)
+        while (inc < limit)
         {
             rand_index = rand.Next(0, bound);
             monster = Instantiate(spawn, points.transform.GetChild(rand_index).gameObject.transform.position, Quaternion.identity);
@@ -156,21 +163,30 @@ public class AIHandler : MonoBehaviour {
 
             //Increase damage
             monster.GetComponent<SkeletonMovement>().increaseDamage((wave - 1) * more_damage);
+            
             monster.GetComponent<SkeletonMovement>().increaseHealth((wave - 1) * more_health);
             if (isMini)
             {
                 //Sets the mini to the boss that spawned it's target.
                 monster.GetComponent<SkeletonMovement>().setTarget(target);
+                //Getting null reference expection
+                boss_children.Add(monster);
             }
-
-            ai_count += 1;
+            else
+            {
+                ai_count += 1;
+            }
+            inc += 1;
         }
 
         
     }
-    //TODO call this when bosses health is under half. It should be called in skelton Movment
+    //Spawns the mini skeletons, if target is null they will automatically be assigned one
     public void spawnMinis(GameObject target)
-    {
+    {   if(target == null)
+        {
+            target = GameObject.FindGameObjectWithTag("Player");
+        }
         create(false, true,target);
     }
 

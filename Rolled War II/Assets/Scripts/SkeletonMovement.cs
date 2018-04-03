@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-
+//TODO Make sure mini's can hit
+//Then make sure they die when the boss dies
 
 public class SkeletonMovement : MonoBehaviour {
     private Animator anim;
@@ -12,6 +13,7 @@ public class SkeletonMovement : MonoBehaviour {
     
     private NavMeshAgent nav;
     public int hitpoints;
+    private int max_hitpoints;
     public bool isBoss;
     private GameObject AIHandler;
     //Check is an empty static game object that needs to have children that are also static and empty. The AI will follow go to each child to create a path.
@@ -25,9 +27,10 @@ public class SkeletonMovement : MonoBehaviour {
     int nextPoint = 0;
 
     bool dead = false;
+    bool hasMinions = false;
     //Raycasts Vars
     RaycastHit hit;
-    int lineOfSight = 20;
+    int lineOfSight = 50;
     bool foundPlayer = false;
     bool isFacing = false;
     //Offsets the ray cast 
@@ -36,7 +39,7 @@ public class SkeletonMovement : MonoBehaviour {
     private float range;
 
     
-    //Target is set to whatever player is seen first
+    //Target is set to whichever player is seen first
     private GameObject target;
 
     //Time before damage is dealt
@@ -59,7 +62,7 @@ public class SkeletonMovement : MonoBehaviour {
             range = 2f;
             
         }
-        
+        max_hitpoints = hitpoints;
         nav = GetComponent<NavMeshAgent>();
         speedHash = Animator.StringToHash("Speed");
         attackHash = Animator.StringToHash("Attack");
@@ -72,7 +75,16 @@ public class SkeletonMovement : MonoBehaviour {
 
     // Update is called once per frame
     void LateUpdate () {
-        //Checks if player is within line of sight if not move to the next checkpoint
+        
+        if (isBoss)
+        {
+            if(max_hitpoints/2>hitpoints && !hasMinions)
+            {
+                print("Should be spawning");
+                hasMinions = true;
+                AIHandler.GetComponent<AIHandler>().spawnMinis(target);
+            }
+        }
         if (foundPlayer && target!=null)
         {
             
