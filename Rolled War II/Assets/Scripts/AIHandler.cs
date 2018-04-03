@@ -13,6 +13,7 @@ public class AIHandler : MonoBehaviour {
 
     public GameObject skeleton_Boss_prefab;
     public GameObject skeleton_prefab;
+    public GameObject skeleton_mini_prefab;
     //Prefabs for all dropable objects
 
     public GameObject speed_prefab;
@@ -58,7 +59,7 @@ public class AIHandler : MonoBehaviour {
         check = transform.GetChild(0).gameObject;
         check_Boss = transform.GetChild(1).gameObject;
         rand = new System.Random();
-        create(false);
+        create(false,false,null);
         
         old_wave = wave;
 	}
@@ -80,7 +81,7 @@ public class AIHandler : MonoBehaviour {
             //Then spawn Boss, Wave gets incremented when all Bosses are killed spawn boss is set by the last normal AI to die
             if(spawnBoss)
             {
-                create(true);
+                create(true,false,null);
                 UpdateText(true);
                 spawnBoss = false;
 
@@ -89,16 +90,18 @@ public class AIHandler : MonoBehaviour {
             else if(Time.time - last_wave_end >= waveDelay) 
             {   if(wave!= 1) { ai_limit = (int)(ai_limit * 1.5); }
                 
-                create(false);
+                create(false,true,null);
                 UpdateText(false);
             }
         }
 	}
 
-    //Creates AI's up to ai_limit or Bosses up to wave # depending on isBoss
-    void create(bool isBoss)
+    //Creates AI's up to ai_limit or Boss depending on isBoss
+    //Or creates the bosses minis at the normal skeltons check
+    //target should be null unless isMini is true
+    void create(bool isBoss, bool isMini,GameObject target)
     {
-        
+
         int rand_index;
         int rand_direction;
         int limit;
@@ -118,7 +121,7 @@ public class AIHandler : MonoBehaviour {
             more_damage = 50;
             more_health = 100;
         }
-        else
+        else if (!isBoss && !isMini)
         {
             points = check;
             spawn = skeleton_prefab;
@@ -127,11 +130,20 @@ public class AIHandler : MonoBehaviour {
             more_damage = 10;
             more_health = 20;
         }
-        
-        while(ai_count<limit)
+        else {
+            points = check;
+            spawn = skeleton_mini_prefab;
+            bound = check.transform.childCount;
+            limit = wave *2;
+            more_damage = 0;
+            more_health = 0;
+
+
+        }
+        while (ai_count < limit)
         {
             rand_index = rand.Next(0, bound);
-            monster =Instantiate(spawn, points.transform.GetChild(rand_index).gameObject.transform.position,Quaternion.identity);
+            monster = Instantiate(spawn, points.transform.GetChild(rand_index).gameObject.transform.position, Quaternion.identity);
             if (isBoss)
             {
                 rand_direction = rand.Next(-1, 2);
@@ -141,15 +153,27 @@ public class AIHandler : MonoBehaviour {
                 rand_direction = rand.Next((bound - 1) * -1, bound);
             }
             monster.GetComponent<SkeletonMovement>().Set_direction(rand_direction);
-           
+
             //Increase damage
-            monster.GetComponent<SkeletonMovement>().increaseDamage((wave - 1)*more_damage);
+            monster.GetComponent<SkeletonMovement>().increaseDamage((wave - 1) * more_damage);
             monster.GetComponent<SkeletonMovement>().increaseHealth((wave - 1) * more_health);
-           
-            
+            if (isMini)
+            {
+                //Sets the mini to the boss that spawned it's target.
+                monster.GetComponent<SkeletonMovement>().setTarget(target);
+            }
+
             ai_count += 1;
         }
+
+        
     }
+    //TODO call this when bosses health is under half. It should be called in skelton Movment
+    public void spawnMinis(GameObject target)
+    {
+        create(false, true,target);
+    }
+
 
     //Signals the AI Handler that an AI has died
     public void Signal_death(Vector3 create_pos,bool isBoss)

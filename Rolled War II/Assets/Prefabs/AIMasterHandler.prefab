@@ -325,7 +325,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1674746845806062}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 4.4, y: -4.2, z: -44.9}
+  m_LocalPosition: {x: 4.4, y: 0, z: -31.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4440405051018530}
@@ -639,6 +639,8 @@ MonoBehaviour:
   skeleton_Boss_prefab: {fileID: 1871033130413638, guid: 65ca414a21813ee4ca9218f16b3835c4,
     type: 2}
   skeleton_prefab: {fileID: 1948197233251528, guid: 6f1191b01812810498455ea7164f3e86,
+    type: 2}
+  skeleton_mini_prefab: {fileID: 1412645498903250, guid: 8068cd86b09869d42ac7b2dc5a3519a4,
     type: 2}
   speed_prefab: {fileID: 1058440114005950, guid: f59593954a130644db05288d726c8717,
     type: 2}

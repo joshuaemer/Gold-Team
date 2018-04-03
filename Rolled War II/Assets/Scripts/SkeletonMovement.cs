@@ -262,4 +262,14 @@ public class SkeletonMovement : MonoBehaviour {
         damage += delta;
 
     }
+    //Used when the boss spawns minis to set it's target to the player
+    public void setTarget(GameObject new_target)
+    {
+        foundPlayer = true;
+        target = new_target;
+    }
+    //returns the located player else returns null
+    public GameObject getTarget() {
+        return target;
+    }
 }
