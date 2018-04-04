@@ -15,6 +15,7 @@ public class SkeletonMovement : MonoBehaviour {
     public int hitpoints;
     private int max_hitpoints;
     public bool isBoss;
+    public bool isMini;
     private GameObject AIHandler;
     //Check is an empty static game object that needs to have children that are also static and empty. The AI will follow go to each child to create a path.
     private GameObject check;
@@ -247,7 +248,11 @@ public class SkeletonMovement : MonoBehaviour {
             Vector3 last_pos = transform.position;
             if (!dead)
             {
-                AIHandler.GetComponent<AIHandler>().Signal_death(last_pos,isBoss);
+                AIHandler.GetComponent<AIHandler>().Signal_death(last_pos,isBoss,isMini);
+                if (isBoss)
+                {
+                    GetComponent<AudioSource>().Play();
+                }
                 Destroy(gameObject, gameObject.GetComponent<Animator>().GetCurrentAnimatorClipInfo(0).Length + 1.15f);
                 //Let the game object know this has died
                 dead = true;
@@ -283,5 +288,10 @@ public class SkeletonMovement : MonoBehaviour {
     //returns the located player else returns null
     public GameObject getTarget() {
         return target;
+    }
+    public void setDeath()
+    {
+        anim.SetBool(deathHash, true);
+        dead = true;
     }
 }

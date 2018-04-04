@@ -1337,8 +1337,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 10
   damage: 75
-  hitpoints: 2000
+  hitpoints: 5000
   isBoss: 1
+  isMini: 0
 --- !u!137 &137110932444968484
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

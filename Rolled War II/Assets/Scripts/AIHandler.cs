@@ -50,8 +50,9 @@ public class AIHandler : MonoBehaviour {
     private float waveDelay = 5f;
     private float last_wave_end = 0f;
     private bool spawnBoss = false;
-    
-    
+
+    //Boss Audio
+    public AudioSource rise;
 
 
 	// Use this for initialization
@@ -183,7 +184,9 @@ public class AIHandler : MonoBehaviour {
     }
     //Spawns the mini skeletons, if target is null they will automatically be assigned one
     public void spawnMinis(GameObject target)
-    {   if(target == null)
+    {
+        rise.Play();
+        if (target == null)
         {
             target = GameObject.FindGameObjectWithTag("Player");
         }
@@ -192,10 +195,15 @@ public class AIHandler : MonoBehaviour {
 
 
     //Signals the AI Handler that an AI has died
-    public void Signal_death(Vector3 create_pos,bool isBoss)
+    public void Signal_death(Vector3 create_pos,bool isBoss,bool isMini)
     {
-        ai_count -= 1;
-        if (!isBoss)
+        if (!isMini)
+        {
+            ai_count -= 1;
+        }
+        
+
+        if (!isBoss&&!isMini)
         {
             UpdateText(false);
             if (ai_count == 0)
@@ -213,50 +221,66 @@ public class AIHandler : MonoBehaviour {
 
 
         }
-       
-        
-        GameObject drop = null;
+
+        if (!isMini)
+        {
+            GameObject drop = null;
 
 
 
-        int id = rand.Next(0, drop_count);
+            int id = rand.Next(0, drop_count);
 
-        switch (id){
-            case 0:
-                drop = speed_prefab;
-                break;
-            case 1:
-                drop = health_prefab;
-                break;
-            case 2:
-                drop = pistol_prefab;
-                break;
-            case 3:
-                drop = sniper_prefab;
-                break;
-            case 4:
-                drop = shotgun_prefab;
-                break;
-            case 5:
-                drop = ak_prefab;
-                break;
-            case 6:
-                drop = grenade_prefab;
-                break;
-            case 7:
-                drop = smg_prefab;
-                break;
+            switch (id)
+            {
+                case 0:
+                    drop = speed_prefab;
+                    break;
+                case 1:
+                    drop = health_prefab;
+                    break;
+                case 2:
+                    drop = pistol_prefab;
+                    break;
+                case 3:
+                    drop = sniper_prefab;
+                    break;
+                case 4:
+                    drop = shotgun_prefab;
+                    break;
+                case 5:
+                    drop = ak_prefab;
+                    break;
+                case 6:
+                    drop = grenade_prefab;
+                    break;
+                case 7:
+                    drop = smg_prefab;
+                    break;
+            }
+
+            //Create drop here at create pos;
+            //Call this function upon death in skeleton movement
+            create_pos.y += 1;
+            Instantiate(drop, create_pos, Quaternion.identity);
         }
-
-        //Create drop here at create pos;
-        //Call this function upon death in skeleton movement
-        create_pos.y += 1;
-        Instantiate(drop, create_pos,Quaternion.identity);
-        //Boss will always drop health as well
+        //Boss will always spawn health as well
         if (isBoss)
         {
             
             Instantiate(health_prefab, check.transform.GetChild(0).gameObject.transform.position, Quaternion.identity);
+            //Destroy his children
+            for(int i =0; i<boss_children.Count; ++i)
+            {
+                GameObject current = (GameObject)boss_children[i];
+                if (current != null)
+                {
+                    current.GetComponent<SkeletonMovement>().setDeath();
+                    Signal_death(current.transform.position, false, true);
+                    Destroy(current, current.GetComponent<Animator>().GetCurrentAnimatorClipInfo(0).Length + 1.15f);
+                }
+            }
+            //Reset the list
+            boss_children = new ArrayList();
         }
         
         
