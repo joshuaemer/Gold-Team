@@ -18,7 +18,9 @@ Gitter: [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/
 
 ### Project Description:
 
+
   This project will be a first person shooter where the players and enemy's will be in wheel chairs. This will effect how the environment is laid out, how they interact with the environment and how they use their weapons. Players will only be able to use a pistol when moving and bigger guns when they are not since these will require both hands to be free. Players will be able to acquire new guns through various means. It will include both single and multilayer. It will be done using Unity and C# as well as Blender for graphics.
+
 
 ### MVP:
 Our MVP will include the following:
@@ -27,7 +29,9 @@ Our MVP will include the following:
  -  A UI that players can view there current inventory(in game) and choose game modes.
  - An AI that will be behave like other players.
  - An interactive environment with ramps, power ups(boosts), elevators and traps.
+
  - GameModes have now been changed to one hoard/Surival mode where you can play agasint both AI and player. This will be reflected in the Beta Release. 
+
  - Realistic wheel chair mechanics (ie. Players will not be able to use stairs).
  - Players will only be able to use a pistol when moving and will need to be stopped to use better guns.
  - A variety of guns with different benefits.
