@@ -36,6 +36,11 @@ public class MenuController : MonoBehaviour {
         }
 
         RefreshLobbies();
+        ConnectionConfig myConfig = new ConnectionConfig();
+        myConfig.AddChannel(QosType.Unreliable);
+        myConfig.AddChannel(QosType.UnreliableFragmented);
+        myConfig.MaxCombinedReliableMessageCount = 100;
+        myConfig.MaxCombinedReliableMessageSize = 500;
     }
 
     public void RefreshLobbies() {
