@@ -1,0 +1,22 @@
+Gold Team Minutes 
+Date 4/6/2018 4:00 pm
+
+
+Attendance:
+All members present
+
+Meeting Discussion:
+Merged all features that were done prior to the meeting.
+Prepared Presentation material.
+
+Tasks Done Prior to Meeting:
+All members fixed all non-trivial bugs assigned to them and created a new release.
+
+Josh: AI Bosses and Spawning has been completed
+Matt: Implemented Lobby system and changed game mode to reflect MVP change.
+Ryan: Fished gun damage.
+
+Tasks TODO before next meeting:
+Josh: Slow down wheel chair when using a gun other than pistol and add reload delay.
+Matt: More Audio
+Ryan: Player Model
