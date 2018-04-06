@@ -81,7 +81,7 @@ public class SkeletonMovement : MonoBehaviour {
         {
             if(max_hitpoints/2>hitpoints && !hasMinions)
             {
-                print("Should be spawning");
+                
                 hasMinions = true;
                 AIHandler.GetComponent<AIHandler>().spawnMinis(target);
             }
