@@ -9,14 +9,7 @@ public class PlayerConnector : NetworkBehaviour {
     // This is not for controlling the character
 
     public MenuController menu;
-
-    [SerializeField]
-    private int team = 0;
-
     public int score = 0;
-
-    private GameManager gm;
-    private string gameMode;
     private GameObject myPlayer;
 	// Use this for initialization
 	void Start () {
@@ -26,10 +19,7 @@ public class PlayerConnector : NetworkBehaviour {
         }
         // Tell the MenuController I, the client, did connect
         menu = GameObject.FindGameObjectWithTag("MenuController").GetComponent<MenuController>();
-        menu.ConfirmConnect();
         CmdSpawnUnit();
-        gm = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
-        gameMode = gm.GetGameType();
     }
 
     public GameObject PlayerPrefab;
