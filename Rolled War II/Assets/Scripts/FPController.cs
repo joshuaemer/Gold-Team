@@ -164,6 +164,7 @@ public class FPController : NetworkBehaviour {
             if (hitpoints < MaxHealth)
             {
                 hitpoints = Math.Min(hitpoints+100,MaxHealth);
+                hitpointsText.text = "HP = " + hitpoints.ToString();
 
             }
             other.transform.parent.gameObject.SetActive(false);
