@@ -137,16 +137,40 @@ public class WeaponMechanics : NetworkBehaviour
     [Command]
     void CmdShoot(Vector3 pos, Vector3 rot)
     {
+        float pistol_damage = 125f;
+        float shotgun_damage = 350f;
+        float sniper_damage = 525f;
+        float ak47_damage = 90f;
+        float m4_damage = 75f;
+        float damage = 0;
+
+        switch (curr) {
+            case 0:
+                damage = pistol_damage;
+                break;
+            case 1:
+                damage = shotgun_damage;
+                break;
+            case 2:
+                damage = sniper_damage;
+                break;
+            case 3:
+                damage = ak47_damage;
+                break;
+            case 4:
+                damage = m4_damage;
+                break;
+        }
         RaycastHit hit;
         if (Physics.Raycast(pos, rot, out hit))
         {
             if (hit.transform.CompareTag("Player"))
             {
-                hit.transform.gameObject.GetComponent<FPController>().TakeDamage(100);
+                hit.transform.gameObject.GetComponent<FPController>().TakeDamage((int)damage);
             }
             else if (hit.transform.CompareTag("Monster"))
             {
-                hit.transform.gameObject.GetComponent<SkeletonMovement>().TakeDamage(100);
+                hit.transform.gameObject.GetComponent<SkeletonMovement>().TakeDamage((int)damage);
             }
         }
     }
