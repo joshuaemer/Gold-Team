@@ -85,12 +85,17 @@ public class MenuController : MonoBehaviour {
     public void CreateLobby() {
         if (lobbyName != "" && lobbyName != null) {
             manager.matchMaker.CreateMatch(lobbyName, lobbySize, true, "", "", "", 0, 0, manager.OnMatchCreate);
+            inGame = true;
+            mainMenu.SetActive(false);
+            
         }
     }
 
     public void JoinRoom(MatchInfoSnapshot _match) {
         manager.matchMaker.JoinMatch(_match.networkId, "", "", "", 0, 0, manager.OnMatchJoined);
         StartCoroutine(WaitForJoin());
+        inGame = true;
+        mainMenu.SetActive(false);
     }
 
     IEnumerator WaitForJoin() {
@@ -131,6 +136,10 @@ public class MenuController : MonoBehaviour {
         inGame = false;
         playerMenu.SetActive(false);
         mainCamera.transform.SetPositionAndRotation(new Vector3(0f, 50f, 0f), Quaternion.Euler(90, 0, 0));
+        manager = NetworkManager.singleton;
+        if (manager.matchMaker == null) {
+            manager.StartMatchMaker();
+        }
     }
 
     // Display Controlls
