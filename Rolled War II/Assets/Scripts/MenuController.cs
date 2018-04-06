@@ -40,6 +40,10 @@ public class MenuController : MonoBehaviour {
 
     public void RefreshLobbies() {
         ClearLobbyList();
+        manager = NetworkManager.singleton;
+        if (manager.matchMaker == null) {
+            manager.StartMatchMaker();
+        }
         manager.matchMaker.ListMatches(0, 20, "", false, 0, 0, OnMatchList);
         status.text = "Loading....";
     }
