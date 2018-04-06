@@ -136,10 +136,12 @@ public class MenuController : MonoBehaviour {
         inGame = false;
         playerMenu.SetActive(false);
         mainCamera.transform.SetPositionAndRotation(new Vector3(0f, 50f, 0f), Quaternion.Euler(90, 0, 0));
+
         manager = NetworkManager.singleton;
         if (manager.matchMaker == null) {
             manager.StartMatchMaker();
         }
+
     }
 
     // Display Controlls

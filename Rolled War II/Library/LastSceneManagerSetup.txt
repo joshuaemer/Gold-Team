@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/Monsters.unity
+- path: Assets/Monsters Boss.unity
   isLoaded: 1
   isActive: 1
