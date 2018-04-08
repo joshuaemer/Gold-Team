@@ -33,7 +33,7 @@ Our MVP will include the following:
  - GameModes have now been changed to one hoard/Surival mode where you can play agasint both AI and player. This will be reflected in the Beta Release. 
 
  - Realistic wheel chair mechanics (ie. Players will not be able to use stairs).
- - Players will only be able to use a pistol when moving and will need to be stopped to use better guns.
+ - Players will only be able to use a pistol when moving and will be slowed to use better guns.
  - A variety of guns with different benefits.
  - An inventory of weapons obtained throughout the game.
  - Finite Hit Points that can be replenished by picking up certain consumables found throughout the game.
