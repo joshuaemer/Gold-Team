@@ -173,6 +173,7 @@ public class SkeletonMovement : MonoBehaviour {
                     {
                         nextPoint = check.transform.childCount - 1;
                     }
+                    print(nextPoint); 
                 }
                 //Boss has 2 casts this is beacuse the boss is tall
                 else if (isBoss)

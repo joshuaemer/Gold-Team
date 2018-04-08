@@ -263,11 +263,11 @@ public class AIHandler : MonoBehaviour {
             create_pos.y += 1;
             Instantiate(drop, create_pos, Quaternion.identity);
         }
-        //Boss will always spawn health as well
+        
         if (isBoss)
         {
             
-            Instantiate(health_prefab, check.transform.GetChild(0).gameObject.transform.position, Quaternion.identity);
+            
             //Destroy his children
             for(int i =0; i<boss_children.Count; ++i)
             {

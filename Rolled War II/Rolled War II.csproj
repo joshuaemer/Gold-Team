@@ -327,6 +327,7 @@
     <Compile Include="Assets\Scripts\GrenadeMechanic.cs" />
     <Compile Include="Assets\Scripts\GunComponent.cs" />
     <Compile Include="Assets\Scripts\InventorySystem.cs" />
+    <Compile Include="Assets\Scripts\LobbyListItem.cs" />
     <Compile Include="Assets\Scripts\ManageTeams.cs" />
     <Compile Include="Assets\Scripts\MenuController.cs" />
     <Compile Include="Assets\Scripts\Pickup.cs" />
