@@ -80,7 +80,7 @@ public class FPController : NetworkBehaviour {
         }
         
 
-        if(speed != init_speed)
+        if(speed > init_speed)
         {
             if(speedFrameWaited<speedFrameWait)
             {
@@ -203,4 +203,19 @@ public class FPController : NetworkBehaviour {
             Destroy(gameObject);
         }
     }
+
+    //Resets speed to init speed or sets speed to init speed/2
+    public void setSpeed(bool reset)
+    {
+        if (reset)
+        {
+            speed = init_speed;
+        }
+        else {
+            speed = init_speed / 2;
+        }
+        
+    }
+
+    
 }
