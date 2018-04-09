@@ -59,8 +59,10 @@ public class InventorySystem : NetworkBehaviour
     //slots corrsponding to gun ids
     private ArrayList id_slots = new ArrayList{ 0 };
 
-
-
+    //Used for reload delay
+    private float start_time;
+    private bool hasReloaded = false;
+    private bool beginReloading = false;
 
     //Formats string to display on screen based on gun id.
     string format(int id)
@@ -113,6 +115,7 @@ public class InventorySystem : NetworkBehaviour
         slots[2] = "Empty";
         slots[3] = "Empty";
         slots[4] = "Empty";
+        slots[5] = "";
         free_slot = 1;
 
 
@@ -124,7 +127,7 @@ public class InventorySystem : NetworkBehaviour
     {
         if (!transform.parent.GetComponent<FPController>().HasAuthority()) { return; }
         Text[] canvas = transform.GetChild(0).gameObject.transform.GetComponentsInChildren<Text>();
-        for (int i = 0; i < 5; ++i)
+        for (int i = 0; i < 6; ++i)
         {
             //Update text based on slots array
             canvas[i].text = slots[i];
@@ -139,7 +142,11 @@ public class InventorySystem : NetworkBehaviour
             initialSet = true;
             setWeapon(0);
         }
-
+        //If the current weapon's clip is empty but the player has ammo in their inventory
+        if ((int)((ArrayList)map[current])[1] == 0 && (int)((ArrayList)map[current])[2]>0)
+        {
+            reload();
+        }
     }
     //Used for Weapon Pickups
     //If the gun is already in the inventory refill ammo
@@ -229,11 +236,11 @@ public class InventorySystem : NetworkBehaviour
     //Else True
     public bool Fire()
     {
-        int id = current;
 
-       
+
+        int id = current;
         int ammoInClip = 0;
-        int ammoInInv = 0;
+        
         if (map.ContainsKey(id))
         {
             ammoInClip = (int)((ArrayList)map[id])[1];
@@ -268,52 +275,16 @@ public class InventorySystem : NetworkBehaviour
             }
             else
             {
+
                 if (ammoInClip > 0)
                 {
                     ((ArrayList)map[id])[1] = (int)((ArrayList)map[id])[1] - 1;
                     slots[(int)((ArrayList)map[id])[0]] = format(id);
                     return true;
                 }
-                else
+                else //we need to reload
                 {
-                    ammoInInv = (int)((ArrayList)map[id])[2];
-                    switch (id)
-                    {
-                        case 0:
-                            ((ArrayList)map[id])[1] = Math.Min(pistolClip, ammoInInv) + (int)((ArrayList)map[id])[1];
-
-                            break;
-                        case 1:
-                            ((ArrayList)map[id])[1] = Math.Min(shotgunClip, ammoInInv) + (int)((ArrayList)map[id])[1];
-
-                            break;
-                        case 2:
-                            ((ArrayList)map[id])[1] = Math.Min(sniperClip, ammoInInv) + (int)((ArrayList)map[id])[1];
-
-                            break;
-
-                        case 3:
-                            ((ArrayList)map[id])[1] = Math.Min(arClip, ammoInInv) + (int)((ArrayList)map[id])[1];
-
-                            break;
-                        case 4:
-                            ((ArrayList)map[id])[1] = Math.Min(smgClip, ammoInInv) + (int)((ArrayList)map[id])[1];
-
-                            break;
-                    }
-
-                    if ((int)((ArrayList)map[id])[1] > 0)
-                    {
-                        ((ArrayList)map[id])[2] = (int)((ArrayList)map[id])[2] - (int)((ArrayList)map[id])[1];
-                        slots[(int)((ArrayList)map[id])[0]] = format(id);
-                       
-
-                        return true;
-                    }
-                    else
-                    {
-                        return false;
-                    }
+                    return false;
                 }
             }
 
@@ -323,6 +294,9 @@ public class InventorySystem : NetworkBehaviour
     //Switchs current weapon returns new id
     public int switchWeapon()
     {
+        slots[5] = "";
+        hasReloaded = false;
+        beginReloading = false;
         int last = current;
         //Get the currenly equipped weapon's index
         int next_index = (int)((ArrayList)map[current])[0] + 1;
@@ -420,4 +394,73 @@ public class InventorySystem : NetworkBehaviour
         for(int i = 0; i<id_slots.Count; ++i) { r += id_slots[i]; r += " , "; }
         print(r);
     }
+
+
+    //Gets called in update when the current weapon needs to be reloaded
+    //On first call the reloading begins
+    //On subsequent calls it checks if the delay is over if it is it reloads
+    void reload() {
+        int id = current;
+        int ammoInInv = 0;
+        //Start reload delay
+        
+        if (!hasReloaded)
+        {
+            if (!beginReloading)
+            {
+                start_time = Time.time;
+                beginReloading = true;
+                slots[5] = "RELOADING...";
+
+
+            }
+            else if (Time.time - start_time >= 2)
+            {
+                hasReloaded = true;
+                beginReloading = false;
+                slots[5] = "";
+
+
+            }
+
+        }
+        else
+        {
+            ammoInInv = (int)((ArrayList)map[id])[2];
+            switch (id)
+            {
+                case 0:
+                    ((ArrayList)map[id])[1] = Math.Min(pistolClip, ammoInInv) + (int)((ArrayList)map[id])[1];
+
+                    break;
+                case 1:
+                    ((ArrayList)map[id])[1] = Math.Min(shotgunClip, ammoInInv) + (int)((ArrayList)map[id])[1];
+
+                    break;
+                case 2:
+                    ((ArrayList)map[id])[1] = Math.Min(sniperClip, ammoInInv) + (int)((ArrayList)map[id])[1];
+
+                    break;
+
+                case 3:
+                    ((ArrayList)map[id])[1] = Math.Min(arClip, ammoInInv) + (int)((ArrayList)map[id])[1];
+
+                    break;
+                case 4:
+                    ((ArrayList)map[id])[1] = Math.Min(smgClip, ammoInInv) + (int)((ArrayList)map[id])[1];
+
+                    break;
+            }
+            hasReloaded = false;
+            if ((int)((ArrayList)map[id])[1] > 0)
+            {
+                ((ArrayList)map[id])[2] = (int)((ArrayList)map[id])[2] - (int)((ArrayList)map[id])[1];
+                slots[(int)((ArrayList)map[id])[0]] = format(id);
+
+
+
+            }
+        }
+    }
+
 }

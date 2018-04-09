@@ -54,6 +54,14 @@ public class WeaponMechanics : NetworkBehaviour
         {
             //Switch Weapons
             curr = inv.GetComponent<InventorySystem>().switchWeapon();
+            if (curr > 0)
+            {
+                transform.GetComponent<FPController>().setSpeed(false);
+            }
+            else
+            {
+                transform.GetComponent<FPController>().setSpeed(true);
+            }
         }
 
         if (curr == 0 && weaponCooled)
