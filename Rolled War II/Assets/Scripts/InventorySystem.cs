@@ -9,7 +9,7 @@ using System;
 
 //TODO Fix gun prefabs by removing parent object.
 
-public class InventorySystem : MonoBehaviour
+public class InventorySystem : NetworkBehaviour
 {
     //keeps track of what guns are in each slot based on id
     //Pistol: 0
@@ -25,6 +25,7 @@ public class InventorySystem : MonoBehaviour
     private Hashtable map;
     private GameObject Player;
     private int current = 0;
+    public GameObject gun_placeholder_sibling;
 
     //Ammo limits
     private int pistolLimit = 120;
@@ -60,7 +61,7 @@ public class InventorySystem : MonoBehaviour
     private ArrayList id_slots = new ArrayList{ 0 };
 
 
-
+    //transform.parent.GetComponent<NetworkIdentity>().hasAuthority
 
     //Formats string to display on screen based on gun id.
     string format(int id)
@@ -101,7 +102,6 @@ public class InventorySystem : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-
         map = new Hashtable
         {
             { 0, new ArrayList { 0, pistolClip, pistolLimit } }
@@ -348,10 +348,11 @@ public class InventorySystem : MonoBehaviour
 
     void setWeapon(int id)
     {
-
+        if (!Player.GetComponent<NetworkIdentity>().hasAuthority) { return; }
         GameObject current_gun_prefab = null;
-        Vector3 create_pos = Player.transform.GetChild(0).gameObject.transform.localPosition;
-        Quaternion create_rot = Player.transform.GetChild(0).gameObject.transform.localRotation;
+        GameObject placeholder = gun_placeholder_sibling.transform.parent.GetChild(0).gameObject;
+        Vector3 create_pos = placeholder.transform.position;
+        Quaternion create_rot = placeholder.transform.rotation;
         GameObject Gun;
 
         switch (id)
@@ -384,9 +385,9 @@ public class InventorySystem : MonoBehaviour
         Destroy(Gun.transform.GetChild(0).GetComponent<BoxCollider>());
 
         //Destroy the old gun
-        Destroy(Player.transform.GetChild(0).gameObject);
+        Destroy(placeholder.gameObject);
         //Make the new gun the first child of the player
-        Gun.transform.parent = Player.transform;
+        Gun.transform.parent = gun_placeholder_sibling.transform.parent;
 
         Gun.transform.SetSiblingIndex(0);
         //Set local position to that of the old gun

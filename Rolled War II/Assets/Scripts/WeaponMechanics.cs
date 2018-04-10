@@ -22,7 +22,7 @@ public class WeaponMechanics : NetworkBehaviour
     private float M4_fireRate = 0.08f;
     private float grenade_fireRate = 2.5f;
     public Camera playerCam;
-    private GameObject inv;
+    public GameObject inv;
     private float nextFire;
     private int curr = 0; //'curr' represents the currently selected weapon in the Inventory
     public AudioClip pistol_shot;
@@ -37,10 +37,8 @@ public class WeaponMechanics : NetworkBehaviour
     void Start()
     {
 
-
-        //Get the Player's Inventory
-
-        inv = transform.GetChild(1).gameObject;
+        
+        
         source = GetComponent<AudioSource>();
 
     }
