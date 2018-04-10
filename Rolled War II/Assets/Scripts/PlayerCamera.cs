@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-[RequireComponent(typeof(Camera))]
 public class PlayerCamera : NetworkBehaviour {
     [SerializeField]
     private Camera cam;
+    [SerializeField]
+    private AudioListener listener;
 
 	void Start () {
         CmdActivateCameras();
@@ -27,8 +28,10 @@ public class PlayerCamera : NetworkBehaviour {
         }
         if (!hasAuthority) {
             cam.enabled = false;
+            listener.enabled = false;
             return;
         }
         cam.enabled = true;
+        listener.enabled = true;
     }
 }

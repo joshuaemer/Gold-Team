@@ -27,20 +27,11 @@ public class MenuController : MonoBehaviour {
     [SerializeField]
     private Text status;
 
-    GameManager gm;
-
     void Start() {
         manager = NetworkManager.singleton;
         if(manager.matchMaker == null) {
             manager.StartMatchMaker();
         }
-
-        RefreshLobbies();
-        ConnectionConfig myConfig = new ConnectionConfig();
-        myConfig.AddChannel(QosType.Unreliable);
-        myConfig.AddChannel(QosType.UnreliableFragmented);
-        myConfig.MaxCombinedReliableMessageCount = 100;
-        myConfig.MaxCombinedReliableMessageSize = 500;
     }
 
     public void RefreshLobbies() {
@@ -102,34 +93,8 @@ public class MenuController : MonoBehaviour {
 
     public void JoinRoom(MatchInfoSnapshot _match) {
         manager.matchMaker.JoinMatch(_match.networkId, "", "", "", 0, 0, manager.OnMatchJoined);
-        StartCoroutine(WaitForJoin());
         inGame = true;
         mainMenu.SetActive(false);
-    }
-
-    IEnumerator WaitForJoin() {
-        ClearLobbyList();
-
-        int countdown = 5;
-        while (countdown > 0) {
-            status.text = "JOINING... (" + countdown + ")";
-
-            yield return new WaitForSeconds(1);
-
-            countdown--;
-        }
-        
-        status.text = "Failed to connect.";
-        yield return new WaitForSeconds(1);
-
-        MatchInfo matchInfo = manager.matchInfo;
-        if (matchInfo != null) {
-            manager.matchMaker.DropConnection(matchInfo.networkId, matchInfo.nodeId, 0, manager.OnDropConnection);
-            manager.StopHost();
-        }
-
-        RefreshLobbies();
-
     }
 
     // Quit the Application

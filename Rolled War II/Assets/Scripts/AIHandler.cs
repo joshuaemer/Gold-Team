@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using UnityEngine.UI;
+using UnityEngine.Networking;
 
-public class AIHandler : MonoBehaviour {
+public class AIHandler : NetworkBehaviour {
    
     
     
@@ -104,7 +105,7 @@ public class AIHandler : MonoBehaviour {
     //target should be null unless isMini is true
     void create(bool isBoss, bool isMini,GameObject target)
     {
-
+        if (!isServer) { return; }
         int rand_index;
         int rand_direction;
         int limit;
@@ -152,6 +153,7 @@ public class AIHandler : MonoBehaviour {
         {
             rand_index = rand.Next(0, bound);
             monster = Instantiate(spawn, points.transform.GetChild(rand_index).gameObject.transform.position, Quaternion.identity);
+            CmdSpawn(monster);
             if (isBoss)
             {
                 rand_direction = rand.Next(-1, 2);
@@ -182,6 +184,12 @@ public class AIHandler : MonoBehaviour {
 
         
     }
+
+    [Command]
+    public void CmdSpawn(GameObject go) {
+        NetworkServer.Spawn(go);
+    }
+
     //Spawns the mini skeletons, if target is null they will automatically be assigned one
     public void spawnMinis(GameObject target)
     {

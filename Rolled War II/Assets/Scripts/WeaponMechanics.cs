@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-
 public class WeaponMechanics : NetworkBehaviour
 {
     //keeps track of what guns are in each slot based on ID
@@ -22,11 +21,16 @@ public class WeaponMechanics : NetworkBehaviour
     private float AK_fireRate = 0.1f;
     private float M4_fireRate = 0.08f;
     private float grenade_fireRate = 2.5f;
-
+    public Camera playerCam;
     private GameObject inv;
     private float nextFire;
     private int curr = 0; //'curr' represents the currently selected weapon in the Inventory
-     public AudioClip gun_shot;
+    public AudioClip pistol_shot;
+    public AudioClip shotgun_shot;
+    public AudioClip sniper_shot;
+    public AudioClip smg_shot;
+    public AudioClip ak_shot;
+    public AudioClip reload;
     public AudioSource source;
 
     // Use this for initialization
@@ -128,9 +132,24 @@ public class WeaponMechanics : NetworkBehaviour
     {
         if (inv.GetComponent<InventorySystem>().Fire())
         {
-          source.PlayOneShot(gun_shot);
-
-            CmdShoot(transform.position, transform.forward);
+            switch (curr) {
+                case 0:
+                    source.PlayOneShot(pistol_shot);
+                    break;
+                case 1:
+                    source.PlayOneShot(shotgun_shot);
+                    break;
+                case 2:
+                    source.PlayOneShot(sniper_shot);
+                    break;
+                case 3:
+                    source.PlayOneShot(ak_shot);
+                    break;
+                case 4:
+                    source.PlayOneShot(smg_shot);
+                    break;
+            }
+            CmdShoot(transform.position, playerCam.transform.forward);
         }
     }
 
@@ -164,11 +183,11 @@ public class WeaponMechanics : NetworkBehaviour
         RaycastHit hit;
         if (Physics.Raycast(pos, rot, out hit))
         {
-            if (hit.transform.CompareTag("Player"))
+            /*if (hit.transform.CompareTag("Player"))
             {
                 hit.transform.gameObject.GetComponent<FPController>().TakeDamage((int)damage);
-            }
-            else if (hit.transform.CompareTag("Monster"))
+            }*/
+            if (hit.transform.CompareTag("Monster"))
             {
                 hit.transform.gameObject.GetComponent<SkeletonMovement>().TakeDamage((int)damage);
             }

@@ -9,7 +9,7 @@ using System;
 
 //TODO Fix gun prefabs by removing parent object.
 
-public class InventorySystem : NetworkBehaviour
+public class InventorySystem : MonoBehaviour
 {
     //keeps track of what guns are in each slot based on id
     //Pistol: 0
