@@ -35,7 +35,9 @@ public class AIHandler : NetworkBehaviour {
     //AI Info
     
     private int ai_limit = 3;
+    [SyncVar]
     private int ai_count =0;
+    [SyncVar]
     private int wave = 1;
     private int old_wave;
     //A list of all enemys spawned by the boss. These will be killed when the boss is destroyed

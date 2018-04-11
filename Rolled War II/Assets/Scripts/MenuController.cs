@@ -32,6 +32,7 @@ public class MenuController : MonoBehaviour {
         if(manager.matchMaker == null) {
             manager.StartMatchMaker();
         }
+        RefreshLobbies();
     }
 
     public void RefreshLobbies() {
@@ -115,7 +116,7 @@ public class MenuController : MonoBehaviour {
         if (manager.matchMaker == null) {
             manager.StartMatchMaker();
         }
-
+        RefreshLobbies();
     }
 
     // Display Controlls
