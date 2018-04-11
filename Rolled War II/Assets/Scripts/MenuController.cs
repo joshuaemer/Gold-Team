@@ -136,12 +136,24 @@ public class MenuController : MonoBehaviour {
         controllsMenu.SetActive(false);
         gameOver.SetActive(true);
         mainMenu.SetActive(false);
+        inGame = false;
     }
 
     public void ToMainMenu() {
         gameOver.SetActive(false);
         mainMenu.SetActive(true);
         mainCamera.SetActive(true);
+        inGame = false;
+    }
+
+    void SetCursor() {
+        if (!inGame || playerMenu.activeInHierarchy) {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        } else {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
     }
 
     // Wait for player to press ESC to bring up pause menu
@@ -155,5 +167,6 @@ public class MenuController : MonoBehaviour {
                 score.text += go.GetComponent<FPController>().hitpoints +  "\n";
             }
         }
+        SetCursor();
     }
 }

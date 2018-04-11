@@ -188,6 +188,7 @@ GameObject:
   - component: {fileID: 82028908698107618}
   - component: {fileID: 114185483254799298}
   - component: {fileID: 54524888304286516}
+  - component: {fileID: 114863390626596544}
   m_Layer: 0
   m_Name: MattPlayer
   m_TagString: Player
@@ -1254,6 +1255,18 @@ MonoBehaviour:
   smg_prefab: {fileID: 1019611890861342, guid: 858705dc764416d49af2a50c10c3d296, type: 2}
   grenade_prefab: {fileID: 1589068871940906, guid: 2daecd76c1dfee7498238be5f4dfdfea,
     type: 2}
+--- !u!114 &114863390626596544
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1634413678982570}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 364505b03299ec04a91e1b7a2d2ac278, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gt: {fileID: 0}
 --- !u!135 &135539618190172926
 SphereCollider:
   m_ObjectHideFlags: 1

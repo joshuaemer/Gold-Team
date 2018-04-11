@@ -351,8 +351,8 @@ public class InventorySystem : NetworkBehaviour
         if (!Player.GetComponent<NetworkIdentity>().hasAuthority) { return; }
         GameObject current_gun_prefab = null;
         GameObject placeholder = gun_placeholder_sibling.transform.parent.GetChild(0).gameObject;
-        Vector3 create_pos = placeholder.transform.position;
-        Quaternion create_rot = placeholder.transform.rotation;
+        Vector3 create_pos = placeholder.transform.localPosition;
+        Quaternion create_rot = placeholder.transform.localRotation;
         GameObject Gun;
 
         switch (id)
