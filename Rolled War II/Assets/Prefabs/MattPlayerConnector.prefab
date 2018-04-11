@@ -85,6 +85,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   menu: {fileID: 114855959451158266, guid: 70f2142a2c23b4245bb8e606844bce12, type: 2}
-  team: 0
+  score: 0
   PlayerPrefab: {fileID: 1634413678982570, guid: fcf8efe0cb3ae854082e67ef9e7f7307,
     type: 2}
