@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using UnityEngine.UI;
+using UnityEngine.Networking;
 
-public class AIHandler : MonoBehaviour {
+public class AIHandler : NetworkBehaviour {
    
     
     
@@ -34,7 +35,9 @@ public class AIHandler : MonoBehaviour {
     //AI Info
     
     private int ai_limit = 3;
+    [SyncVar]
     private int ai_count =0;
+    [SyncVar]
     private int wave = 1;
     private int old_wave;
     //A list of all enemys spawned by the boss. These will be killed when the boss is destroyed
@@ -104,7 +107,7 @@ public class AIHandler : MonoBehaviour {
     //target should be null unless isMini is true
     void create(bool isBoss, bool isMini,GameObject target)
     {
-
+        if (!isServer) { return; }
         int rand_index;
         int rand_direction;
         int limit;
@@ -152,6 +155,7 @@ public class AIHandler : MonoBehaviour {
         {
             rand_index = rand.Next(0, bound);
             monster = Instantiate(spawn, points.transform.GetChild(rand_index).gameObject.transform.position, Quaternion.identity);
+            CmdSpawn(monster);
             if (isBoss)
             {
                 rand_direction = rand.Next(-1, 2);
@@ -182,6 +186,12 @@ public class AIHandler : MonoBehaviour {
 
         
     }
+
+    [Command]
+    public void CmdSpawn(GameObject go) {
+        NetworkServer.Spawn(go);
+    }
+
     //Spawns the mini skeletons, if target is null they will automatically be assigned one
     public void spawnMinis(GameObject target)
     {
@@ -263,11 +273,11 @@ public class AIHandler : MonoBehaviour {
             create_pos.y += 1;
             Instantiate(drop, create_pos, Quaternion.identity);
         }
-        //Boss will always spawn health as well
+        
         if (isBoss)
         {
             
-            Instantiate(health_prefab, check.transform.GetChild(0).gameObject.transform.position, Quaternion.identity);
+            
             //Destroy his children
             for(int i =0; i<boss_children.Count; ++i)
             {

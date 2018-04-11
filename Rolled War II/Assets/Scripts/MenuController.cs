@@ -27,19 +27,20 @@ public class MenuController : MonoBehaviour {
     [SerializeField]
     private Text status;
 
-    GameManager gm;
-
     void Start() {
         manager = NetworkManager.singleton;
         if(manager.matchMaker == null) {
             manager.StartMatchMaker();
         }
-
         RefreshLobbies();
     }
 
     public void RefreshLobbies() {
         ClearLobbyList();
+        manager = NetworkManager.singleton;
+        if (manager.matchMaker == null) {
+            manager.StartMatchMaker();
+        }
         manager.matchMaker.ListMatches(0, 20, "", false, 0, 0, OnMatchList);
         status.text = "Loading....";
     }
@@ -93,34 +94,8 @@ public class MenuController : MonoBehaviour {
 
     public void JoinRoom(MatchInfoSnapshot _match) {
         manager.matchMaker.JoinMatch(_match.networkId, "", "", "", 0, 0, manager.OnMatchJoined);
-        StartCoroutine(WaitForJoin());
         inGame = true;
         mainMenu.SetActive(false);
-    }
-
-    IEnumerator WaitForJoin() {
-        ClearLobbyList();
-
-        int countdown = 5;
-        while (countdown > 0) {
-            status.text = "JOINING... (" + countdown + ")";
-
-            yield return new WaitForSeconds(1);
-
-            countdown--;
-        }
-        
-        status.text = "Failed to connect.";
-        yield return new WaitForSeconds(1);
-
-        MatchInfo matchInfo = manager.matchInfo;
-        if (matchInfo != null) {
-            manager.matchMaker.DropConnection(matchInfo.networkId, matchInfo.nodeId, 0, manager.OnDropConnection);
-            manager.StopHost();
-        }
-
-        RefreshLobbies();
-
     }
 
     // Quit the Application
@@ -141,7 +116,7 @@ public class MenuController : MonoBehaviour {
         if (manager.matchMaker == null) {
             manager.StartMatchMaker();
         }
-
+        RefreshLobbies();
     }
 
     // Display Controlls
@@ -162,12 +137,25 @@ public class MenuController : MonoBehaviour {
         controllsMenu.SetActive(false);
         gameOver.SetActive(true);
         mainMenu.SetActive(false);
+        inGame = false;
     }
 
     public void ToMainMenu() {
         gameOver.SetActive(false);
         mainMenu.SetActive(true);
         mainCamera.SetActive(true);
+        inGame = false;
+        RefreshLobbies();
+    }
+
+    void SetCursor() {
+        if (!inGame || playerMenu.activeInHierarchy) {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        } else {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
     }
 
     // Wait for player to press ESC to bring up pause menu
@@ -181,5 +169,6 @@ public class MenuController : MonoBehaviour {
                 score.text += go.GetComponent<FPController>().hitpoints +  "\n";
             }
         }
+        SetCursor();
     }
 }

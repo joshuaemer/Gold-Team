@@ -8,7 +8,7 @@ public class GunComponent : NetworkBehaviour {
     public int id;//The id of the weapon
 
     
-    private GameObject inv;
+    public GameObject inv;
     //Grenade vars
     public GameObject explosion;// Will be null for all other weapons, this is the prefab for the explosion.
     private int grenade_damage = 500;
@@ -42,9 +42,10 @@ public class GunComponent : NetworkBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        print(transform.parent.name);
         if(inv == null && transform.parent.parent != null)
         {
-            inv = transform.parent.parent.GetChild(1).gameObject;
+            inv = transform.parent.parent.parent.GetChild(0).gameObject;
         }
         //Update is only used for grenades
 

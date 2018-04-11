@@ -12,19 +12,18 @@ public class FPController : NetworkBehaviour {
     public float rotateSpeed = 3.0f;
     public float smoother = 10;
     public int MaxHealth;
-
     private GameObject inv;
-
-    [SyncVar]
+    public float hSensitivity = 2.0f;
+    public float vSensitivity = 2.0f;
+    public float yaw = 0;
+    public float pitch = 0;
     public int hitpoints = 1000;
 
     private CharacterController controller;
-
     private MenuController menu;
-    
-   
+    private NetworkManager manager;
 
-    
+    public Camera playerCamera;
 
     // this is used to sync position and rotation of other players
     private Vector3 enemyPosition;
@@ -49,6 +48,15 @@ public class FPController : NetworkBehaviour {
         speedText.text = "Speed = " + speed.ToString();
         inv = GameObject.Find("Inventory");
 
+        manager = NetworkManager.singleton;
+        if (manager.matchMaker == null) {
+            manager.StartMatchMaker();
+        }
+
+        ConnectionConfig myConfig = new ConnectionConfig();
+        myConfig.AddChannel(QosType.ReliableSequenced);
+        myConfig.MaxCombinedReliableMessageCount = 20;
+        myConfig.MaxCombinedReliableMessageSize = 500;
 
         init_speed = speed;
         MaxHealth = hitpoints;
@@ -72,6 +80,17 @@ public class FPController : NetworkBehaviour {
         float curSpeed = speed * Input.GetAxis("Vertical");
         controller.SimpleMove(forward * curSpeed);
         CmdUpdatePlayer(transform.position, transform.rotation);
+
+        
+        if (Math.Abs(pitch - vSensitivity * Input.GetAxis("Mouse Y")) < 90) {
+            pitch -= vSensitivity * Input.GetAxis("Mouse Y");
+            playerCamera.transform.localEulerAngles = new Vector3(pitch, yaw, 0);
+        }
+        if (Math.Abs(yaw + hSensitivity * Input.GetAxis("Mouse X")) < 50){
+            yaw += hSensitivity * Input.GetAxis("Mouse X");
+            playerCamera.transform.localEulerAngles = new Vector3(pitch, yaw, 0);
+        }
+
         speedText.text = "Speed = " + speed.ToString();
 
         if(inv == null)
@@ -102,9 +121,6 @@ public class FPController : NetworkBehaviour {
 
     [Command]
     void CmdUpdatePlayer(Vector3 pos, Quaternion rot) {
-        transform.position = pos;
-        transform.rotation = rot;
-
         RpcUpdatePlayer(pos, rot);
     }
 
@@ -180,7 +196,9 @@ public class FPController : NetworkBehaviour {
     }
 
     void OnDestroy() {
-        menu.GameOver();
+        if (hasAuthority) {
+            menu.GameOver();
+        }
     }
 
     private void OnTriggerStay(Collider other)

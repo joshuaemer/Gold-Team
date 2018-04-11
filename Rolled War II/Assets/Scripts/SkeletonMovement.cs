@@ -2,16 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Networking;
 
 //TODO Make sure mini's can hit
 //Then make sure they die when the boss dies
 
-public class SkeletonMovement : MonoBehaviour {
+public class SkeletonMovement : NetworkBehaviour {
     private Animator anim;
     public float speed;
     public int damage;
     
     private NavMeshAgent nav;
+    [SyncVar]
     public int hitpoints;
     private int max_hitpoints;
     public bool isBoss;

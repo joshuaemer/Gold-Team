@@ -1,4 +1,8 @@
 sceneSetups:
+<<<<<<< HEAD
 - path: Assets/Testing Reload.unity
+=======
+- path: Assets/NewMap.unity
+>>>>>>> NewMap
   isLoaded: 1
   isActive: 1

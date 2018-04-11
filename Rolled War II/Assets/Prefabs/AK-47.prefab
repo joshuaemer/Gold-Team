@@ -180,3 +180,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 3
+  inv: {fileID: 0}
+  explosion: {fileID: 0}
