@@ -145,6 +145,7 @@ public class MenuController : MonoBehaviour {
         mainMenu.SetActive(true);
         mainCamera.SetActive(true);
         inGame = false;
+        RefreshLobbies();
     }
 
     void SetCursor() {
