@@ -63,19 +63,26 @@ See wiki Page Developer Documentation.
   
 
 
+
 ### Beta
-YouTube video: https://youtu.be/8ulQaiMeyFA
+**YouTube video:** https://youtu.be/8ulQaiMeyFA
 
 Release v0.3.0
 
-Landing Page:   http://www.acsu.buffalo.edu/~joshuaem
+**Landing Page:**   http://www.acsu.buffalo.edu/~joshuaem
 
-How to Run: 
+**How to Run:** 
   Please see "How to Run the Beta" section of the landing page. 
 
 
 **Controls:**
 	Please see "Controls" section of the landing page.
+
+
+
+
+
+
 ### Help Wanted
   There are 3 issuses with a help wanted tag they are as follows:
   
