@@ -63,29 +63,26 @@ See wiki Page Developer Documentation.
   
 
 
-### Alpha
-YouTube video: https://youtu.be/LonUqTFIchg
 
-Release v0.2.0
+### Beta
+**YouTube video:** https://youtu.be/8ulQaiMeyFA
 
-How to Run:
-  The Alpha Release now has support for Windows, Linux32 and Linux64. 
+Release v0.3.0
 
-**IMPORTANT(Windows only) Do not run the exe titled Rolled War II v0.1.0.exe located in the Rolled War II folder as this is the prototype. Unless you wanted to run the protype for some reason then go for it.**
+**Landing Page:**   http://www.acsu.buffalo.edu/~joshuaem
 
-1. Download the Source code from Alpha release.
-2. In the Gold Team folder (The Parent Folder) extract the respective folder and execute the file listed below. 
+**How to Run:** 
+  Please see "How to Run the Beta" section of the landing page. 
 
-    Windows: Folder: Windows.zip  Executable: RWII.exe
-    
-    Linux64: Folder: Linux 64.zip Executable: RWII.x86_64
-    
-    Linux32: Folder: Linux 32.zip Executable: RWII.x86
-    
- 3. To create a game select a game mode. To join an existing game select Join Game. Multiplayer is done over LAN only.
+
 **Controls:**
-	W/S will move the player forward and backwards. A/D will move the camera left and right. E will switch weapons, G will throw a grenade and Esc will pause the game.
-To see these controls in game, hit Esc and click controls.
+	Please see "Controls" section of the landing page.
+
+
+
+
+
+
 ### Help Wanted
   There are 3 issuses with a help wanted tag they are as follows:
   
