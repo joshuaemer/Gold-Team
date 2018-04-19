@@ -15,12 +15,13 @@ public class WeaponMechanics : NetworkBehaviour
 
     private bool weaponCooled = true; //Bool variable to determine whether or not the weapon has cooled down directly after firing
     /*Fire rates (in seconds) of each of the 6 weapons.*/
-    private float pistolFireRate = 0.2f;
-    private float shotgun_fireRate = 1.5f;
-    private float sniper_fireRate = 3f;
-    private float AK_fireRate = 0.1f;
-    private float M4_fireRate = 0.08f;
-    private float grenade_fireRate = 2.5f;
+	
+    private float pistolFireRate = 0.2f;//SA
+    private float shotgun_fireRate = 1.5f;//SA
+    private float sniper_fireRate = 3f;//SA
+    private float AK_fireRate = 0.1f;//FA
+    private float M4_fireRate = 0.08f;//FA
+    private float grenade_fireRate = 2.5f;//SA
     public Camera playerCam;
     public GameObject inv;
     private float nextFire;
@@ -65,7 +66,23 @@ public class WeaponMechanics : NetworkBehaviour
                 transform.GetComponent<FPController>().setSpeed(true);
             }
         }
-
+		
+		if(Input.GetKeyDown("f") && (curr==3 || curr == 4)){
+			if(curr==3){
+				if(AK_fireRate== 0.1f)
+				{
+					AK_fireRate = pistolFireRate;
+				}
+				else AK_fireRate = 0.1f;
+			}
+			if(curr==4){
+				if(M4_fireRate== 0.08f)
+				{
+					M4_fireRate = pistolFireRate;
+				}
+				else M4_fireRate = 0.08f;
+			}
+		}
         if (curr == 0 && weaponCooled)
         { //Checks if the current weapon is the pistol and if the weapon is cooled
             if (Input.GetMouseButtonDown(0))
@@ -92,18 +109,34 @@ public class WeaponMechanics : NetworkBehaviour
         //Checks if the current weapon is the AK-47 and if the weapon is cooled
         else if (curr == 3 && weaponCooled)
         {
-            if (Input.GetMouseButton(0))
-            {
-                StartCoroutine(waitForNSeconds(AK_fireRate));
-            }
+			if(AK_fireRate == pistolFireRate){
+			    if (Input.GetMouseButtonDown(0))
+				{
+					StartCoroutine(waitForNSeconds(AK_fireRate));
+				}
+			}
+			else{
+				if (Input.GetMouseButton(0))
+				{
+					StartCoroutine(waitForNSeconds(AK_fireRate));
+				}
+			}
         }
         //Checks if the current weapon is the M4 (called SMG in game) and if the weapon is cooled
         else if (curr == 4 && weaponCooled)
         {
-            if (Input.GetMouseButton(0))
-            {
-                StartCoroutine(waitForNSeconds(M4_fireRate));
-            }
+			if(M4_fireRate == pistolFireRate){
+			    if (Input.GetMouseButtonDown(0))
+				{
+					StartCoroutine(waitForNSeconds(M4_fireRate));
+				}
+			}
+			else{
+				if (Input.GetMouseButton(0))
+				{
+					StartCoroutine(waitForNSeconds(M4_fireRate));
+				}
+			}
         }
         //Checks if the current weapon is the grenade and if the weapon is cooled
         else if (curr == 5)
