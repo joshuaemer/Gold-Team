@@ -1,0 +1,17 @@
+Gold Team Minutes
+Date 4/20/2018 4:00pm
+
+Attendance:
+Ryan is present
+Matt is present
+Josh has an excused absence
+
+Meeting Discussion:
+Merging pull request from collaboration phase and hotfixes.
+
+Tasks Done prior to Meeting:
+Matt: Fixed GUI bugs
+Everyone: Fixing any reported bugs
+
+Tasks TODO before next meeting:
+Everyone: Fix bugs if/when they are reported.
