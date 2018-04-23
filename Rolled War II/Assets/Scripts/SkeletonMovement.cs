@@ -47,6 +47,10 @@ public class SkeletonMovement : NetworkBehaviour {
 
     //Time before damage is dealt
     private float timeWaited = 0;
+
+    //Used to prevent getting stuck
+    Vector3 oldpos1;
+    Vector3 oldpos2;
     
     // Use this for initialization
     void Start () {
@@ -82,6 +86,8 @@ public class SkeletonMovement : NetworkBehaviour {
         
         if (isBoss)
         {
+            oldpos2 = oldpos1;
+            oldpos1 = transform.position;
             if(max_hitpoints/2>hitpoints && !hasMinions)
             {
                 
@@ -210,7 +216,7 @@ public class SkeletonMovement : NetworkBehaviour {
             if (!foundPlayer)
             {
                 
-                if (InRange(1, check.transform.GetChild(nextPoint).transform.position))
+                if (InRange(1, check.transform.GetChild(nextPoint).transform.position) || (isBoss && !hasMoved()))
                 {
 
                     nextPoint += direction;
@@ -297,5 +303,10 @@ public class SkeletonMovement : NetworkBehaviour {
     {
         anim.SetBool(deathHash, true);
         dead = true;
+    }
+    //returns true if the boss has moved and is not stuck
+    bool hasMoved()
+    {
+        return !(transform.position == oldpos1 && transform.position == oldpos2);
     }
 }

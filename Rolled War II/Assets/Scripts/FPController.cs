@@ -232,7 +232,7 @@ public class FPController : NetworkBehaviour {
         else {
             speed = init_speed / 2;
         }
-        
+        speedText.text = "Speed = " + speed.ToString();
     }
 
     
