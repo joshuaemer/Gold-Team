@@ -37,8 +37,7 @@ public class WeaponMechanics : NetworkBehaviour
     void Start()
     {
 
-        
-        
+                
         source = GetComponent<AudioSource>();
 
     }
