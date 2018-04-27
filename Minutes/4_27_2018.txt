@@ -5,7 +5,8 @@ Attendance:
 
 
 Meeting Discussion:
-
+Went over Beta testing feedback and created issuses for bugs and the feature request we are choosing to implement.
+Some of the bugs reported such as the spike pit one have already been fixed in the latest beta release.
 
 Tasks Done prior to Meeting:
 Matt: Fixed GUI Bug
@@ -15,4 +16,6 @@ Ryan:
 
 Tasks TODO before next meeting:
 We will be meeting on Wednesday 5/2 to finialize the official release.
-
+Everyone will fix the bugs they are assigned.
+Josh will implement the feature request. 
+Ryan will work on the player model.
