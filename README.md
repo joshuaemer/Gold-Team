@@ -26,7 +26,7 @@ Gitter: [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/
 Our MVP will include the following:
 
  - A Lobbying System that allows players to choose a game or be randomly placed into one. 
- -  A UI that players can view there current inventory(in game) and choose game modes.
+ -  A UI that players can view there current inventory(in game).
  - An AI that will be behave like other players.
  - An interactive environment with ramps, power ups(boosts), elevators and traps.
 
@@ -38,6 +38,8 @@ Our MVP will include the following:
  - A variety of guns with different benefits.
  - An inventory of weapons obtained throughout the game.
  - Finite Hit Points that can be replenished by picking up certain consumables found throughout the game.
+ 
+ -**Added Beta Testing Feature**: The boss now has the ablitiy to push the player out of the map. If this happens the camera will fade and the player will be transported back onto the map.
 
  
 
