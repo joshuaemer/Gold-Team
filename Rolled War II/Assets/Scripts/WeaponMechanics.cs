@@ -140,26 +140,27 @@ public class WeaponMechanics : NetworkBehaviour
             switch (curr) {
                 case 0:
                     source.PlayOneShot(pistol_shot);
-                    transform.GetChild(1).gameObject.Play();
+                    
                     break;
                 case 1:
                     source.PlayOneShot(shotgun_shot);
-                    transform.GetChild(1).gameObject.Play();
+                   
                     break;
                 case 2:
                     source.PlayOneShot(sniper_shot);
-                    transform.GetChild(1).gameObject.Play();
+                    
                     break;
                 case 3:
                     source.PlayOneShot(ak_shot);
-                    transform.GetChild(1).gameObject.Play();
+                    
                     break;
                 case 4:
                     source.PlayOneShot(smg_shot);
-                    transform.GetChild(1).gameObject.Play();
+                    
                     break;
             }
             CmdShoot(transform.position, playerCam.transform.forward);
+          
         }
     }
 
