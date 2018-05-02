@@ -12,7 +12,7 @@ public class FPController : NetworkBehaviour {
     public float rotateSpeed = 3.0f;
     public float smoother = 10;
     public int MaxHealth;
-    private GameObject inv;
+    private InventorySystem inv;
     public float hSensitivity = 2.0f;
     public float vSensitivity = 2.0f;
     public float yaw = 0;
@@ -46,7 +46,7 @@ public class FPController : NetworkBehaviour {
         speedText = GameObject.Find("Speed").GetComponent<Text>();
         hitpointsText.text = "HP = " + hitpoints.ToString();
         speedText.text = "Speed = " + speed.ToString();
-        inv = GameObject.Find("Inventory");
+        inv = transform.GetComponentInChildren<InventorySystem>();
 
         manager = NetworkManager.singleton;
         if (manager.matchMaker == null) {
@@ -95,7 +95,7 @@ public class FPController : NetworkBehaviour {
 
         if(inv == null)
         {
-            inv = GameObject.Find("Inventory");
+            inv = transform.GetComponentInChildren<InventorySystem>();
         }
         
 
@@ -187,6 +187,7 @@ public class FPController : NetworkBehaviour {
         }
         else if (other.CompareTag("Weapon"))
         {   //Add the gun to the inventory
+            if (!hasAuthority) { return; }
             inv.GetComponent<InventorySystem>().Add(other.GetComponent<GunComponent>().GetID());
             
             //Since other is the trigger we need to get rid of the entire game object

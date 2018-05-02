@@ -332,7 +332,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1634413678982570}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -15.482677, y: 1.4633373, z: 13.801962}
+  m_LocalPosition: {x: 21.271084, y: 16.52, z: 22.334894}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4655661574491078}
@@ -364,7 +364,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1012460534158214}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.52400017, y: 0.049, z: 1.172}
+  m_LocalPosition: {x: 0.52400017, y: -0.005999908, z: 0.9540005}
   m_LocalScale: {x: 0.1752831, y: 0.15211259, z: 1.5229127}
   m_Children: []
   m_Father: {fileID: 4465170048992130}
@@ -1105,22 +1105,22 @@ MonoBehaviour:
   m_SceneId:
     m_Value: 0
   m_AssetId:
-    i0: 16
-    i1: 203
-    i2: 219
-    i3: 195
-    i4: 96
-    i5: 225
-    i6: 183
-    i7: 228
-    i8: 59
-    i9: 248
-    i10: 109
-    i11: 213
-    i12: 227
-    i13: 186
-    i14: 117
-    i15: 242
+    i0: 252
+    i1: 248
+    i2: 239
+    i3: 224
+    i4: 203
+    i5: 58
+    i6: 232
+    i7: 84
+    i8: 8
+    i9: 46
+    i10: 103
+    i11: 239
+    i12: 158
+    i13: 127
+    i14: 115
+    i15: 7
   m_ServerOnly: 0
   m_LocalPlayerAuthority: 1
 --- !u!114 &114611561198257364

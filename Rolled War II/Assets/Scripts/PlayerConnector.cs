@@ -36,6 +36,7 @@ public class PlayerConnector : NetworkBehaviour {
     void RpcAssignPlayer(GameObject go) {
         if (isLocalPlayer) {
             myPlayer = go;
+            menu.Connect();
         }
     }
 }
