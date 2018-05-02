@@ -86,16 +86,16 @@ public class MenuController : MonoBehaviour {
     public void CreateLobby() {
         if (lobbyName != "" && lobbyName != null) {
             manager.matchMaker.CreateMatch(lobbyName, lobbySize, true, "", "", "", 0, 0, manager.OnMatchCreate);
-            inGame = true;
-            mainMenu.SetActive(false);
-            
         }
+    }
+
+    public void Connect() {
+        inGame = true;
+        mainMenu.SetActive(false);
     }
 
     public void JoinRoom(MatchInfoSnapshot _match) {
         manager.matchMaker.JoinMatch(_match.networkId, "", "", "", 0, 0, manager.OnMatchJoined);
-        inGame = true;
-        mainMenu.SetActive(false);
     }
 
     // Quit the Application

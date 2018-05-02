@@ -271,7 +271,10 @@ public class AIHandler : NetworkBehaviour {
             //Create drop here at create pos;
             //Call this function upon death in skeleton movement
             create_pos.y += 1;
-            Instantiate(drop, create_pos, Quaternion.identity);
+            if (isServer) {
+                GameObject go = Instantiate(drop, create_pos, Quaternion.identity);
+                NetworkServer.Spawn(go);
+            }
         }
         
         if (isBoss)

@@ -154,7 +154,8 @@ public class InventorySystem : NetworkBehaviour
     //Else Add the gun to the inventory
     public void Add(int id)
     {
-
+        if (!transform.parent.GetComponent<FPController>().HasAuthority()) { return; }
+        Debug.LogWarning("here");
         switch (id)
         {
             case 0:
@@ -200,7 +201,6 @@ public class InventorySystem : NetworkBehaviour
                 }
                 else
                 {
-
                     map.Add(id, new ArrayList { free_slot, arClip, arLimit });
                     slots[free_slot] = format(id);
                     free_slot += 1;
