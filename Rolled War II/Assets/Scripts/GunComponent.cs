@@ -42,6 +42,7 @@ public class GunComponent : NetworkBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+
         if(inv == null && transform.parent.parent != null)
         {
             inv = transform.parent.parent.parent.GetChild(0).gameObject;

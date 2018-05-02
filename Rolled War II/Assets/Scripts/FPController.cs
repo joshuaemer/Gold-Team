@@ -38,7 +38,22 @@ public class FPController : NetworkBehaviour {
     private int speedFrameWaited;
 
 
+    //Map Bounds
+    private float x_max = 110.0f;
+    private float x_min = -166.0f;
+    private float z_max = 115.3f;
+    private float z_min = -105.0f;
+    private float y_min = -20.0f;
+    private Vector3 spawnPoint = new Vector3(0, 20, 0);
+
+    //Fading vars
+    private float alphaFadeValue = 0;
+    private Texture2D whiteTexture;
+    private bool beginFade = false;
+    bool reverse = false;
+
     void Start() {
+        whiteTexture = Texture2D.whiteTexture;
         controller = gameObject.GetComponent<CharacterController>();
         menu = GameObject.FindGameObjectWithTag("MenuController").GetComponent<MenuController>();
         
@@ -74,23 +89,30 @@ public class FPController : NetworkBehaviour {
             return;
         }
 
+        if (OutOfBounds()) {
+            beginFade = true;
+        }
+
         // We know this is OUR character to control so let's control it
+        
         transform.Rotate(0, Input.GetAxis("Horizontal") * rotateSpeed, 0);
         Vector3 forward = transform.TransformDirection(Vector3.forward);
         float curSpeed = speed * Input.GetAxis("Vertical");
         controller.SimpleMove(forward * curSpeed);
         CmdUpdatePlayer(transform.position, transform.rotation);
 
-        
-        if (Math.Abs(pitch - vSensitivity * Input.GetAxis("Mouse Y")) < 90) {
+
+        if (Math.Abs(pitch - vSensitivity * Input.GetAxis("Mouse Y")) < 90)
+        {
             pitch -= vSensitivity * Input.GetAxis("Mouse Y");
             playerCamera.transform.localEulerAngles = new Vector3(pitch, yaw, 0);
         }
-        if (Math.Abs(yaw + hSensitivity * Input.GetAxis("Mouse X")) < 50){
+        if (Math.Abs(yaw + hSensitivity * Input.GetAxis("Mouse X")) < 50)
+        {
             yaw += hSensitivity * Input.GetAxis("Mouse X");
             playerCamera.transform.localEulerAngles = new Vector3(pitch, yaw, 0);
         }
-
+        
         speedText.text = "Speed = " + speed.ToString();
 
         if(inv == null)
@@ -211,6 +233,7 @@ public class FPController : NetworkBehaviour {
             other.transform.parent.GetChild(0).gameObject.SetActive(true);
         }
     }
+   
 
 
     public void TakeDamage(int damage) {
@@ -236,5 +259,47 @@ public class FPController : NetworkBehaviour {
         speedText.text = "Speed = " + speed.ToString();
     }
 
-    
+    private bool OutOfBounds()
+    {
+        float x_pos = transform.position.x;
+        float y_pos = transform.position.y;
+        float z_pos = transform.position.z;
+
+        return ((z_pos < z_min || z_pos > z_max) || (x_pos < x_min || x_pos > x_max)) || y_pos < y_min;
+    }
+
+
+    void OnGUI()
+    {
+        if (!hasAuthority) { return; }
+        
+            if (beginFade)
+            {
+                if (alphaFadeValue > 1.2)
+                {
+                    reverse = true;
+                transform.position = spawnPoint;
+                }
+                else if (alphaFadeValue <=0)
+                {
+                    beginFade = false;
+                    reverse = false;
+                }
+
+
+                if (reverse)
+                {
+                    alphaFadeValue -= Mathf.Clamp01(Time.deltaTime / 5);
+                }
+                else
+                {
+                    alphaFadeValue += Mathf.Clamp01(Time.deltaTime / 5);
+                }
+
+                GUI.color = new Color(1, 1, 1, alphaFadeValue);
+                GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), whiteTexture);
+                
+            }
+
+    }
 }

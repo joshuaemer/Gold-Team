@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -37,8 +37,7 @@ public class WeaponMechanics : NetworkBehaviour
     void Start()
     {
 
-        
-        
+                
         source = GetComponent<AudioSource>();
 
     }
@@ -141,21 +140,27 @@ public class WeaponMechanics : NetworkBehaviour
             switch (curr) {
                 case 0:
                     source.PlayOneShot(pistol_shot);
+                    
                     break;
                 case 1:
                     source.PlayOneShot(shotgun_shot);
+                   
                     break;
                 case 2:
                     source.PlayOneShot(sniper_shot);
+                    
                     break;
                 case 3:
                     source.PlayOneShot(ak_shot);
+                    
                     break;
                 case 4:
                     source.PlayOneShot(smg_shot);
+                    
                     break;
             }
             CmdShoot(transform.position, playerCam.transform.forward);
+          
         }
     }
 
