@@ -24,6 +24,9 @@ public class MenuController : MonoBehaviour {
 
     private List<GameObject> lobbyList = new List<GameObject>();
 
+    private float joinTime;
+    bool attempted_connect;
+
     [SerializeField]
     private Text status;
 
@@ -33,6 +36,7 @@ public class MenuController : MonoBehaviour {
             manager.StartMatchMaker();
         }
         RefreshLobbies();
+        attempted_connect = false;
     }
 
     public void RefreshLobbies() {
@@ -96,6 +100,8 @@ public class MenuController : MonoBehaviour {
 
     public void JoinRoom(MatchInfoSnapshot _match) {
         manager.matchMaker.JoinMatch(_match.networkId, "", "", "", 0, 0, manager.OnMatchJoined);
+        joinTime = Time.time;
+        attempted_connect = true;
     }
 
     // Quit the Application
@@ -160,7 +166,11 @@ public class MenuController : MonoBehaviour {
 
     // Wait for player to press ESC to bring up pause menu
     public void Update() {
-        if(Input.GetKeyDown(KeyCode.Escape) && inGame) {
+        if (joinTime - Time.time > 5 && mainMenu.active && attempted_connect) {
+            Disconnect();
+            attempted_connect = false;
+        }
+        if (Input.GetKeyDown(KeyCode.Escape) && inGame) {
             playerMenu.SetActive(toggle);
             toggle = !toggle;
             controllsMenu.SetActive(false);
