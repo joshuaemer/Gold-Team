@@ -15,12 +15,13 @@ public class WeaponMechanics : NetworkBehaviour
 
     private bool weaponCooled = true; //Bool variable to determine whether or not the weapon has cooled down directly after firing
     /*Fire rates (in seconds) of each of the 6 weapons.*/
-    private float pistolFireRate = 0.2f;
-    private float shotgun_fireRate = 1.5f;
-    private float sniper_fireRate = 3f;
-    private float AK_fireRate = 0.1f;
-    private float M4_fireRate = 0.08f;
-    private float grenade_fireRate = 2.5f;
+
+    private float pistolFireRate = 0.2f;//SA
+    private float shotgun_fireRate = 1.5f;//SA
+    private float sniper_fireRate = 3f;//SA
+    private float AK_fireRate = 0.1f;//FA
+    private float M4_fireRate = 0.08f;//FA
+    private float grenade_fireRate = 2.5f;//SA
     public Camera playerCam;
     public GameObject inv;
     private float nextFire;
@@ -37,7 +38,7 @@ public class WeaponMechanics : NetworkBehaviour
     void Start()
     {
 
-                
+
         source = GetComponent<AudioSource>();
 
     }
@@ -46,7 +47,7 @@ public class WeaponMechanics : NetworkBehaviour
     // Update is called once per frame
     /*Checking Input.getMouseButtonDown(0) checks if the left mouse button is clicked down at the current frame in Update (semi-automatic fire)
       Input.getMouseButton(0) checks if the left mouse button is being held at the current frame (automatic fire).
-    */
+     */
     void Update()
     {
         if (!hasAuthority) { return; }
@@ -62,6 +63,22 @@ public class WeaponMechanics : NetworkBehaviour
             else
             {
                 transform.GetComponent<FPController>().setSpeed(true);
+            }
+        }
+        if(Input.GetKeyDown("f") && (curr==3 || curr == 4)){
+            if(curr==3){
+                if(AK_fireRate== 0.1f)
+                {
+                    AK_fireRate = pistolFireRate;
+                }
+                else AK_fireRate = 0.1f;
+            }
+            if(curr==4){
+                if(M4_fireRate== 0.08f)
+                {
+                    M4_fireRate = pistolFireRate;
+                }
+                else M4_fireRate = 0.08f;
             }
         }
 
@@ -119,10 +136,10 @@ public class WeaponMechanics : NetworkBehaviour
         }
     }
     /*waitForNSeconds(float N): Function that takes in a float argument called N, calls the shoot() function,
-    sets the boolean variable weaponCooled to false, and delays the function for N seconds before turning
-    weaponCooled back to true.  This function returns an IEnumerator that is used as an arguemnt in the
-    StartCoroutine function above.
-    
+      sets the boolean variable weaponCooled to false, and delays the function for N seconds before turning
+      weaponCooled back to true.  This function returns an IEnumerator that is used as an arguemnt in the
+      StartCoroutine function above.
+
      */
     IEnumerator waitForNSeconds(float N)
     {
@@ -140,68 +157,68 @@ public class WeaponMechanics : NetworkBehaviour
             switch (curr) {
                 case 0:
                     source.PlayOneShot(pistol_shot);
-                    
+
                     break;
                 case 1:
                     source.PlayOneShot(shotgun_shot);
-                   
+
                     break;
                 case 2:
                     source.PlayOneShot(sniper_shot);
-                    
+
                     break;
                 case 3:
                     source.PlayOneShot(ak_shot);
-                    
+
                     break;
                 case 4:
                     source.PlayOneShot(smg_shot);
-                    
+
                     break;
             }
             CmdShoot(transform.position, playerCam.transform.forward);
-          
+
         }
     }
 
     [Command]
-    void CmdShoot(Vector3 pos, Vector3 rot)
-    {
-        float pistol_damage = 125f;
-        float shotgun_damage = 350f;
-        float sniper_damage = 525f;
-        float ak47_damage = 90f;
-        float m4_damage = 75f;
-        float damage = 0;
-
-        switch (curr) {
-            case 0:
-                damage = pistol_damage;
-                break;
-            case 1:
-                damage = shotgun_damage;
-                break;
-            case 2:
-                damage = sniper_damage;
-                break;
-            case 3:
-                damage = ak47_damage;
-                break;
-            case 4:
-                damage = m4_damage;
-                break;
-        }
-        RaycastHit hit;
-        if (Physics.Raycast(pos, rot, out hit))
+        void CmdShoot(Vector3 pos, Vector3 rot)
         {
-            /*if (hit.transform.CompareTag("Player"))
+            float pistol_damage = 125f;
+            float shotgun_damage = 350f;
+            float sniper_damage = 525f;
+            float ak47_damage = 90f;
+            float m4_damage = 75f;
+            float damage = 0;
+
+            switch (curr) {
+                case 0:
+                    damage = pistol_damage;
+                    break;
+                case 1:
+                    damage = shotgun_damage;
+                    break;
+                case 2:
+                    damage = sniper_damage;
+                    break;
+                case 3:
+                    damage = ak47_damage;
+                    break;
+                case 4:
+                    damage = m4_damage;
+                    break;
+            }
+            RaycastHit hit;
+            if (Physics.Raycast(pos, rot, out hit))
             {
-                hit.transform.gameObject.GetComponent<FPController>().TakeDamage((int)damage);
-            }*/
-            if (hit.transform.CompareTag("Monster"))
-            {
-                hit.transform.gameObject.GetComponent<SkeletonMovement>().TakeDamage((int)damage);
+                /*if (hit.transform.CompareTag("Player"))
+                  {
+                  hit.transform.gameObject.GetComponent<FPController>().TakeDamage((int)damage);
+                  }*/
+                if (hit.transform.CompareTag("Monster"))
+                {
+                    hit.transform.gameObject.GetComponent<SkeletonMovement>().TakeDamage((int)damage);
+                }
             }
         }
-    }
 }
