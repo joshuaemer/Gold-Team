@@ -74,7 +74,7 @@ Release v1.0.0
 **Landing Page:**   http://www.acsu.buffalo.edu/~joshuaem
 
 **How to Run:** 
-  Please see "How to Run the Beta" section of the landing page. 
+  Please see "How to Run the Game" section of the landing page. 
 
 
 **Controls:**
