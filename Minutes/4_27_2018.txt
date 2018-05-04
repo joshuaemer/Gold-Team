@@ -2,7 +2,7 @@ Gold Team Minutes
 Date 4/27/2018 4:00pm
 
 Attendance:
-
+All members present
 
 Meeting Discussion:
 Went over Beta testing feedback and created issuses for bugs and the feature request we are choosing to implement.

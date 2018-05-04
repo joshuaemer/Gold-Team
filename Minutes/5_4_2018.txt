@@ -1,0 +1,21 @@
+Gold Team Minutes
+Date 5/4/2018 4:00pm
+
+Attendance:
+Matt: Present
+Josh: Present
+Ryan: Present.
+
+
+Meeting Discussion:
+There wasn't much to discuss. Release was finished prior to this meeting.
+
+
+Tasks Done prior to Meeting:
+Matt: Fixed Beta Testing Bugs
+Josh: Added Beta Testing Feature selection.
+Josh and Matt: Merged branches and created new release on tuesday.
+Ryan:
+
+Tasks TODO before next meeting:
+Fix any assigned bugs.
